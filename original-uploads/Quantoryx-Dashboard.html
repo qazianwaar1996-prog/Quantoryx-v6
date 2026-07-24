@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantoryx — AI-Powered Trading Platform</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.8.0/Recharts.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ═══════════════════════════════════════════════
+       QUANTORYX DESIGN SYSTEM v5.0
+       Token-based, glassmorphism, purple→blue gradient
+    ═══════════════════════════════════════════════ */
+    :root {
+      /* Core Palette */
+      --q-bg-base: #0a0b14;
+      --q-bg-surface: #0f1022;
+      --q-bg-card: rgba(255,255,255,0.04);
+      --q-bg-card-hover: rgba(255,255,255,0.07);
+      --q-bg-sidebar: #0c0d1f;
+      --q-bg-glass: rgba(13,14,32,0.85);
+
+      /* Gradient Brand */
+      --q-grad-primary: linear-gradient(135deg, #7c3aed 0%, #4f46e5 50%, #2563eb 100%);
+      --q-grad-accent: linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%);
+      --q-grad-success: linear-gradient(135deg, #059669 0%, #10b981 100%);
+      --q-grad-danger: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
+
+      /* Text */
+      --q-text-primary: #f0f1ff;
+      --q-text-secondary: #8b8fa8;
+      --q-text-tertiary: #5a5e7a;
+      --q-text-accent: #a78bfa;
+      --q-text-success: #10b981;
+      --q-text-danger: #f87171;
+      --q-text-warning: #fbbf24;
+
+      /* Borders */
+      --q-border: rgba(255,255,255,0.07);
+      --q-border-active: rgba(139,92,246,0.4);
+      --q-border-glass: rgba(255,255,255,0.1);
+
+      /* Purple Brand */
+      --q-purple-500: #8b5cf6;
+      --q-purple-600: #7c3aed;
+      --q-purple-400: #a78bfa;
+      --q-blue-500: #3b82f6;
+      --q-blue-600: #2563eb;
+      --q-indigo-500: #6366f1;
+
+      /* Shadows */
+      --q-shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+      --q-shadow-glow: 0 0 32px rgba(139,92,246,0.15);
+      --q-shadow-elevated: 0 8px 40px rgba(0,0,0,0.4);
+
+      /* Layout */
+      --q-sidebar-w: 220px;
+      --q-header-h: 56px;
+      --q-radius: 12px;
+      --q-radius-sm: 8px;
+      --q-radius-lg: 16px;
+    }
+
+    /* Light Mode */
+    .light-mode {
+      --q-bg-base: #f4f5fa;
+      --q-bg-surface: #ffffff;
+      --q-bg-card: rgba(255,255,255,0.9);
+      --q-bg-card-hover: rgba(255,255,255,1);
+      --q-bg-sidebar: #ffffff;
+      --q-bg-glass: rgba(255,255,255,0.9);
+      --q-text-primary: #0f1022;
+      --q-text-secondary: #4b5563;
+      --q-text-tertiary: #9ca3af;
+      --q-border: rgba(0,0,0,0.08);
+      --q-border-active: rgba(139,92,246,0.3);
+      --q-border-glass: rgba(0,0,0,0.1);
+      --q-shadow-card: 0 2px 16px rgba(0,0,0,0.08);
+      --q-shadow-glow: 0 0 24px rgba(139,92,246,0.1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body, #root {
+      height: 100%;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--q-bg-base);
+      color: var(--q-text-primary);
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.3); border-radius: 2px; }
+
+    /* ═══ LAYOUT ═══ */
+    .app-layout {
+      display: grid;
+      grid-template-columns: var(--q-sidebar-w) 1fr;
+      grid-template-rows: var(--q-header-h) 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ═══ HEADER ═══ */
+    .header {
+      grid-column: 1 / -1;
+      background: var(--q-bg-glass);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--q-border);
+      display: flex;
+      align-items: center;
+      padding: 0 20px;
+      gap: 16px;
+      position: relative;
+      z-index: 100;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: var(--q-sidebar-w);
+      padding-left: 4px;
+      flex-shrink: 0;
+    }
+
+    .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--q-grad-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 800;
+      color: white;
+      letter-spacing: -1px;
+    }
+
+    .logo-text { display: flex; flex-direction: column; line-height: 1; }
+    .logo-name { font-size: 15px; font-weight: 700; color: var(--q-text-primary); letter-spacing: 0.5px; }
+    .logo-tagline { font-size: 9px; color: var(--q-text-secondary); font-weight: 400; margin-top: 1px; }
+
+    .header-search {
+      flex: 1;
+      max-width: 480px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--q-bg-card);
+      border: 1px solid var(--q-border);
+      border-radius: var(--q-radius-sm);
+      padding: 0 14px;
+      height: 36px;
+      color: var(--q-text-secondary);
+      font-size: 13px;
+    }
+
+    .header-search input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--q-text-primary);
+      font-size: 13px;
+      flex: 1;
+      font-family: inherit;
+    }
+
+    .header-search input::placeholder { color: var(--q-text-tertiary); }
+
+    .kbd {
+      background: var(--q-bg-card);
+      border: 1px solid var(--q-border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 10px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--q-text-tertiary);
+    }
+
+    .header-spacer { flex: 1; }
+
+    .market-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .status-dot.open { background: #10b981; box-shadow: 0 0 6px #10b981; }
+    .status-dot.closed { background: #ef4444; }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: var(--q-radius-sm);
+      border: none;
+      background: var(--q-bg-card);
+      color: var(--q-text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      transition: all 0.15s ease;
+    }
+
+    .icon-btn:hover {
+      background: var(--q-bg-card-hover);
+      color: var(--q-text-primary);
+    }
+
+    .avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--q-grad-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      border: 2px solid var(--q-border-active);
+    }
+
+    /* ═══ SIDEBAR ═══ */
+    .sidebar {
+      background: var(--q-bg-sidebar);
+      border-right: 1px solid var(--q-border);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      padding: 12px 10px;
+      gap: 2px;
+    }
+
+    .nav-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--q-text-tertiary);
+      padding: 10px 10px 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: var(--q-radius-sm);
+      cursor: pointer;
+      color: var(--q-text-secondary);
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      position: relative;
+      text-decoration: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+    }
+
+    .nav-item:hover {
+      background: var(--q-bg-card);
+      color: var(--q-text-primary);
+    }
+
+    .nav-item.active {
+      background: rgba(139,92,246,0.12);
+      color: var(--q-purple-400);
+    }
+
+    .nav-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 20px;
+      background: var(--q-grad-accent);
+      border-radius: 0 2px 2px 0;
+    }
+
+    .nav-icon { font-size: 15px; width: 18px; text-align: center; flex-shrink: 0; }
+
+    .nav-badge {
+      margin-left: auto;
+      background: var(--q-grad-accent);
+      color: white;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 20px;
+    }
+
+    .nav-dot {
+      margin-left: auto;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+    }
+
+    .sidebar-ai-card {
+      margin: 12px 4px 4px;
+      padding: 16px;
+      background: var(--q-grad-primary);
+      border-radius: var(--q-radius);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-ai-card::before {
+      content: '';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      width: 80px;
+      height: 80px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+    }
+
+    .sidebar-ai-title { font-size: 13px; font-weight: 700; color: white; margin-bottom: 2px; }
+    .sidebar-ai-sub { font-size: 11px; color: rgba(255,255,255,0.7); margin-bottom: 12px; }
+
+    .sidebar-ai-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: background 0.15s;
+      width: 100%;
+    }
+
+    .sidebar-ai-btn:hover { background: rgba(255,255,255,0.3); }
+
+    .sidebar-footer {
+      margin-top: auto;
+      border-top: 1px solid var(--q-border);
+      padding-top: 8px;
+    }
+
+    /* ═══ MAIN CONTENT ═══ */
+    .main-content {
+      overflow-y: auto;
+      background: var(--q-bg-base);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* ═══ PAGE HEADER ═══ */
+    .page-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .page-title { font-size: 20px; font-weight: 700; color: var(--q-text-primary); }
+    .page-sub { font-size: 13px; color: var(--q-text-secondary); margin-top: 2px; }
+
+    .page-actions { display: flex; gap: 8px; align-items: center; }
+
+    /* ═══ CARDS ═══ */
+    .card {
+      background: var(--q-bg-card);
+      border: 1px solid var(--q-border);
+      border-radius: var(--q-radius);
+      padding: 16px;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--q-border-glass);
+      box-shadow: var(--q-shadow-card);
+    }
+
+    /* ═══ STAT CARDS ROW ═══ */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+    }
+
+    .stat-card {
+      background: var(--q-bg-card);
+      border: 1px solid var(--q-border);
+      border-radius: var(--q-radius);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .stat-card:hover { border-color: var(--q-border-active); box-shadow: var(--q-shadow-glow); }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-card.grad-purple::before { background: var(--q-grad-accent); }
+    .stat-card.grad-blue::before { background: linear-gradient(90deg, #3b82f6, #06b6d4); }
+    .stat-card.grad-green::before { background: var(--q-grad-success); }
+    .stat-card.grad-red::before { background: var(--q-grad-danger); }
+    .stat-card.grad-orange::before { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+    .stat-card.grad-cyan::before { background: linear-gradient(90deg, #06b6d4, #3b82f6); }
+
+    .stat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+
+    .stat-label { font-size: 11px; font-weight: 500; color: var(--q-text-secondary); text-transform: uppercase; letter-spacing: 0.4px; }
+
+    .stat-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+    }
+
+    .stat-icon.purple { background: rgba(139,92,246,0.15); color: var(--q-purple-400); }
+    .stat-icon.blue { background: rgba(59,130,246,0.15); color: #60a5fa; }
+    .stat-icon.green { background: rgba(16,185,129,0.15); color: #34d399; }
+    .stat-icon.red { background: rgba(239,68,68,0.15); color: #fca5a5; }
+    .stat-icon.orange { background: rgba(245,158,11,0.15); color: #fcd34d; }
+    .stat-icon.cyan { background: rgba(6,182,212,0.15); color: #67e8f9; }
+
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.5px;
+      margin-bottom: 4px;
+    }
+
+    .stat-change {
+      font-size: 11px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .stat-change.up { color: var(--q-text-success); }
+    .stat-change.down { color: var(--q-text-danger); }
+    .stat-change.neutral { color: var(--q-text-secondary); }
+
+    .sparkline { margin-top: 8px; opacity: 0.8; }
+
+    /* ═══ CHARTS GRID ═══ */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px 260px;
+      gap: 14px;
+    }
+
+    /* ═══ AI INSIGHT CARD ═══ */
+    .ai-insight-card {
+      background: linear-gradient(135deg, rgba(17,17,40,0.95) 0%, rgba(26,17,60,0.95) 100%);
+      border: 1px solid rgba(139,92,246,0.25);
+      border-radius: var(--q-radius);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ai-insight-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 140px; height: 140px;
+      background: radial-gradient(circle, rgba(139,92,246,0.12) 0%, transparent 70%);
+    }
+
+    .ai-header { display: flex; align-items: center; justify-content: space-between; }
+    .ai-header-title { display: flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; color: var(--q-text-secondary); }
+    .ai-badge { background: var(--q-grad-accent); color: white; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 20px; }
+
+    .ai-signal {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .ai-signal.bullish { color: #10b981; }
+    .ai-signal.bearish { color: #ef4444; }
+    .ai-signal.neutral { color: #f59e0b; }
+
+    .ai-confidence { font-size: 13px; font-weight: 500; color: var(--q-text-secondary); margin-top: -4px; }
+    .ai-confidence span { color: var(--q-purple-400); font-weight: 700; }
+
+    .confidence-bar {
+      height: 4px;
+      background: var(--q-border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .confidence-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: var(--q-grad-accent);
+      transition: width 1s ease;
+    }
+
+    .ai-factors { display: flex; flex-direction: column; gap: 4px; }
+    .ai-factor { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--q-text-secondary); }
+    .ai-factor-dot { width: 5px; height: 5px; border-radius: 50%; background: #10b981; flex-shrink: 0; }
+
+    .ai-actions { display: flex; gap: 8px; margin-top: 4px; }
+
+    /* ═══ MARKET REGIME ═══ */
+    .regime-card {
+      background: var(--q-bg-card);
+      border: 1px solid var(--q-border);
+      border-radius: var(--q-radius);
+      padding: 16px;
+    }
+
+    .regime-donut { display: flex; align-items: center; justify-content: center; margin: 8px 0; position: relative; }
+
+    .regime-center {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .regime-name { font-size: 13px; font-weight: 700; }
+    .regime-pct { font-size: 11px; color: var(--q-text-secondary); }
+
+    .regime-legend { display: flex; flex-direction: column; gap: 5px; }
+    .regime-item { display: flex; align-items: center; justify-content: space-between; font-size: 11px; }
+    .regime-item-label { display: flex; align-items: center; gap: 6px; color: var(--q-text-secondary); }
+    .regime-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .regime-item-pct { font-weight: 600; color: var(--q-text-primary); }
+
+    /* ═══ OPTIMIZE CARD ═══ */
+    .optimize-card {
+      background: var(--q-bg-card);
+      border: 1px solid var(--q-border);
+      border-radius: var(--q-radius);
+      padding: 16px;
+    }
+
+    .optimize-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 12px; }
+
+    .form-group { display: flex; flex-direction: column; gap: 4px; }
+    .form-label { font-size: 10px; font-weight: 500; color: var(--q-text-secondary); text-transform: uppercase; letter-spacing: 0.4px; }
+
+    .form-select, .form-input {
+      background: var(--q-bg-base);
+      border: 1px solid var(--q-border);
+      border-radius: 6px;
+      padding: 7px 10px;
+      color: var(--q-text-primary);
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s;
+      cursor: pointer;
+    }
+
+    .form-select:focus, .form-input:focus { border-color: var(--q-purple-500); }
+
+    .slider-group { grid-column: 1 / -1; }
+
+    .slider {
+      width: 100%;
+      margin-top: 6px;
+      height: 4px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: var(--q-border);
+      border-radius: 2px;
+      outline: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--q-purple-500);
+      cursor: pointer;
+      border: 2px solid white;
+      box-shadow: 0 0 6px rgba(139,92,246,0.5);
+    }
+
+    .slider-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: var(--q-text-secondary); }
+
+    /* ═══ PORTFOLIO CARD ═══ */
+    .portfolio-card { grid-column: 1 / -1; }
+    .portfolio-grid { display: grid; grid-template-columns: 1fr 240px; gap: 16px; }
+
+    .portfolio-overview { display: flex; flex-direction: column; gap: 16px; }
+
+    .portfolio-meta {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      padding: 12px 0;
+      border-top: 1px solid var(--q-border);
+      border-bottom: 1px solid var(--q-border);
+    }
+
+    .meta-item {}
+    .meta-label { font-size: 10px; color: var(--q-text-tertiary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 2px; }
+    .meta-value { font-size: 18px; font-weight: 700; }
+    .meta-value.positive { color: var(--q-text-success); }
+    .meta-value.negative { color: var(--q-text-danger); }
+    .meta-value.normal { color: var(--q-text-primary); }
+
+    /* ═══ HOLDINGS & TRADES ═══ */
+    .holdings-section {}
+    .section-title { font-size: 12px; font-weight: 600; color: var(--q-text-secondary); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 10px; }
+
+    .allocation-chart { display: flex; flex-direction: column; gap: 4px; }
+
+    .alloc-item { display: flex; align-items: center; gap: 8px; font-size: 12px; }
+    .alloc-bar-wrap { flex: 1; height: 4px; background: var(--q-border); border-radius: 2px; overflow: hidden; }
+    .alloc-bar { height: 100%; border-radius: 2px; }
+    .alloc-name { width: 60px; color: var(--q-text-secondary); }
+    .alloc-pct { width: 32px; text-align: right; color: var(--q-text-primary); font-weight: 600; }
+
+    .trades-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+    .trades-table th { text-align: left; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.4px; color: var(--q-text-tertiary); padding: 6px 8px; border-bottom: 1px solid var(--q-border); }
+    .trades-table td { padding: 8px 8px; border-bottom: 1px solid var(--q-border); color: var(--q-text-secondary); }
+    .trades-table tbody tr:hover td { background: var(--q-bg-card-hover); color: var(--q-text-primary); }
+    .trades-table td:first-child { color: var(--q-text-primary); font-weight: 500; }
+
+    .pair-badge {
+      display: inline-block;
+      background: rgba(139,92,246,0.12);
+      color: var(--q-purple-400);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .change-positive { color: var(--q-text-success); }
+    .change-negative { color: var(--q-text-danger); }
+
+    /* ═══ SYSTEM STATUS ═══ */
+    .system-status-card { }
+
+    .status-grid { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+    .status-row { display: flex; align-items: center; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid var(--q-border); }
+    .status-row:last-child { border-bottom: none; }
+    .status-row-label { font-size: 12px; color: var(--q-text-secondary); }
+    .status-pill { font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+    .status-pill.ok { background: rgba(16,185,129,0.15); color: #34d399; }
+    .status-pill.warn { background: rgba(245,158,11,0.15); color: #fcd34d; }
+    .status-pill.error { background: rgba(239,68,68,0.15); color: #fca5a5; }
+
+    /* ═══ BOTTOM ROW ═══ */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 300px;
+      gap: 14px;
+    }
+
+    /* ═══ BUTTONS ═══ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border-radius: 7px;
+      border: none;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: var(--q-grad-primary);
+      color: white;
+      box-shadow: 0 2px 12px rgba(139,92,246,0.3);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 4px 20px rgba(139,92,246,0.5);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: var(--q-bg-card);
+      border: 1px solid var(--q-border);
+      color: var(--q-text-secondary);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--q-border-glass);
+      color: var(--q-text-primary);
+    }
+
+    .btn-sm { padding: 5px 10px; font-size: 11px; }
+    .btn-full { width: 100%; justify-content: center; }
+
+    /* ═══ CARD HEADERS ═══ */
+    .card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .card-title { font-size: 13px; font-weight: 600; color: var(--q-text-primary); display: flex; align-items: center; gap: 6px; }
+    .card-title-icon { font-size: 14px; }
+    .card-actions { display: flex; gap: 6px; align-items: center; }
+
+    .tab-group { display: flex; gap: 2px; background: var(--q-bg-base); border-radius: 6px; padding: 2px; }
+    .tab-btn { padding: 4px 10px; border-radius: 5px; border: none; background: none; color: var(--q-text-tertiary); font-size: 11px; font-weight: 500; cursor: pointer; font-family: inherit; transition: all 0.15s; }
+    .tab-btn.active { background: var(--q-bg-card); color: var(--q-text-primary); box-shadow: 0 1px 4px rgba(0,0,0,0.2); }
+
+    .select-sm {
+      background: var(--q-bg-base);
+      border: 1px solid var(--q-border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      color: var(--q-text-secondary);
+      font-size: 11px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+
+    /* ═══ RISK WARNING ═══ */
+    .risk-warning {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: var(--q-radius-sm);
+      padding: 8px 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--q-text-warning);
+      margin-top: 8px;
+    }
+
+    .risk-warning-icon { font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ═══ STRATEGY LIST ═══ */
+    .strategy-list { display: flex; flex-direction: column; gap: 5px; margin-top: 8px; }
+    .strategy-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 10px; background: var(--q-bg-base); border-radius: 7px; border: 1px solid var(--q-border); font-size: 12px; transition: border-color 0.15s; }
+    .strategy-row:hover { border-color: var(--q-border-glass); }
+    .strategy-name { font-weight: 500; color: var(--q-text-primary); }
+    .strategy-meta { font-size: 11px; color: var(--q-text-tertiary); font-family: 'JetBrains Mono', monospace; }
+    .strategy-metrics { display: flex; gap: 10px; font-size: 11px; }
+
+    /* ═══ LOADING ═══ */
+    .skeleton {
+      background: linear-gradient(90deg, var(--q-bg-card) 25%, var(--q-bg-card-hover) 50%, var(--q-bg-card) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.5s infinite;
+      border-radius: 4px;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
+
+    /* ═══ MOBILE ═══ */
+    @media (max-width: 1100px) {
+      .stats-grid { grid-template-columns: repeat(3, 1fr); }
+      .charts-grid { grid-template-columns: 1fr 280px; }
+      .bottom-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      :root { --q-sidebar-w: 0px; }
+      .app-layout { grid-template-columns: 1fr; grid-template-rows: var(--q-header-h) 1fr; }
+      .sidebar { display: none; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .charts-grid { grid-template-columns: 1fr; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-meta { grid-template-columns: repeat(2, 1fr); }
+      .bottom-grid { grid-template-columns: 1fr; }
+      .header-search { display: none; }
+    }
+
+    /* ═══ TRANSITIONS ═══ */
+    .fade-in { animation: fadeIn 0.3s ease forwards; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══ TOOLTIP ═══ */
+    .recharts-tooltip-wrapper .recharts-default-tooltip {
+      background: var(--q-bg-glass) !important;
+      border: 1px solid var(--q-border) !important;
+      border-radius: 8px !important;
+      font-size: 12px !important;
+      backdrop-filter: blur(12px) !important;
+    }
+
+    .recharts-cartesian-axis-tick-value { fill: var(--q-text-tertiary) !important; font-size: 10px !important; }
+
+    /* Optimization chart 3D surface placeholder */
+    .surface-chart {
+      width: 100%;
+      height: 140px;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #1a0a3f 0%, #0f1a4f 100%);
+    }
+
+    .surface-grid { position: absolute; inset: 0; opacity: 0.3; }
+
+    /* ═══ MOBILE NAV BAR ═══ */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--q-bg-glass);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--q-border);
+      padding: 8px 0 12px;
+      z-index: 200;
+    }
+
+    .mobile-nav-items { display: flex; justify-content: space-around; align-items: center; }
+    .mobile-nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; font-size: 9px; color: var(--q-text-tertiary); cursor: pointer; padding: 4px 12px; border-radius: 8px; }
+    .mobile-nav-item.active { color: var(--q-purple-400); }
+    .mobile-nav-item-icon { font-size: 18px; }
+
+    @media (max-width: 768px) {
+      .mobile-nav { display: block; }
+      .main-content { padding-bottom: 80px; }
+    }
+
+    /* ═══ PROGRESS RING ═══ */
+    .progress-ring-text { font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useCallback, useRef } = React;
+const {
+  LineChart, Line, AreaChart, Area, BarChart, Bar,
+  XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell, RadarChart, Radar, PolarGrid, PolarAngleAxis
+} = Recharts;
+
+// ═══════════════════════════════════════════════
+// MOCK DATA — replace with API calls in production
+// ═══════════════════════════════════════════════
+const MOCK_EQUITY_DATA = Array.from({length: 26}, (_, i) => {
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul'];
+  const base = 100000;
+  const growth = 1 + (i * 0.00965);
+  const noise = Math.sin(i * 0.8) * 2000 + Math.cos(i * 1.3) * 1500;
+  return {
+    label: months[Math.floor(i / 4)] || months[months.length-1],
+    equity: +(base * growth + noise).toFixed(0),
+    benchmark: +(base * (1 + i * 0.0048) + noise * 0.5).toFixed(0),
+  };
+});
+
+const MOCK_STATS = {
+  totalStrategies: 28,
+  totalBacktests: 156,
+  totalReturn: 24.67,
+  maxDrawdown: -8.34,
+  sharpeRatio: 1.67,
+  winRate: 62.4,
+  cagr: 24.67,
+  sortinoRatio: 2.45,
+};
+
+const MOCK_PORTFOLIO = {
+  totalEquity: 126430.50,
+  dayChange: +1234.50,
+  dayChangePct: +1.086,
+  cashBalance: 8430.50,
+};
+
+const MOCK_HOLDINGS = [
+  { name: 'Equities', pct: 45, color: '#7c3aed' },
+  { name: 'Forex', pct: 25, color: '#3b82f6' },
+  { name: 'Crypto', pct: 15, color: '#10b981' },
+  { name: 'Commodities', pct: 10, color: '#f59e0b' },
+  { name: 'Cash', pct: 5, color: '#6b7280' },
+];
+
+const MOCK_TRADES = [
+  { pair: 'AAPL', type: 'Equity', value: '$8,850.00', change: '+1.43%', direction: 'up', time: 'May 20, 2024' },
+  { pair: 'EUR/USD', type: 'Forex', value: '$7,230.00', change: '-0.38%', direction: 'down', time: 'May 20, 2024' },
+  { pair: 'BTC/USD', type: 'Crypto', value: '$38,780.00', change: '+9.31%', direction: 'up', time: 'May 20, 2024' },
+];
+
+const MOCK_STRATEGIES = [
+  { name: 'Momentum Breakout', date: 'May 18, 2024', sharpe: '+12.34%', status: 'up' },
+  { name: 'Mean Reversion Pro', date: 'May 17, 2024', sharpe: '+8.21%', status: 'up' },
+  { name: 'ML Trend Following', date: 'May 17, 2024', sharpe: '-1.45%', status: 'down' },
+  { name: 'RSI Divergence', date: 'May 16, 2024', sharpe: '-5.78%', status: 'down' },
+  { name: 'Ichimoku Cloud', date: 'May 15, 2024', sharpe: '+9.31%', status: 'up' },
+];
+
+const REGIME_DATA = [
+  { name: 'Bull', value: 72, color: '#10b981' },
+  { name: 'Neutral', value: 18, color: '#6366f1' },
+  { name: 'Bear', value: 10, color: '#ef4444' },
+];
+
+const SPARKLINE_UP = [3,5,4,7,6,9,8,11,10,13];
+const SPARKLINE_DOWN = [13,11,10,8,9,7,6,5,4,6];
+
+// ═══════════════════════════════════════════════
+// ICONS
+// ═══════════════════════════════════════════════
+const Icon = ({ name }) => {
+  const icons = {
+    dashboard: '⬛', strategies: '📋', backtest: '▶️', optimize: '⚙️',
+    ai: '🤖', portfolio: '💼', reports: '📊', regime: '📡', settings: '⚙️',
+    help: '❓', logout: '🚪', search: '🔍', bell: '🔔', gear: '⚙️',
+    strategies_icon: '📈', chart: '📈', brain: '🧠', up: '▲', down: '▼',
+    warning: '⚠️', check: '✅', arrow_up: '↑', arrow_down: '↓',
+    star: '★', fire: '🔥', bolt: '⚡', eye: '👁', refresh: '↻', plus: '+'
+  };
+  return icons[name] || '·';
+};
+
+// ═══════════════════════════════════════════════
+// MINI SPARKLINE
+// ═══════════════════════════════════════════════
+const Sparkline = ({ data, color = '#8b5cf6', height = 32 }) => (
+  <div className="sparkline">
+    <ResponsiveContainer width="100%" height={height}>
+      <LineChart data={data.map((v, i) => ({ v, i }))}>
+        <Line type="monotone" dataKey="v" stroke={color} strokeWidth={1.5} dot={false} />
+      </LineChart>
+    </ResponsiveContainer>
+  </div>
+);
+
+// ═══════════════════════════════════════════════
+// STAT CARD
+// ═══════════════════════════════════════════════
+const StatCard = ({ label, value, change, icon, iconColor, gradient, sparkData, sparkColor, format = 'plain' }) => {
+  const isUp = change > 0;
+  const changeClass = change > 0 ? 'up' : change < 0 ? 'down' : 'neutral';
+
+  const formatVal = (v) => {
+    if (format === 'pct') return `${v > 0 ? '+' : ''}${v}%`;
+    if (format === 'neg-pct') return `${v}%`;
+    return v;
+  };
+
+  return (
+    <div className={`stat-card ${gradient}`}>
+      <div className="stat-header">
+        <span className="stat-label">{label}</span>
+        <div className={`stat-icon ${iconColor}`}>{icon}</div>
+      </div>
+      <div className="stat-value" style={{ color: format === 'neg-pct' && value < 0 ? 'var(--q-text-danger)' : format === 'pct' ? 'var(--q-text-success)' : 'var(--q-text-primary)' }}>
+        {formatVal(value)}
+      </div>
+      <div className={`stat-change ${changeClass}`}>
+        {change !== 0 && <span>{isUp ? '▲' : '▼'}</span>}
+        <span>{Math.abs(change)}% vs last month</span>
+      </div>
+      {sparkData && <Sparkline data={sparkData} color={sparkColor} />}
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// CUSTOM CHART TOOLTIP
+// ═══════════════════════════════════════════════
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div style={{
+      background: 'rgba(13,14,32,0.95)',
+      border: '1px solid rgba(255,255,255,0.1)',
+      borderRadius: '8px',
+      padding: '8px 12px',
+      fontSize: '12px'
+    }}>
+      <div style={{ color: 'var(--q-text-secondary)', marginBottom: 4 }}>{label}</div>
+      {payload.map((p, i) => (
+        <div key={i} style={{ color: p.color, fontWeight: 600 }}>
+          {p.name}: ${(p.value/1000).toFixed(1)}K
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// PERFORMANCE CHART
+// ═══════════════════════════════════════════════
+const PerformanceChart = ({ timeframe, onTimeframeChange }) => {
+  const gradientId = 'equityGrad';
+  return (
+    <div className="card" style={{ height: '100%' }}>
+      <div className="card-header">
+        <div className="card-title">
+          <span className="card-title-icon">📈</span>
+          Performance Overview
+        </div>
+        <div className="card-actions">
+          <select className="select-sm" value={timeframe} onChange={e => onTimeframeChange(e.target.value)}>
+            <option>Equity Curve</option>
+            <option>Drawdown</option>
+            <option>Returns</option>
+          </select>
+          <div className="tab-group">
+            {['1M','3M','6M','1Y','ALL'].map(t => (
+              <button key={t} className={`tab-btn ${t === '1Y' ? 'active' : ''}`}>{t}</button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', gap: 16, marginBottom: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11 }}>
+          <div style={{ width: 20, height: 2, background: 'var(--q-purple-400)' }} />
+          <span style={{ color: 'var(--q-text-secondary)' }}>Quantoryx Strategy</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 11 }}>
+          <div style={{ width: 20, height: 2, background: '#6b7280', borderTop: '2px dashed #6b7280', borderBottom: 'none' }} />
+          <span style={{ color: 'var(--q-text-secondary)' }}>Buy & Hold (SPY)</span>
+        </div>
+      </div>
+
+      <div style={{ marginBottom: 8, fontSize: 11, color: 'var(--q-text-tertiary)' }}>140%</div>
+      <ResponsiveContainer width="100%" height={160}>
+        <AreaChart data={MOCK_EQUITY_DATA} margin={{ top: 4, right: 4, bottom: 0, left: -20 }}>
+          <defs>
+            <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#8b5cf6" stopOpacity={0.25} />
+              <stop offset="95%" stopColor="#8b5cf6" stopOpacity={0} />
+            </linearGradient>
+            <linearGradient id="benchGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="5%" stopColor="#6b7280" stopOpacity={0.1} />
+              <stop offset="95%" stopColor="#6b7280" stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+          <XAxis dataKey="label" tick={{ fill: 'var(--q-text-tertiary)', fontSize: 10 }} axisLine={false} tickLine={false} interval={3} />
+          <YAxis hide />
+          <Tooltip content={<CustomTooltip />} />
+          <Area type="monotone" dataKey="benchmark" stroke="#6b7280" strokeWidth={1.5} strokeDasharray="4 3" fill="url(#benchGrad)" dot={false} name="Buy & Hold" />
+          <Area type="monotone" dataKey="equity" stroke="#a78bfa" strokeWidth={2} fill={`url(#${gradientId})`} dot={false} name="Quantoryx" />
+        </AreaChart>
+      </ResponsiveContainer>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 8, marginTop: 12 }}>
+        {[
+          { label: 'CAGR', value: '24.67%', color: 'positive' },
+          { label: 'Max DD', value: '-8.34%', color: 'negative' },
+          { label: 'Sharpe', value: '1.67', color: 'normal' },
+          { label: 'Sortino', value: '2.45', color: 'normal' },
+          { label: 'Win Rate', value: '62.4%', color: 'positive' },
+        ].map(m => (
+          <div key={m.label}>
+            <div style={{ fontSize: 10, color: 'var(--q-text-tertiary)', marginBottom: 2 }}>{m.label}</div>
+            <div className={`meta-value ${m.color}`} style={{ fontSize: 14 }}>{m.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// AI INSIGHT CARD
+// ═══════════════════════════════════════════════
+const AIInsightCard = () => (
+  <div className="ai-insight-card">
+    <div className="ai-header">
+      <div className="ai-header-title">
+        <span>🤖</span> AI Market Insight
+      </div>
+      <div className="ai-badge">Quantoryx AI</div>
+    </div>
+
+    <div>
+      <div className="ai-signal bullish">Bullish</div>
+      <div className="ai-confidence">Confidence: <span>72%</span></div>
+    </div>
+
+    <div className="confidence-bar">
+      <div className="confidence-fill" style={{ width: '72%' }} />
+    </div>
+
+    <div style={{ fontSize: 12, color: 'var(--q-text-secondary)', fontStyle: 'italic' }}>
+      Market shows bullish momentum with strong volume confirmation across major indices.
+    </div>
+
+    <div className="ai-factors">
+      <div className="section-title" style={{ marginBottom: 4 }}>Key Factors:</div>
+      {['Increasing Volume','Bullish Momentum','Positive News Sentiment','Strong Market Breadth'].map(f => (
+        <div key={f} className="ai-factor">
+          <div className="ai-factor-dot" />
+          <span>{f}</span>
+        </div>
+      ))}
+    </div>
+
+    <div className="ai-actions">
+      <button className="btn btn-primary btn-sm">
+        🤖 Run AI Analysis
+      </button>
+      <button className="btn btn-ghost btn-sm">View Report</button>
+    </div>
+  </div>
+);
+
+// ═══════════════════════════════════════════════
+// MARKET REGIME CARD
+// ═══════════════════════════════════════════════
+const MarketRegimeCard = () => (
+  <div className="card regime-card">
+    <div className="card-header">
+      <div className="card-title">
+        <span>📡</span> Market Regime
+      </div>
+    </div>
+    <div className="regime-donut">
+      <ResponsiveContainer width={130} height={130}>
+        <PieChart>
+          <Pie
+            data={REGIME_DATA}
+            cx="50%" cy="50%"
+            innerRadius={38} outerRadius={55}
+            startAngle={90} endAngle={-270}
+            dataKey="value"
+            strokeWidth={0}
+          >
+            {REGIME_DATA.map((e, i) => <Cell key={i} fill={e.color} />)}
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+      <div className="regime-center">
+        <div className="regime-name" style={{ color: '#10b981' }}>Bull Market</div>
+        <div className="regime-pct">72%</div>
+      </div>
+    </div>
+    <div className="regime-legend">
+      {REGIME_DATA.map(r => (
+        <div key={r.name} className="regime-item">
+          <div className="regime-item-label">
+            <div className="regime-dot" style={{ background: r.color }} />
+            {r.name}
+          </div>
+          <div className="regime-item-pct">{r.value}%</div>
+        </div>
+      ))}
+    </div>
+  </div>
+);
+
+// ═══════════════════════════════════════════════
+// OPTIMIZE STRATEGY CARD
+// ═══════════════════════════════════════════════
+const OptimizeCard = () => {
+  const [params, setParams] = useState({ lookback: 45, breakout: 2.3, stopLoss: 5, takeLoss: 10, sharpe: 0.5 });
+  return (
+    <div className="card">
+      <div className="card-header">
+        <div>
+          <div className="card-title">⚙️ Optimize Strategy</div>
+          <div style={{ fontSize: 11, color: 'var(--q-text-tertiary)', marginTop: 2 }}>Find the best parameters for your strategy</div>
+        </div>
+      </div>
+
+      <div className="optimize-grid">
+        <div className="form-group">
+          <label className="form-label">Strategy</label>
+          <select className="form-select">
+            <option>Momentum Breakout</option>
+            <option>EMA Crossover</option>
+            <option>RSI Strategy</option>
+            <option>MACD</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Optimization Type</label>
+          <select className="form-select">
+            <option>Grid Search</option>
+            <option>Walk-Forward</option>
+            <option>Bayesian</option>
+          </select>
+        </div>
+        <div className="form-group">
+          <label className="form-label">Metric</label>
+          <select className="form-select">
+            <option>Sharpe Ratio</option>
+            <option>Net Profit</option>
+            <option>Win Rate</option>
+          </select>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'flex-end' }}>
+          <button className="btn btn-primary btn-full">⚡ Start Optimization</button>
+        </div>
+      </div>
+
+      <div style={{ marginTop: 12 }}>
+        <div className="section-title">Parameter Ranges</div>
+        {[
+          { label: 'Lookback Period', key: 'lookback', min: 5, max: 100, step: 1 },
+          { label: 'Breakout Threshold', key: 'breakout', min: 0.5, max: 5, step: 0.1 },
+          { label: 'Stop Loss (%)', key: 'stopLoss', min: 1, max: 10, step: 0.5 },
+          { label: 'Take Profit (%)', key: 'takeLoss', min: 1, max: 20, step: 0.5 },
+          { label: 'Sharpe Ratio', key: 'sharpe', min: 0, max: 3, step: 0.1 },
+        ].map(s => (
+          <div key={s.key} style={{ marginBottom: 6 }}>
+            <div className="slider-row" style={{ marginBottom: 2 }}>
+              <span style={{ fontSize: 11, color: 'var(--q-text-secondary)' }}>{s.label}</span>
+              <span style={{ fontSize: 11, color: 'var(--q-text-primary)', fontFamily: 'JetBrains Mono, monospace' }}>{params[s.key]}</span>
+            </div>
+            <input type="range" className="slider"
+              min={s.min} max={s.max} step={s.step}
+              value={params[s.key]}
+              onChange={e => setParams(p => ({ ...p, [s.key]: +e.target.value }))}
+            />
+          </div>
+        ))}
+      </div>
+
+      <div style={{ marginTop: 12 }}>
+        <div className="section-title">Optimization Results</div>
+        <div style={{
+          background: 'linear-gradient(135deg, #1a0a3f 0%, #0f1a4f 100%)',
+          borderRadius: 8, padding: '8px', marginTop: 6,
+          display: 'flex', flexDirection: 'column', gap: 4
+        }}>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.5)', textAlign: 'right' }}>Sharpe: 1.87</div>
+          <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.4)', textAlign: 'right' }}>LP: 45, BT: 2.3</div>
+          <svg viewBox="0 0 200 80" style={{ width: '100%', height: 80 }}>
+            {/* 3D surface visualization */}
+            {Array.from({length: 8}, (_, r) =>
+              Array.from({length: 10}, (_, c) => {
+                const x = c * 20 + r * 5;
+                const y = 20 + r * 8 - Math.sin((r+c)*0.5) * 18;
+                const x2 = (c+1) * 20 + r * 5;
+                const y2 = 20 + r * 8 - Math.sin((r+c+1)*0.5) * 18;
+                const intensity = Math.sin((r+c)*0.5) * 0.5 + 0.5;
+                const color = `hsl(${260 + intensity*80}, 80%, ${25 + intensity*35}%)`;
+                return (
+                  <line key={`${r}-${c}`}
+                    x1={x} y1={y} x2={x2} y2={y2}
+                    stroke={color} strokeWidth="1.5" opacity="0.7"
+                  />
+                );
+              })
+            )}
+          </svg>
+          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 9, color: 'rgba(255,255,255,0.4)' }}>
+            <span>Lookback Period</span>
+            <span>Breakout Threshold</span>
+          </div>
+        </div>
+        <div style={{ marginTop: 8 }}>
+          <div className="section-title" style={{ marginBottom: 5 }}>Best Parameters</div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 6 }}>
+            {[['LP','45'],['BT','2.3'],['SL','3.0'],['TP','6.0'],['SR','1.87']].map(([k,v]) => (
+              <div key={k} style={{ textAlign: 'center', background: 'var(--q-bg-base)', borderRadius: 6, padding: '5px 4px' }}>
+                <div style={{ fontSize: 9, color: 'var(--q-text-tertiary)', marginBottom: 2 }}>{k}</div>
+                <div style={{ fontSize: 13, fontWeight: 700, fontFamily: 'JetBrains Mono, monospace' }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// PORTFOLIO CARD
+// ═══════════════════════════════════════════════
+const PortfolioCard = () => (
+  <div className="card">
+    <div className="card-header">
+      <div className="card-title">💼 Portfolio Overview</div>
+      <button className="btn btn-ghost btn-sm">View Details</button>
+    </div>
+    <div className="portfolio-grid">
+      <div className="portfolio-overview">
+        <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+          <div>
+            <div style={{ fontSize: 11, color: 'var(--q-text-tertiary)', marginBottom: 2 }}>Total Equity</div>
+            <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: -0.5 }}>$126,430.50</div>
+            <div style={{ fontSize: 12, color: 'var(--q-text-success)', marginTop: 2 }}>▲ +$1,234.50 (+1.086%)</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: 11, color: 'var(--q-text-tertiary)', marginBottom: 2 }}>Day Change</div>
+            <div style={{ fontSize: 18, fontWeight: 700, color: 'var(--q-text-success)' }}>+$1,234.50</div>
+            <div style={{ fontSize: 11, color: 'var(--q-text-success)' }}>▲ 1.086%</div>
+          </div>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{ fontSize: 11, color: 'var(--q-text-tertiary)', marginBottom: 2 }}>Cash Balance</div>
+            <div style={{ fontSize: 18, fontWeight: 700 }}>$8,430.50</div>
+            <div style={{ fontSize: 11, color: 'var(--q-text-tertiary)' }}>▲ 0.86%</div>
+          </div>
+        </div>
+
+        <div className="portfolio-meta">
+          {[
+            { label: 'Total Equity', value: '$126,430', cls: 'normal' },
+            { label: 'Day P/L', value: '+$1,234', cls: 'positive' },
+            { label: 'Cash', value: '$8,430', cls: 'normal' },
+            { label: 'Open P/L', value: '+$892', cls: 'positive' },
+          ].map(m => (
+            <div key={m.label} className="meta-item">
+              <div className="meta-label">{m.label}</div>
+              <div className={`meta-value ${m.cls}`} style={{ fontSize: 14 }}>{m.value}</div>
+            </div>
+          ))}
+        </div>
+
+        <div>
+          <div className="section-title">Allocation</div>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            <ResponsiveContainer width={100} height={100}>
+              <PieChart>
+                <Pie data={MOCK_HOLDINGS} cx="50%" cy="50%" outerRadius={45} dataKey="pct" strokeWidth={0}>
+                  {MOCK_HOLDINGS.map((h, i) => <Cell key={i} fill={h.color} />)}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
+            <div style={{ flex: 1 }}>
+              {MOCK_HOLDINGS.map(h => (
+                <div key={h.name} className="alloc-item">
+                  <div className="alloc-name">{h.name}</div>
+                  <div className="alloc-bar-wrap">
+                    <div className="alloc-bar" style={{ width: `${h.pct}%`, background: h.color }} />
+                  </div>
+                  <div className="alloc-pct">{h.pct}%</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div className="section-title">Top Holdings</div>
+        <table className="trades-table">
+          <thead>
+            <tr><th>Asset</th><th>Type</th><th>Value</th><th>Change</th></tr>
+          </thead>
+          <tbody>
+            {MOCK_TRADES.map(t => (
+              <tr key={t.pair}>
+                <td><span className="pair-badge">{t.pair}</span></td>
+                <td>{t.type}</td>
+                <td>{t.value}</td>
+                <td className={t.direction === 'up' ? 'change-positive' : 'change-negative'}>
+                  {t.direction === 'up' ? '▲' : '▼'} {t.change}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+);
+
+// ═══════════════════════════════════════════════
+// SYSTEM STATUS
+// ═══════════════════════════════════════════════
+const SystemStatusCard = () => {
+  const systems = [
+    { name: 'Momentum Breakout', date: 'May 18, 2024', change: '+12.34%', status: 'up' },
+    { name: 'Mean Reversion Pro', date: 'May 17, 2024', change: '+8.21%', status: 'up' },
+    { name: 'ML Trend Following', date: 'May 17, 2024', change: '-1.45%', status: 'down' },
+    { name: 'RSI Divergence', date: 'May 16, 2024', change: '-5.78%', status: 'down' },
+    { name: 'Ichimoku Cloud', date: 'May 15, 2024', change: '+9.31%', status: 'up' },
+  ];
+  return (
+    <div className="card">
+      <div className="card-header">
+        <div className="card-title">
+          <span style={{ color: '#10b981', fontSize: 10 }}>●</span> System Status
+          <span style={{ fontSize: 10, color: '#10b981', fontWeight: 400 }}>All Systems Operational</span>
+        </div>
+      </div>
+      <div className="strategy-list">
+        {systems.map(s => (
+          <div key={s.name} className="strategy-row">
+            <div>
+              <div className="strategy-name">{s.name}</div>
+              <div className="strategy-meta">{s.date}</div>
+            </div>
+            <div className={s.status === 'up' ? 'change-positive' : 'change-negative'} style={{ fontWeight: 700, fontSize: 12 }}>
+              {s.status === 'up' ? '▲' : '▼'} {s.change}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="risk-warning">
+        <span className="risk-warning-icon">⚠️</span>
+        <div>
+          <div style={{ fontWeight: 600, marginBottom: 2 }}>Risk Warning</div>
+          <div>Market volatility is elevated. Use proper position sizing and risk management.</div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// SIDEBAR
+// ═══════════════════════════════════════════════
+const Sidebar = ({ activePage, onPageChange }) => {
+  const navItems = [
+    { id: 'dashboard', icon: '⬛', label: 'Dashboard' },
+    { id: 'strategies', icon: '📋', label: 'Strategies' },
+    { id: 'backtest', icon: '▶', label: 'Backtest' },
+    { id: 'optimize', icon: '⚙', label: 'Optimize', badge: 'New' },
+    { id: 'ai', icon: '🤖', label: 'AI Analysis', dot: true },
+    { id: 'portfolio', icon: '💼', label: 'Portfolio' },
+    { id: 'reports', icon: '📊', label: 'Reports' },
+    { id: 'regime', icon: '📡', label: 'Market Regime' },
+    { id: 'settings', icon: '⚙', label: 'Settings' },
+  ];
+  return (
+    <nav className="sidebar">
+      {navItems.map(item => (
+        <button
+          key={item.id}
+          className={`nav-item ${activePage === item.id ? 'active' : ''}`}
+          onClick={() => onPageChange(item.id)}
+        >
+          <span className="nav-icon">{item.icon}</span>
+          <span>{item.label}</span>
+          {item.badge && <span className="nav-badge">{item.badge}</span>}
+          {item.dot && <span className="nav-dot" />}
+        </button>
+      ))}
+
+      <div style={{ flex: 1 }} />
+
+      <div className="sidebar-ai-card">
+        <div style={{ fontSize: 22, marginBottom: 4 }}>🧠</div>
+        <div className="sidebar-ai-title">Quantoryx AI</div>
+        <div className="sidebar-ai-sub">Smarter insights, better trades.</div>
+        <button className="sidebar-ai-btn">▶ Run AI Analysis →</button>
+      </div>
+
+      <div className="sidebar-footer">
+        <button className="nav-item"><span className="nav-icon">❓</span> Help & Docs</button>
+        <button className="nav-item"><span className="nav-icon">🚪</span> Logout</button>
+      </div>
+    </nav>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// HEADER
+// ═══════════════════════════════════════════════
+const Header = ({ isDark, onToggleTheme }) => (
+  <header className="header">
+    <div className="header-logo">
+      <div className="logo-icon">Q</div>
+      <div className="logo-text">
+        <span className="logo-name">QUANTORYX</span>
+        <span className="logo-tagline">AI-Powered Trading Platform</span>
+      </div>
+    </div>
+
+    <div className="header-search">
+      <span>🔍</span>
+      <input placeholder="Search strategies, backtests, insights..." />
+      <span className="kbd">Ctrl + K</span>
+    </div>
+
+    <div className="header-spacer" />
+
+    <div className="market-status">
+      <div className="status-dot open" />
+      <span style={{ color: 'var(--q-text-secondary)', fontSize: 12 }}>Markets Open</span>
+    </div>
+
+    <div className="header-actions">
+      <button className="icon-btn" title="Notifications">🔔</button>
+      <button className="icon-btn" title="Toggle Theme" onClick={onToggleTheme}>
+        {isDark ? '☀️' : '🌙'}
+      </button>
+      <button className="icon-btn">⚙️</button>
+      <div className="avatar" title="Anwaar">A</div>
+    </div>
+  </header>
+);
+
+// ═══════════════════════════════════════════════
+// DASHBOARD PAGE
+// ═══════════════════════════════════════════════
+const DashboardPage = () => {
+  const [timeframe, setTimeframe] = useState('Equity Curve');
+
+  const stats = [
+    { label: 'Total Strategies', value: '28', change: 12, icon: '📋', iconColor: 'purple', gradient: 'grad-purple', sparkData: SPARKLINE_UP, sparkColor: '#a78bfa' },
+    { label: 'Total Backtests', value: '156', change: 18, icon: '▶', iconColor: 'blue', gradient: 'grad-blue', sparkData: SPARKLINE_UP, sparkColor: '#60a5fa' },
+    { label: 'Total Return', value: '+24.67%', change: 3.31, icon: '💹', iconColor: 'green', gradient: 'grad-green', sparkData: SPARKLINE_UP, sparkColor: '#34d399' },
+    { label: 'Max Drawdown', value: '-8.34%', change: -2.11, icon: '📉', iconColor: 'red', gradient: 'grad-red', sparkData: SPARKLINE_DOWN, sparkColor: '#fca5a5' },
+    { label: 'Sharpe Ratio', value: '1.67', change: 0.26, icon: '📊', iconColor: 'orange', gradient: 'grad-orange', sparkData: SPARKLINE_UP, sparkColor: '#fcd34d' },
+    { label: 'Win Rate', value: '62.4%', change: 4.32, icon: '🎯', iconColor: 'cyan', gradient: 'grad-cyan', sparkData: SPARKLINE_UP, sparkColor: '#67e8f9' },
+  ];
+
+  return (
+    <div className="main-content">
+      {/* Page Header */}
+      <div className="page-header">
+        <div>
+          <div className="page-title">Dashboard</div>
+          <div className="page-sub">Welcome back, Anwaar 👋 Here's your performance overview</div>
+        </div>
+        <div className="page-actions">
+          <button className="btn btn-ghost btn-sm">↻ Refresh</button>
+          <button className="btn btn-primary btn-sm">+ New Backtest</button>
+        </div>
+      </div>
+
+      {/* Stats Row */}
+      <div className="stats-grid fade-in">
+        {stats.map((s, i) => (
+          <div key={i} className={`stat-card ${s.gradient}`}>
+            <div className="stat-header">
+              <span className="stat-label">{s.label}</span>
+              <div className={`stat-icon ${s.iconColor}`}>{s.icon}</div>
+            </div>
+            <div className="stat-value" style={{
+              color: s.value.includes('-') ? 'var(--q-text-danger)' : s.value.includes('+') ? 'var(--q-text-success)' : 'var(--q-text-primary)'
+            }}>
+              {s.value}
+            </div>
+            <div className={`stat-change ${s.change > 0 ? 'up' : s.change < 0 ? 'down' : 'neutral'}`}>
+              {s.change > 0 ? '▲' : '▼'} {Math.abs(s.change)}% vs last month
+            </div>
+            <Sparkline data={s.sparkData} color={s.sparkColor} />
+          </div>
+        ))}
+      </div>
+
+      {/* Charts Row */}
+      <div className="charts-grid fade-in">
+        <PerformanceChart timeframe={timeframe} onTimeframeChange={setTimeframe} />
+        <AIInsightCard />
+        <MarketRegimeCard />
+      </div>
+
+      {/* Optimize + Portfolio Row */}
+      <div style={{ display: 'grid', gridTemplateColumns: '400px 1fr', gap: 14 }} className="fade-in">
+        <OptimizeCard />
+        <PortfolioCard />
+      </div>
+
+      {/* Bottom Row */}
+      <div className="bottom-grid fade-in">
+        <SystemStatusCard />
+        <div className="card" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div className="card-header">
+            <div className="card-title">📈 Recent Activity</div>
+            <button className="btn btn-ghost btn-sm">View All</button>
+          </div>
+          <div style={{ flex: 1, overflow: 'hidden' }}>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={MOCK_EQUITY_DATA.slice(-8)} margin={{ top: 4, right: 4, bottom: 0, left: -24 }}>
+                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.04)" vertical={false} />
+                <XAxis dataKey="label" tick={{ fill: 'var(--q-text-tertiary)', fontSize: 10 }} axisLine={false} tickLine={false} />
+                <YAxis hide />
+                <Tooltip content={<CustomTooltip />} />
+                <Bar dataKey="equity" fill="url(#barGrad)" radius={[4,4,0,0]} />
+                <defs>
+                  <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#8b5cf6" />
+                    <stop offset="100%" stopColor="#3b82f6" />
+                  </linearGradient>
+                </defs>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          <table className="trades-table">
+            <thead>
+              <tr><th>Strategy</th><th>Date</th><th>Return</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              {MOCK_STRATEGIES.slice(0,4).map(s => (
+                <tr key={s.name}>
+                  <td>{s.name}</td>
+                  <td>{s.date}</td>
+                  <td className={s.status === 'up' ? 'change-positive' : 'change-negative'}>{s.sharpe}</td>
+                  <td><span className={`status-pill ${s.status === 'up' ? 'ok' : 'error'}`}>{s.status === 'up' ? 'Profit' : 'Loss'}</span></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="card">
+          <div className="card-header">
+            <div className="card-title">🔥 Quick Actions</div>
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {[
+              { icon: '▶', label: 'Run Backtest', sub: 'Simulate strategy performance', color: 'var(--q-purple-400)' },
+              { icon: '⚙', label: 'Optimize Parameters', sub: 'Find optimal settings', color: '#60a5fa' },
+              { icon: '🤖', label: 'AI Analysis', sub: 'Get AI recommendations', color: '#34d399' },
+              { icon: '📊', label: 'View Reports', sub: 'Access all reports', color: '#fcd34d' },
+            ].map(a => (
+              <button key={a.label} style={{
+                display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px',
+                background: 'var(--q-bg-base)', border: '1px solid var(--q-border)',
+                borderRadius: 8, cursor: 'pointer', transition: 'all 0.15s', textAlign: 'left'
+              }}
+              onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--q-border-glass)'}
+              onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--q-border)'}
+              >
+                <div style={{ fontSize: 20, color: a.color, width: 32, textAlign: 'center' }}>{a.icon}</div>
+                <div>
+                  <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--q-text-primary)' }}>{a.label}</div>
+                  <div style={{ fontSize: 11, color: 'var(--q-text-tertiary)' }}>{a.sub}</div>
+                </div>
+                <div style={{ marginLeft: 'auto', color: 'var(--q-text-tertiary)' }}>›</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// PLACEHOLDER PAGES
+// ═══════════════════════════════════════════════
+const PlaceholderPage = ({ title, icon }) => (
+  <div className="main-content" style={{ alignItems: 'center', justifyContent: 'center', gap: 12 }}>
+    <div style={{ fontSize: 48 }}>{icon}</div>
+    <div style={{ fontSize: 20, fontWeight: 700, color: 'var(--q-text-primary)' }}>{title}</div>
+    <div style={{ fontSize: 14, color: 'var(--q-text-secondary)' }}>This page is under construction</div>
+    <button className="btn btn-primary">← Back to Dashboard</button>
+  </div>
+);
+
+// ═══════════════════════════════════════════════
+// LOGIN PAGE
+// ═══════════════════════════════════════════════
+const LoginPage = ({ onLogin }) => {
+  const [form, setForm] = useState({ username: '', password: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  const handleSubmit = async () => {
+    if (!form.username || !form.password) { setError('Please fill in all fields'); return; }
+    setLoading(true);
+    setError('');
+    // Simulate API call to POST /api/auth/login
+    await new Promise(r => setTimeout(r, 800));
+    setLoading(false);
+    onLogin({ username: form.username, full_name: 'Anwaar', role: 'user' });
+  };
+
+  return (
+    <div style={{
+      minHeight: '100vh', background: 'var(--q-bg-base)',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      padding: 20
+    }}>
+      <div style={{
+        width: '100%', maxWidth: 400,
+        background: 'var(--q-bg-card)',
+        border: '1px solid var(--q-border)',
+        borderRadius: 16, padding: 32,
+        backdropFilter: 'blur(20px)'
+      }}>
+        <div style={{ textAlign: 'center', marginBottom: 28 }}>
+          <div style={{
+            width: 48, height: 48,
+            background: 'var(--q-grad-primary)',
+            borderRadius: 12,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            fontSize: 22, fontWeight: 800, color: 'white',
+            margin: '0 auto 12px'
+          }}>Q</div>
+          <div style={{ fontSize: 20, fontWeight: 700 }}>Welcome to Quantoryx</div>
+          <div style={{ fontSize: 13, color: 'var(--q-text-secondary)', marginTop: 4 }}>AI-Powered Trading Platform</div>
+        </div>
+
+        {error && (
+          <div style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: 8, padding: '8px 12px', fontSize: 12, color: '#fca5a5', marginBottom: 16 }}>
+            {error}
+          </div>
+        )}
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+          <div className="form-group">
+            <label className="form-label">Username</label>
+            <input
+              className="form-input"
+              placeholder="Enter your username"
+              value={form.username}
+              onChange={e => setForm(f => ({ ...f, username: e.target.value }))}
+              onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              className="form-input"
+              type="password"
+              placeholder="Enter your password"
+              value={form.password}
+              onChange={e => setForm(f => ({ ...f, password: e.target.value }))}
+              onKeyDown={e => e.key === 'Enter' && handleSubmit()}
+            />
+          </div>
+          <button
+            className="btn btn-primary btn-full"
+            style={{ marginTop: 8, padding: '10px' }}
+            onClick={handleSubmit}
+            disabled={loading}
+          >
+            {loading ? '⏳ Signing in...' : '→ Sign In'}
+          </button>
+        </div>
+
+        <div style={{ textAlign: 'center', marginTop: 16, fontSize: 12, color: 'var(--q-text-tertiary)' }}>
+          Don't have an account? <span style={{ color: 'var(--q-purple-400)', cursor: 'pointer' }}>Register</span>
+        </div>
+
+        <div style={{ marginTop: 20, padding: '10px 12px', background: 'rgba(139,92,246,0.06)', border: '1px solid rgba(139,92,246,0.15)', borderRadius: 8, fontSize: 11, color: 'var(--q-text-tertiary)', textAlign: 'center' }}>
+          🚀 Demo: enter any username/password to explore the dashboard
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ═══════════════════════════════════════════════
+// MOBILE NAV
+// ═══════════════════════════════════════════════
+const MobileNav = ({ activePage, onPageChange }) => (
+  <nav className="mobile-nav">
+    <div className="mobile-nav-items">
+      {[
+        { id: 'dashboard', icon: '⬛', label: 'Home' },
+        { id: 'strategies', icon: '📋', label: 'Strategy' },
+        { id: 'ai', icon: '🤖', label: 'Analysis' },
+        { id: 'portfolio', icon: '💼', label: 'Portfolio' },
+        { id: 'settings', icon: '⚙', label: 'More' },
+      ].map(item => (
+        <div key={item.id} className={`mobile-nav-item ${activePage === item.id ? 'active' : ''}`} onClick={() => onPageChange(item.id)}>
+          <div className="mobile-nav-item-icon">{item.icon}</div>
+          <div>{item.label}</div>
+        </div>
+      ))}
+    </div>
+  </nav>
+);
+
+// ═══════════════════════════════════════════════
+// ROOT APP
+// ═══════════════════════════════════════════════
+const App = () => {
+  const [isDark, setIsDark] = useState(true);
+  const [activePage, setActivePage] = useState('dashboard');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const toggleTheme = () => {
+    setIsDark(d => !d);
+    document.body.classList.toggle('light-mode');
+  };
+
+  const handleLogin = (userData) => {
+    setUser(userData);
+    setIsLoggedIn(true);
+  };
+
+  if (!isLoggedIn) {
+    return <LoginPage onLogin={handleLogin} />;
+  }
+
+  const renderPage = () => {
+    if (activePage === 'dashboard') return <DashboardPage />;
+    const pages = {
+      strategies: { title: 'Strategies', icon: '📋' },
+      backtest: { title: 'Backtest', icon: '▶' },
+      optimize: { title: 'Optimize', icon: '⚙' },
+      ai: { title: 'AI Analysis', icon: '🤖' },
+      portfolio: { title: 'Portfolio', icon: '💼' },
+      reports: { title: 'Reports', icon: '📊' },
+      regime: { title: 'Market Regime', icon: '📡' },
+      settings: { title: 'Settings', icon: '⚙' },
+    };
+    const p = pages[activePage];
+    return <PlaceholderPage title={p?.title || 'Page'} icon={p?.icon || '📄'} />;
+  };
+
+  return (
+    <div className={`app-layout ${isDark ? '' : 'light-mode'}`}>
+      <Header isDark={isDark} onToggleTheme={toggleTheme} />
+      <Sidebar activePage={activePage} onPageChange={setActivePage} />
+      {renderPage()}
+      <MobileNav activePage={activePage} onPageChange={setActivePage} />
+    </div>
+  );
+};
+
+ReactDOM.render(<App />, document.getElementById('root'));
+</script>
+</body>
+</html>
