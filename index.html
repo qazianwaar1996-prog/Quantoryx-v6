@@ -45,7 +45,7 @@
   --she:0 8px 32px rgba(0,0,0,.12);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body,#root{height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+html,body,#root{height:100%;overflow-x:hidden;font-family:'Inter',system-ui,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
 body{background:var(--bg0);color:var(--t1);transition:background .25s,color .25s}
 button,input,select,textarea{font-family:inherit}
 button{cursor:pointer}
@@ -65,7 +65,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .hd-brand{display:flex;flex-direction:column;line-height:1.2}
 .hd-name{font-size:12.5px;font-weight:800;letter-spacing:.5px;color:var(--t1)}
 .hd-tag{font-size:9px;color:var(--t3);font-weight:400}
-.hd-search{display:flex;align-items:center;gap:8px;flex:1;max-width:400px;background:var(--inp);border:1px solid var(--bd);border-radius:var(--rsm);padding:0 10px;height:33px;cursor:text;transition:border-color var(--tr)}
+.hd-search{display:flex;align-items:center;gap:8px;flex:1;max-width:400px;min-width:0;background:var(--inp);border:1px solid var(--bd);border-radius:var(--rsm);padding:0 10px;height:33px;cursor:text;transition:border-color var(--tr)}
 .hd-search:hover{border-color:var(--bdh)}
 .hd-sq{font-size:12px;color:var(--t3)}
 .hd-sph{font-size:12.5px;color:var(--t3);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -102,7 +102,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .sb-ft{padding-top:4px;border-top:1px solid var(--bd)}
 
 /* ── PAGE ── */
-.pa{overflow-y:auto;background:var(--bg0);height:100%}
+.pa{overflow-y:auto;overflow-x:hidden;background:var(--bg0);height:100%;width:100%}
 .pg{padding:17px;display:flex;flex-direction:column;gap:14px;max-width:1600px}
 
 /* ── PG HEADER ── */
@@ -124,12 +124,12 @@ select option{background:var(--bg1);color:var(--t1)}
 .btn-fl{width:100%;justify-content:center}
 
 /* ── CARDS ── */
-.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);backdrop-filter:blur(10px);transition:border-color var(--tr),box-shadow var(--tr)}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);backdrop-filter:blur(10px);transition:border-color var(--tr),box-shadow var(--tr);min-width:0}
 .card:hover{border-color:var(--bdh);box-shadow:var(--sh)}
 .cp{padding:15px}
 
 /* ── STAT CARDS ── */
-.sr{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.sr{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;min-width:0}
 .sc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:12px 13px;cursor:pointer;transition:all var(--trm);position:relative;overflow:hidden}
 .sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity var(--tr);border-radius:var(--r) var(--r) 0 0}
 .sc:hover{border-color:var(--bd-act);box-shadow:var(--shg)}
@@ -154,7 +154,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .up{color:var(--ok)}.down{color:var(--err)}.neu{color:var(--t2)}
 
 /* ── CHARTS GRID ── */
-.cg{display:grid;grid-template-columns:1fr 284px 234px;gap:12px}
+.cg{display:grid;grid-template-columns:1fr 284px 234px;gap:12px;min-width:0}
 
 /* Perf card */
 .perf-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px}
@@ -203,7 +203,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .reg-pv{font-weight:600;color:var(--t1)}
 
 /* ── MID GRID ── */
-.mg{display:grid;grid-template-columns:1fr 1fr 238px;gap:12px}
+.mg{display:grid;grid-template-columns:1fr 1fr 238px;gap:12px;min-width:0}
 
 /* Optimize */
 .opt-tt{font-size:13px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:7px}
@@ -250,7 +250,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .al-n{color:var(--t2);flex:1}
 .al-p{font-weight:600;color:var(--t1);font-family:'JetBrains Mono',monospace;font-size:10.5px}
 .hl-t{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:8px}
-.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl{width:100%;border-collapse:collapse;font-size:11px;table-layout:fixed}
 .tbl th{text-align:left;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--t3);padding:3px 5px;border-bottom:1px solid var(--bd)}
 .tbl td{padding:5px 5px;border-bottom:1px solid var(--bd);color:var(--t2)}
 .tbl td:first-child{color:var(--t1);font-weight:600}
@@ -428,6 +428,7 @@ select option{background:var(--bg1);color:var(--t1)}
   .pw-m{grid-template-columns:1fr 1fr}
   .bp-grid{grid-template-columns:repeat(3,1fr)}
   .opt-ctrl{grid-template-columns:1fr}
+  svg{max-width:100%}
 }
 </style>
 </head>
@@ -548,7 +549,7 @@ const LineChart=({data,keys,colors,height=210,showGrid=true,showX=true,showY=tru
   const xLabels=[...new Set(data.map(d=>d.w))];
   const yTicks=[0,.25,.5,.75,1].map(t=>mn+t*rng);
   const id=k=>'lc'+k+Math.random().toString(36).slice(2,5);
-  return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'visible'}},
+  return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'hidden'}},
     R.createElement('defs',null,
       keys.map((k,ki)=>R.createElement('linearGradient',{key:k,id:'lg'+k,x1:'0',y1:'0',x2:'0',y2:'1'},
         R.createElement('stop',{offset:'5%',stopColor:colors[ki],stopOpacity:.28}),
@@ -581,7 +582,7 @@ const BarChart=({data,keys,colors,height=200})=>{
     return Math.max(mx,...Object.values(sv));
   },0)||100;
   const bw=cw/data.length,xLabels=[...new Set(data.map(d=>d.w))];
-  return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'visible'}},
+  return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'hidden'}},
     [.25,.5,.75,1].map(t=>R.createElement('line',{key:t,x1:ml,y1:mt+ch*(1-t),x2:W-mr,y2:mt+ch*(1-t),stroke:'rgba(255,255,255,.04)',strokeWidth:.3})),
     [.25,.5,.75,1].map(t=>R.createElement('text',{key:t,x:ml-1,y:mt+ch*(1-t)+.8,textAnchor:'end',fill:'var(--t3)',fontSize:3},Math.round(t*maxV))),
     data.map((d,di)=>{
