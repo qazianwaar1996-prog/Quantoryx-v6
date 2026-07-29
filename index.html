@@ -3,1632 +3,1185 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Quantoryx v7 — AI-Powered Trading Platform</title>
+<title>Quantoryx v8 — AI-Powered Trading Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --bg-base:     #080a14;
-  --bg-elevated: #0d0f20;
-  --bg-card:     rgba(255,255,255,0.038);
-  --bg-card-h:   rgba(255,255,255,0.068);
-  --bg-sidebar:  #090b1a;
-  --bg-glass:    rgba(8,10,20,0.92);
-  --bg-input:    rgba(255,255,255,0.05);
-  --bg-ai:       linear-gradient(145deg,#0c0928 0%,#100838 50%,#090d2a 100%);
-  --grad-brand:  linear-gradient(135deg,#7c3aed 0%,#4f46e5 50%,#2563eb 100%);
-  --grad-accent: linear-gradient(135deg,#8b5cf6 0%,#6366f1 100%);
-  --grad-ok:     linear-gradient(135deg,#059669 0%,#10b981 100%);
-  --grad-err:    linear-gradient(135deg,#dc2626 0%,#ef4444 100%);
-  --grad-warn:   linear-gradient(135deg,#d97706 0%,#f59e0b 100%);
-  --tx-1:  #eef0ff;
-  --tx-2:  #8b8fa8;
-  --tx-3:  #4e5270;
-  --tx-ok: #10b981;
-  --tx-err:#f87171;
-  --tx-wrn:#fbbf24;
-  --tx-acc:#a78bfa;
-  --bd:    rgba(255,255,255,0.068);
-  --bd-h:  rgba(255,255,255,0.13);
-  --bd-pu: rgba(139,92,246,0.28);
-  --bd-act:rgba(139,92,246,0.48);
-  --pu-300:#c4b5fd;
-  --pu-400:#a78bfa;
-  --pu-500:#8b5cf6;
-  --pu-600:#7c3aed;
-  --bl-400:#60a5fa;
-  --bl-500:#3b82f6;
-  --gr-400:#34d399;
-  --gr-500:#10b981;
-  --re-400:#f87171;
-  --re-500:#ef4444;
-  --ye-400:#fbbf24;
-  --cy-400:#67e8f9;
-  --sh-card: 0 4px 24px rgba(0,0,0,.35);
-  --sh-glow: 0 0 32px rgba(139,92,246,.16);
-  --sh-elev: 0 8px 40px rgba(0,0,0,.5);
-  --sh-btn:  0 2px 14px rgba(139,92,246,.36);
-  --sb-w: 188px;
-  --hd-h: 52px;
-  --r:    12px;
-  --r-sm: 8px;
-  --r-lg: 16px;
-  --t:    0.14s ease;
-  --t-md: 0.24s ease;
+/* ═══════════════════════════════════════════════
+   QUANTORYX v8 — PIXEL-PERFECT DESIGN SYSTEM
+   Dark/Light · Desktop/Mobile · All pages
+═══════════════════════════════════════════════ */
+:root{
+  --bg0:#080a14;--bg1:#0d0f1f;--bg2:#111328;
+  --card:rgba(255,255,255,.04);--cardh:rgba(255,255,255,.07);
+  --sb:#090b1a;--glass:rgba(8,10,20,.93);--inp:rgba(255,255,255,.05);
+  --ai-bg:linear-gradient(145deg,#0c0928 0%,#100838 100%);
+  --brand:linear-gradient(135deg,#7c3aed,#4f46e5,#2563eb);
+  --acc:linear-gradient(135deg,#8b5cf6,#6366f1);
+  --ok-g:linear-gradient(135deg,#059669,#10b981);
+  --err-g:linear-gradient(135deg,#dc2626,#ef4444);
+  --t1:#eef0ff;--t2:#8b8fa8;--t3:#4e5270;
+  --ok:#10b981;--err:#f87171;--wrn:#fbbf24;--acc-t:#a78bfa;
+  --bd:rgba(255,255,255,.07);--bdh:rgba(255,255,255,.13);
+  --bd-pu:rgba(139,92,246,.28);--bd-act:rgba(139,92,246,.5);
+  --pu4:#a78bfa;--pu5:#8b5cf6;--pu6:#7c3aed;
+  --bl4:#60a5fa;--gr4:#34d399;--re4:#f87171;--ye4:#fbbf24;--cy4:#67e8f9;
+  --sh:0 4px 24px rgba(0,0,0,.35);--shg:0 0 32px rgba(139,92,246,.16);
+  --she:0 8px 40px rgba(0,0,0,.5);--shb:0 2px 14px rgba(139,92,246,.38);
+  --sbw:188px;--hdh:52px;--r:12px;--rsm:8px;--rlg:16px;
+  --tr:.14s ease;--trm:.22s ease;
 }
-.lm {
-  --bg-base:    #f0f2f9;
-  --bg-elevated:#ffffff;
-  --bg-card:    rgba(255,255,255,0.9);
-  --bg-card-h:  #ffffff;
-  --bg-sidebar: #ffffff;
-  --bg-glass:   rgba(255,255,255,0.94);
-  --bg-input:   rgba(0,0,0,0.04);
-  --bg-ai:      linear-gradient(145deg,#f5f3ff 0%,#ede8ff 100%);
-  --tx-1: #0d0f24; --tx-2: #4b5563; --tx-3: #9ca3af;
-  --tx-acc:#7c3aed; --tx-ok:#059669; --tx-err:#dc2626; --tx-wrn:#d97706;
-  --bd: rgba(0,0,0,0.085); --bd-h: rgba(0,0,0,0.14);
-  --bd-pu:rgba(139,92,246,0.22); --bd-act:rgba(139,92,246,0.36);
-  --sh-card:0 2px 16px rgba(0,0,0,0.08);
-  --sh-glow:0 0 24px rgba(139,92,246,0.1);
-  --sh-elev:0 8px 32px rgba(0,0,0,0.12);
+.lm{
+  --bg0:#f0f2f9;--bg1:#fff;--bg2:#e8eaf4;
+  --card:rgba(255,255,255,.92);--cardh:#fff;--sb:#fff;
+  --glass:rgba(255,255,255,.95);--inp:rgba(0,0,0,.04);
+  --ai-bg:linear-gradient(145deg,#f5f3ff,#ede8ff);
+  --t1:#0d0f24;--t2:#4b5563;--t3:#9ca3af;
+  --ok:#059669;--err:#dc2626;--wrn:#d97706;--acc-t:#7c3aed;
+  --bd:rgba(0,0,0,.085);--bdh:rgba(0,0,0,.14);
+  --bd-pu:rgba(139,92,246,.22);--bd-act:rgba(139,92,246,.38);
+  --sh:0 2px 16px rgba(0,0,0,.08);--shg:0 0 24px rgba(139,92,246,.1);
+  --she:0 8px 32px rgba(0,0,0,.12);
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body,#root{height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased;}
-body{background:var(--bg-base);color:var(--tx-1);transition:background .3s,color .3s;}
-input,button,select,textarea{font-family:inherit;}
-button{cursor:pointer;}
-::-webkit-scrollbar{width:3px;height:3px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:rgba(139,92,246,.25);border-radius:2px;}
-::selection{background:rgba(139,92,246,.2);}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
-select option{background:var(--bg-elevated);color:var(--tx-1);}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body,#root{height:100%;font-family:'Inter',system-ui,sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+body{background:var(--bg0);color:var(--t1);transition:background .25s,color .25s}
+button,input,select,textarea{font-family:inherit}
+button{cursor:pointer}
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(139,92,246,.22);border-radius:2px}
+::selection{background:rgba(139,92,246,.22)}
+select option{background:var(--bg1);color:var(--t1)}
 
-/* ── Shell ── */
-.shell{display:grid;grid-template-columns:var(--sb-w) 1fr;grid-template-rows:var(--hd-h) 1fr;height:100vh;overflow:hidden;}
+/* ── SHELL ── */
+.shell{display:grid;grid-template-columns:var(--sbw) 1fr;grid-template-rows:var(--hdh) 1fr;height:100vh;overflow:hidden}
 
-/* ── Header ── */
-.hd{
-  grid-column:1/-1;background:var(--bg-glass);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid var(--bd);
-  display:flex;align-items:center;padding:0 18px;gap:12px;position:relative;z-index:100;
-}
-.hd-logo{display:flex;align-items:center;gap:9px;width:var(--sb-w);flex-shrink:0;padding-left:2px;cursor:pointer;}
-.hd-logo-icon{
-  width:30px;height:30px;background:var(--grad-brand);border-radius:8px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:900;color:#fff;flex-shrink:0;
-  box-shadow:0 2px 10px rgba(124,58,237,.4);
-}
-.hd-logo-name{font-size:13px;font-weight:800;color:var(--tx-1);letter-spacing:.5px;}
-.hd-logo-tag{font-size:9px;color:var(--tx-3);margin-top:1px;}
-.hd-search{
-  display:flex;align-items:center;gap:8px;flex:1;max-width:400px;
-  background:var(--bg-input);border:1px solid var(--bd);border-radius:var(--r-sm);
-  padding:0 11px;height:34px;cursor:text;text-align:left;border:none;
-  transition:border-color var(--t);
-}
-.hd-search{border:1px solid var(--bd);}
-.hd-search:hover{border-color:var(--bd-h);}
-.hd-search-q{font-size:13px;color:var(--tx-3);flex:1;}
-.hd-kbd{
-  background:rgba(255,255,255,.06);border:1px solid var(--bd);border-radius:4px;
-  padding:1px 5px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--tx-3);
-}
-.hd-gap{flex:1;}
-.hd-mkt{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--tx-2);white-space:nowrap;}
-.hd-dot{width:7px;height:7px;border-radius:50%;background:var(--gr-500);box-shadow:0 0 6px var(--gr-500);animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.4;}}
-.hd-actions{display:flex;align-items:center;gap:2px;}
-.hd-btn{
-  width:32px;height:32px;border-radius:var(--r-sm);border:none;
-  background:transparent;color:var(--tx-2);
-  display:flex;align-items:center;justify-content:center;font-size:15px;transition:all var(--t);
-}
-.hd-btn:hover{background:var(--bg-card);color:var(--tx-1);}
-.hd-notif{position:relative;}
-.hd-notif-badge{
-  position:absolute;top:-2px;right:-2px;min-width:14px;height:14px;
-  background:var(--re-500);border-radius:7px;font-size:8px;font-weight:700;
-  color:#fff;display:flex;align-items:center;justify-content:center;
-  border:2px solid var(--bg-base);padding:0 2px;
-}
-.hd-avatar{
-  width:32px;height:32px;border-radius:50%;background:var(--grad-brand);
-  display:flex;align-items:center;justify-content:center;
-  color:#fff;font-weight:700;font-size:12px;
-  border:2px solid var(--bd-act);cursor:pointer;overflow:hidden;
-  transition:box-shadow var(--t);
-}
-.hd-avatar:hover{box-shadow:0 0 0 3px rgba(139,92,246,.22);}
+/* ── HEADER ── */
+.hd{grid-column:1/-1;background:var(--glass);backdrop-filter:blur(24px);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 16px;gap:10px;z-index:200;position:relative}
+.hd-logo{display:flex;align-items:center;gap:8px;width:var(--sbw);flex-shrink:0;cursor:pointer;text-decoration:none}
+.hd-Q{width:30px;height:30px;border-radius:8px;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;flex-shrink:0;box-shadow:0 2px 10px rgba(124,58,237,.4)}
+.hd-brand{display:flex;flex-direction:column;line-height:1.2}
+.hd-name{font-size:12.5px;font-weight:800;letter-spacing:.5px;color:var(--t1)}
+.hd-tag{font-size:9px;color:var(--t3);font-weight:400}
+.hd-search{display:flex;align-items:center;gap:8px;flex:1;max-width:400px;background:var(--inp);border:1px solid var(--bd);border-radius:var(--rsm);padding:0 10px;height:33px;cursor:text;transition:border-color var(--tr)}
+.hd-search:hover{border-color:var(--bdh)}
+.hd-sq{font-size:12px;color:var(--t3)}
+.hd-sph{font-size:12.5px;color:var(--t3);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hd-kbd{background:rgba(255,255,255,.06);border:1px solid var(--bd);border-radius:4px;padding:1px 5px;font-size:9px;font-family:'JetBrains Mono',monospace;color:var(--t3);flex-shrink:0}
+.hd-gap{flex:1}
+.hd-mkt{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--t2);white-space:nowrap}
+.hd-dot{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.hd-acts{display:flex;align-items:center;gap:2px}
+.hd-ico{width:32px;height:32px;border-radius:var(--rsm);border:none;background:transparent;color:var(--t2);display:flex;align-items:center;justify-content:center;font-size:15px;transition:all var(--tr);position:relative}
+.hd-ico:hover{background:var(--card);color:var(--t1)}
+.hd-badge{position:absolute;top:-1px;right:-1px;width:14px;height:14px;background:#ef4444;border-radius:50%;font-size:8px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;border:2px solid var(--bg0)}
+.hd-av{width:32px;height:32px;border-radius:50%;background:var(--brand);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#fff;border:2px solid var(--bd-act);cursor:pointer;transition:box-shadow var(--tr)}
+.hd-av:hover{box-shadow:0 0 0 3px rgba(139,92,246,.22)}
 
-/* ── Sidebar ── */
-.sb{
-  background:var(--bg-sidebar);border-right:1px solid var(--bd);
-  overflow-y:auto;display:flex;flex-direction:column;padding:8px 7px;gap:1px;
-}
-.sb-item{
-  display:flex;align-items:center;gap:9px;padding:7.5px 10px;
-  border-radius:var(--r-sm);color:var(--tx-2);font-size:13px;font-weight:500;
-  border:none;background:none;width:100%;text-align:left;
-  transition:all var(--t);position:relative;cursor:pointer;
-}
-.sb-item:hover{background:var(--bg-card);color:var(--tx-1);}
-.sb-item.on{background:rgba(139,92,246,.13);color:var(--pu-400);}
-.sb-item.on::before{
-  content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
-  width:3px;height:18px;background:var(--grad-accent);border-radius:0 2px 2px 0;
-}
-.sb-ico{font-size:14px;width:16px;text-align:center;flex-shrink:0;}
-.sb-lbl{flex:1;}
-.sb-badge{background:var(--grad-accent);color:#fff;font-size:9px;font-weight:700;padding:2px 6px;border-radius:20px;}
-.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--gr-500);box-shadow:0 0 5px var(--gr-500);}
-.sb-spacer{flex:1;min-height:10px;}
-.sb-ai{
-  margin:8px 3px 4px;padding:14px;
-  background:linear-gradient(145deg,#180a45 0%,#231060 60%,#16145a 100%);
-  border-radius:var(--r);position:relative;overflow:hidden;
-  border:1px solid rgba(139,92,246,.3);
-}
-.sb-ai::after{
-  content:'';position:absolute;top:-20px;right:-20px;
-  width:80px;height:80px;background:rgba(139,92,246,.18);
-  border-radius:50%;filter:blur(20px);pointer-events:none;
-}
-.sb-ai-brain{font-size:22px;margin-bottom:4px;position:relative;z-index:1;}
-.sb-ai-title{font-size:13px;font-weight:700;color:#fff;position:relative;z-index:1;}
-.sb-ai-sub{font-size:11px;color:rgba(255,255,255,.6);margin:2px 0 11px;position:relative;z-index:1;line-height:1.4;}
-.sb-ai-btn{
-  width:100%;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);
-  border-radius:7px;color:#fff;font-size:11.5px;font-weight:600;padding:7px 12px;
-  transition:background var(--t);position:relative;z-index:1;
-  display:flex;align-items:center;gap:6px;justify-content:center;cursor:pointer;
-}
-.sb-ai-btn:hover{background:rgba(255,255,255,.26);}
-.sb-footer{padding-top:4px;border-top:1px solid var(--bd);}
+/* ── SIDEBAR ── */
+.sb{background:var(--sb);border-right:1px solid var(--bd);overflow-y:auto;display:flex;flex-direction:column;padding:8px 7px;gap:1px}
+.sb-it{display:flex;align-items:center;gap:9px;padding:7px 10px;border-radius:var(--rsm);color:var(--t2);font-size:13px;font-weight:500;border:none;background:none;width:100%;text-align:left;cursor:pointer;transition:all var(--tr);position:relative;white-space:nowrap}
+.sb-it:hover{background:var(--card);color:var(--t1)}
+.sb-it.on{background:rgba(139,92,246,.13);color:var(--pu4)}
+.sb-it.on::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);width:3px;height:18px;background:var(--acc);border-radius:0 2px 2px 0}
+.sb-ic{font-size:14px;width:17px;text-align:center;flex-shrink:0}
+.sb-lb{flex:1}
+.sb-bx{background:var(--acc);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;margin-left:auto}
+.sb-dt{width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 5px var(--ok);margin-left:auto}
+.sb-sp{flex:1;min-height:8px}
+.sb-ai{margin:6px 3px 4px;padding:14px;background:linear-gradient(145deg,#180a45,#231060 60%,#16145a);border-radius:var(--r);border:1px solid rgba(139,92,246,.3);position:relative;overflow:hidden}
+.sb-ai::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(139,92,246,.18);border-radius:50%;filter:blur(20px);pointer-events:none}
+.sb-ai-br{font-size:22px;margin-bottom:4px;position:relative;z-index:1}
+.sb-ai-t{font-size:13px;font-weight:700;color:#fff;position:relative;z-index:1}
+.sb-ai-s{font-size:11px;color:rgba(255,255,255,.6);margin:2px 0 11px;position:relative;z-index:1;line-height:1.4}
+.sb-ai-b{width:100%;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);border-radius:7px;color:#fff;font-size:11.5px;font-weight:600;padding:7px 12px;display:flex;align-items:center;gap:6px;justify-content:center;cursor:pointer;position:relative;z-index:1;transition:background var(--tr)}
+.sb-ai-b:hover{background:rgba(255,255,255,.25)}
+.sb-ft{padding-top:4px;border-top:1px solid var(--bd)}
 
-/* ── Page ── */
-.page-area{overflow-y:auto;background:var(--bg-base);height:100%;}
-.page{padding:18px;display:flex;flex-direction:column;gap:14px;min-height:100%;}
+/* ── PAGE ── */
+.pa{overflow-y:auto;background:var(--bg0);height:100%}
+.pg{padding:17px;display:flex;flex-direction:column;gap:14px;min-height:100%;max-width:1600px}
 
-/* ── Page header ── */
-.pg-hd{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px;}
-.pg-title{font-size:19px;font-weight:800;color:var(--tx-1);letter-spacing:-.3px;}
-.pg-sub{font-size:12px;color:var(--tx-2);margin-top:2px;}
-.pg-acts{display:flex;gap:7px;align-items:center;}
+/* ── PG HEADER ── */
+.pgh{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.pgt{font-size:19px;font-weight:800;letter-spacing:-.3px;color:var(--t1)}
+.pgs{font-size:12px;color:var(--t2);margin-top:2px}
+.pga{display:flex;gap:7px;align-items:center}
 
-/* ── Buttons ── */
-.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:7px;font-weight:600;transition:all var(--t);white-space:nowrap;cursor:pointer;}
-.btn:disabled{opacity:.5;pointer-events:none;}
-.btn-p{background:var(--grad-brand);color:#fff;box-shadow:var(--sh-btn);}
-.btn-p:hover{box-shadow:0 4px 20px rgba(139,92,246,.52);transform:translateY(-1px);}
-.btn-g{background:var(--bg-card);border:1px solid var(--bd);color:var(--tx-2);}
-.btn-g:hover{border-color:var(--bd-h);color:var(--tx-1);}
-.btn-sm{padding:5px 11px;font-size:11px;border-radius:6px;}
-.btn-md{padding:7px 14px;font-size:12px;}
-.btn-lg{padding:9px 18px;font-size:13px;}
-.btn-full{width:100%;justify-content:center;}
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:6px;border:none;border-radius:7px;font-weight:600;cursor:pointer;transition:all var(--tr);white-space:nowrap}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn-p{background:var(--brand);color:#fff;box-shadow:var(--shb)}
+.btn-p:hover{box-shadow:0 4px 22px rgba(139,92,246,.55);transform:translateY(-1px)}
+.btn-g{background:var(--card);border:1px solid var(--bd);color:var(--t2)}
+.btn-g:hover{border-color:var(--bdh);color:var(--t1)}
+.btn-sm{padding:5px 11px;font-size:11px;border-radius:6px}
+.btn-md{padding:7px 14px;font-size:12px}
+.btn-lg{padding:9px 18px;font-size:13px}
+.btn-fl{width:100%;justify-content:center}
 
-/* ── Cards ── */
-.card{
-  background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);
-  backdrop-filter:blur(12px);transition:border-color var(--t),box-shadow var(--t);
-}
-.card:hover{border-color:var(--bd-h);box-shadow:var(--sh-card);}
-.cp{padding:16px;}
+/* ── CARDS ── */
+.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);backdrop-filter:blur(10px);transition:border-color var(--tr),box-shadow var(--tr)}
+.card:hover{border-color:var(--bdh);box-shadow:var(--sh)}
+.cp{padding:15px}
 
-/* ── Stat Cards ── */
-.stats-row{display:grid;grid-template-columns:repeat(6,1fr);gap:11px;}
-.stat{
-  background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);
-  padding:13px 14px;cursor:pointer;transition:all var(--t-md);position:relative;overflow:hidden;
-}
-.stat::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:2px;
-  opacity:0;transition:opacity var(--t);border-radius:var(--r) var(--r) 0 0;
-}
-.stat:hover{border-color:var(--bd-act);box-shadow:var(--sh-glow);}
-.stat:hover::after{opacity:1;}
-.s-pu::after{background:var(--grad-accent);}
-.s-bl::after{background:linear-gradient(90deg,var(--bl-500),#06b6d4);}
-.s-gr::after{background:var(--grad-ok);}
-.s-rd::after{background:var(--grad-err);}
-.s-or::after{background:var(--grad-warn);}
-.s-cy::after{background:linear-gradient(90deg,#06b6d4,var(--bl-500));}
-.stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.stat-lbl{font-size:10px;font-weight:600;color:var(--tx-2);text-transform:uppercase;letter-spacing:.5px;}
-.stat-ico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
-.ico-pu{background:rgba(139,92,246,.14);color:var(--pu-400);}
-.ico-bl{background:rgba(59,130,246,.14);color:var(--bl-400);}
-.ico-gr{background:rgba(16,185,129,.14);color:var(--gr-400);}
-.ico-rd{background:rgba(239,68,68,.14);color:var(--re-400);}
-.ico-or{background:rgba(245,158,11,.14);color:var(--ye-400);}
-.ico-cy{background:rgba(6,182,212,.14);color:var(--cy-400);}
-.stat-val{font-size:21px;font-weight:800;letter-spacing:-.5px;margin-bottom:3px;line-height:1.1;}
-.stat-chg{font-size:10.5px;font-weight:500;display:flex;align-items:center;gap:3px;margin-bottom:4px;}
-.up{color:var(--tx-ok);}  .down{color:var(--tx-err);}  .neu{color:var(--tx-2);}
+/* ── STAT CARDS ── */
+.sr{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.sc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:12px 13px;cursor:pointer;transition:all var(--trm);position:relative;overflow:hidden}
+.sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity var(--tr);border-radius:var(--r) var(--r) 0 0}
+.sc:hover{border-color:var(--bd-act);box-shadow:var(--shg)}
+.sc:hover::after{opacity:1}
+.sc-pu::after{background:var(--acc)}
+.sc-bl::after{background:linear-gradient(90deg,#3b82f6,#06b6d4)}
+.sc-gr::after{background:var(--ok-g)}
+.sc-rd::after{background:var(--err-g)}
+.sc-or::after{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+.sc-cy::after{background:linear-gradient(90deg,#06b6d4,#3b82f6)}
+.sc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px}
+.sc-lbl{font-size:10px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.5px}
+.sc-ic{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.ic-pu{background:rgba(139,92,246,.14);color:var(--pu4)}
+.ic-bl{background:rgba(59,130,246,.14);color:var(--bl4)}
+.ic-gr{background:rgba(16,185,129,.14);color:var(--gr4)}
+.ic-rd{background:rgba(239,68,68,.14);color:var(--re4)}
+.ic-or{background:rgba(245,158,11,.14);color:var(--ye4)}
+.ic-cy{background:rgba(6,182,212,.14);color:var(--cy4)}
+.sc-val{font-size:21px;font-weight:800;letter-spacing:-.5px;margin-bottom:2px;line-height:1.1}
+.sc-sub{font-size:10px;font-weight:500;margin-bottom:4px;display:flex;align-items:center;gap:3px}
+.up{color:var(--ok)}.down{color:var(--err)}.neu{color:var(--t2)}
 
-/* ── Charts grid (3 cols) ── */
-.charts-grid{display:grid;grid-template-columns:1fr 288px 238px;gap:12px;}
+/* ── CHARTS GRID ── */
+.cg{display:grid;grid-template-columns:1fr 284px 234px;gap:12px}
 
 /* Perf card */
-.perf-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
-.perf-title{font-size:13px;font-weight:700;color:var(--tx-1);display:flex;align-items:center;gap:7px;}
-.perf-controls{display:flex;align-items:center;gap:7px;}
-.sel-sm{background:var(--bg-input);border:1px solid var(--bd);border-radius:6px;padding:4px 8px;color:var(--tx-2);font-size:11px;outline:none;cursor:pointer;}
-.sel-sm:focus{border-color:var(--pu-500);}
-.leg{display:flex;gap:12px;margin-bottom:8px;}
-.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tx-2);}
-.leg-line{width:20px;height:2px;border-radius:1px;flex-shrink:0;}
-.leg-dash{border-top:2px dashed rgba(255,255,255,.2);background:none!important;}
-.perf-metrics{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid var(--bd);}
-.pm-lbl{font-size:10px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;}
-.pm-val{font-size:14px;font-weight:700;}
-.pm-ok{color:var(--tx-ok);} .pm-err{color:var(--tx-err);} .pm-neu{color:var(--tx-1);}
+.perf-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:9px}
+.perf-tt{font-size:13px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:7px}
+.perf-ct{display:flex;gap:6px}
+.sel{background:var(--inp);border:1px solid var(--bd);border-radius:6px;padding:4px 7px;color:var(--t2);font-size:11px;outline:none;cursor:pointer}
+.sel:focus{border-color:var(--pu5)}
+.leg{display:flex;gap:12px;margin-bottom:7px}
+.leg-i{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--t2)}
+.leg-l{width:20px;height:2px;border-radius:1px;flex-shrink:0}
+.leg-d{border-top:2px dashed rgba(255,255,255,.2);background:none!important}
+.pm-row{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:11px;padding-top:10px;border-top:1px solid var(--bd)}
+.pm-l{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:1px}
+.pm-v{font-size:14px;font-weight:700}
+.c-ok{color:var(--ok)}.c-err{color:var(--err)}.c-n{color:var(--t1)}
 
-/* AI insight card */
-.ai-card{
-  background:var(--bg-ai);border:1px solid var(--bd-pu);border-radius:var(--r);
-  padding:15px;display:flex;flex-direction:column;gap:9px;position:relative;overflow:hidden;
-}
-.ai-card::before{
-  content:'';position:absolute;top:-40px;right:-40px;
-  width:130px;height:130px;
-  background:radial-gradient(circle,rgba(139,92,246,.16) 0%,transparent 70%);
-  pointer-events:none;
-}
-.ai-hd{display:flex;align-items:center;justify-content:space-between;}
-.ai-hd-lbl{font-size:11px;font-weight:600;color:var(--tx-2);display:flex;align-items:center;gap:5px;}
-.ai-badge-q{background:var(--grad-accent);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap;}
-.ai-signal{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.1;}
-.sig-bull{color:var(--gr-500);}
-.ai-conf-row{font-size:12.5px;font-weight:500;color:var(--tx-2);}
-.ai-conf-row span{color:var(--pu-400);font-weight:700;}
-.conf-bar{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-top:2px;}
-.conf-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pu-500),var(--bl-500));transition:width 1s ease;}
-.ai-desc{font-size:11.5px;color:var(--tx-2);line-height:1.55;}
-.ai-factors-lbl{font-size:11px;font-weight:600;color:var(--tx-1);}
-.ai-fac{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--tx-2);margin-bottom:2px;}
-.fac-ck{color:var(--tx-ok);font-size:10px;}
-.ai-acts{display:flex;gap:7px;margin-top:2px;}
+/* AI card */
+.ai-card{background:var(--ai-bg);border:1px solid var(--bd-pu);border-radius:var(--r);padding:14px;display:flex;flex-direction:column;gap:8px;position:relative;overflow:hidden}
+.ai-card::before{content:'';position:absolute;top:-40px;right:-40px;width:130px;height:130px;background:radial-gradient(circle,rgba(139,92,246,.16) 0%,transparent 70%);pointer-events:none}
+.ai-hd{display:flex;align-items:center;justify-content:space-between}
+.ai-hl{font-size:11px;font-weight:600;color:var(--t2);display:flex;align-items:center;gap:5px}
+.ai-bq{background:var(--acc);color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:20px;white-space:nowrap}
+.ai-sig{font-size:30px;font-weight:800;letter-spacing:-.5px;line-height:1.1;color:var(--ok)}
+.ai-cr{font-size:12.5px;color:var(--t2);font-weight:500}
+.ai-cr span{color:var(--pu4);font-weight:700}
+.conf-b{height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden;margin-top:2px}
+.conf-f{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--pu5),#3b82f6);transition:width 1s ease}
+.ai-desc{font-size:11.5px;color:var(--t2);line-height:1.55}
+.ai-fl{font-size:11px;font-weight:600;color:var(--t1);margin-bottom:1px}
+.ai-fac{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--t2);margin-bottom:1px}
+.ai-ck{color:var(--ok);font-size:10px;flex-shrink:0}
+.ai-acts{display:flex;gap:7px;margin-top:2px}
 
-/* Market Regime card */
-.regime-card{padding:15px;display:flex;flex-direction:column;}
-.regime-card-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.regime-donut-wrap{display:flex;justify-content:center;position:relative;}
-.regime-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;}
-.reg-name{font-size:13px;font-weight:700;color:var(--tx-1);}
-.reg-pct-txt{font-size:11px;color:var(--tx-2);}
-.reg-legend{display:flex;flex-direction:column;gap:5px;margin-top:10px;}
-.reg-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;padding:1px 0;}
-.reg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
-.reg-lbl-txt{color:var(--tx-2);display:flex;align-items:center;gap:7px;}
-.reg-pct-val{font-weight:600;color:var(--tx-1);}
+/* Regime card */
+.reg-card{padding:14px;display:flex;flex-direction:column}
+.reg-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.reg-hdt{font-size:13px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:7px}
+.reg-dw{display:flex;justify-content:center;position:relative}
+.reg-ctr{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none}
+.reg-cn{font-size:13px;font-weight:700;color:var(--t1)}
+.reg-cp{font-size:11px;color:var(--t2)}
+.reg-leg{display:flex;flex-direction:column;gap:5px;margin-top:10px}
+.reg-row{display:flex;align-items:center;justify-content:space-between;font-size:12px}
+.reg-lft{color:var(--t2);display:flex;align-items:center;gap:7px}
+.reg-d{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.reg-pv{font-weight:600;color:var(--t1)}
 
-/* ── Mid Grid (3 cols) ── */
-.mid-grid{display:grid;grid-template-columns:1fr 1fr 240px;gap:12px;}
+/* ── MID GRID ── */
+.mg{display:grid;grid-template-columns:1fr 1fr 238px;gap:12px}
 
 /* Optimize */
-.opt-hd{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px;}
-.opt-title{font-size:13px;font-weight:700;color:var(--tx-1);display:flex;align-items:center;gap:7px;}
-.opt-sub{font-size:11px;color:var(--tx-3);margin-top:2px;}
-.opt-controls{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:7px;align-items:end;margin-top:10px;}
-.form-grp{display:flex;flex-direction:column;gap:3px;}
-.form-lbl{font-size:10px;font-weight:600;color:var(--tx-2);text-transform:uppercase;letter-spacing:.4px;}
-.form-sel{
-  background:var(--bg-input);border:1px solid var(--bd);border-radius:6px;
-  padding:6px 8px;color:var(--tx-1);font-size:11.5px;outline:none;width:100%;
-  transition:border-color var(--t);cursor:pointer;
-}
-.form-sel:focus{border-color:var(--pu-500);}
-.form-inp{
-  background:var(--bg-input);border:1px solid var(--bd);border-radius:6px;
-  padding:7px 10px;color:var(--tx-1);font-size:12px;outline:none;width:100%;
-  transition:border-color var(--t);
-}
-.form-inp:focus{border-color:var(--pu-500);}
-.opt-body{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:11px;}
-.param-ranges-lbl{font-size:11px;font-weight:700;color:var(--tx-1);margin-bottom:7px;}
-.sl-row{margin-bottom:8px;}
-.sl-hd{display:flex;justify-content:space-between;margin-bottom:3px;}
-.sl-lbl{font-size:11px;color:var(--tx-2);}
-.sl-val{font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--tx-1);}
-.sl-max{font-size:9px;color:var(--tx-3);font-family:'JetBrains Mono',monospace;}
-.slider{
-  width:100%;height:4px;-webkit-appearance:none;appearance:none;
-  background:rgba(139,92,246,.2);border-radius:2px;outline:none;cursor:pointer;
-}
-.slider::-webkit-slider-thumb{
-  -webkit-appearance:none;width:13px;height:13px;border-radius:50%;
-  background:var(--pu-500);cursor:pointer;
-  border:2px solid var(--bg-base);box-shadow:0 0 6px rgba(139,92,246,.5);
-}
-.surf-wrap{display:flex;flex-direction:column;}
-.surf-title{font-size:11px;font-weight:700;color:var(--tx-1);margin-bottom:7px;}
-.surf-canvas{
-  background:linear-gradient(135deg,#130a3e 0%,#0d1a50 100%);
-  border-radius:8px;padding:8px;flex:1;min-height:145px;
-  display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;
-}
-.surf-axis-x{position:absolute;bottom:6px;left:50%;transform:translateX(-50%);font-size:8px;color:rgba(255,255,255,.3);font-family:'JetBrains Mono',monospace;}
-.surf-axis-y{position:absolute;left:4px;top:50%;transform:translateY(-50%) rotate(-90deg);font-size:8px;color:rgba(255,255,255,.3);font-family:'JetBrains Mono',monospace;}
-.surf-tooltip{
-  position:absolute;top:8px;right:8px;
-  background:rgba(8,4,36,.92);border:1px solid var(--bd-pu);border-radius:6px;
-  padding:5px 8px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--tx-1);
-}
-.best-params{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:8px;}
-.param-box{text-align:center;background:var(--bg-elevated);border:1px solid var(--bd);border-radius:6px;padding:5px 3px;}
-.param-k{font-size:9px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px;}
-.param-v{font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--tx-1);}
-.best-params-lbl{font-size:11px;font-weight:700;color:var(--tx-1);margin:6px 0 5px;}
+.opt-tt{font-size:13px;font-weight:700;color:var(--t1);display:flex;align-items:center;gap:7px}
+.opt-st{font-size:11px;color:var(--t3);margin-top:2px;margin-bottom:10px}
+.opt-ctrl{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:7px;align-items:end;margin-bottom:11px}
+.fg{display:flex;flex-direction:column;gap:3px}
+.fl{font-size:10px;font-weight:600;color:var(--t2);text-transform:uppercase;letter-spacing:.4px}
+.fs{background:var(--inp);border:1px solid var(--bd);border-radius:6px;padding:6px 8px;color:var(--t1);font-size:11.5px;outline:none;width:100%;cursor:pointer;transition:border-color var(--tr)}
+.fs:focus{border-color:var(--pu5)}
+.fi{background:var(--inp);border:1px solid var(--bd);border-radius:6px;padding:7px 10px;color:var(--t1);font-size:12px;outline:none;width:100%;transition:border-color var(--tr)}
+.fi:focus{border-color:var(--pu5)}
+.opt-body{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:2px}
+.pr-lbl{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:7px}
+.sl-row{margin-bottom:7px}
+.sl-hd{display:flex;justify-content:space-between;margin-bottom:3px}
+.sl-l{font-size:11px;color:var(--t2)}
+.sl-v{font-size:11px;font-weight:600;font-family:'JetBrains Mono',monospace;color:var(--t1)}
+.sl-m{font-size:9px;color:var(--t3);font-family:'JetBrains Mono',monospace}
+.slider{width:100%;height:4px;-webkit-appearance:none;background:rgba(139,92,246,.2);border-radius:2px;outline:none;cursor:pointer}
+.slider::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:var(--pu5);border:2px solid var(--bg0);box-shadow:0 0 6px rgba(139,92,246,.5)}
+.surf-tt{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:7px}
+.surf-c{background:linear-gradient(135deg,#130a3e,#0d1a50);border-radius:8px;padding:8px;flex:1;min-height:145px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.surf-tip{position:absolute;top:8px;right:8px;background:rgba(8,4,36,.92);border:1px solid var(--bd-pu);border-radius:6px;padding:4px 7px;font-size:10px;font-family:'JetBrains Mono',monospace;color:var(--t1)}
+.surf-ax{position:absolute;font-size:8px;color:rgba(255,255,255,.3);font-family:'JetBrains Mono',monospace}
+.surf-axb{bottom:5px;left:50%;transform:translateX(-50%)}
+.surf-axl{left:4px;top:50%;transform:translateY(-50%) rotate(-90deg)}
+.bp-lbl{font-size:11px;font-weight:700;color:var(--t1);margin:7px 0 5px}
+.bp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+.bp-box{text-align:center;background:var(--bg1);border:1px solid var(--bd);border-radius:6px;padding:5px 3px}
+.bp-k{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px;line-height:1.3}
+.bp-v{font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--t1)}
 
 /* Portfolio widget */
-.port-metrics{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:13px;}
-.m-lbl{font-size:10px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px;}
-.m-val{font-size:18px;font-weight:800;letter-spacing:-.3px;}
-.m-chg{font-size:10.5px;font-weight:500;display:flex;align-items:center;gap:3px;margin-top:1px;}
-.port-body{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.alloc-title{font-size:11px;font-weight:700;color:var(--tx-1);margin-bottom:8px;}
-.donut-alloc{display:flex;align-items:center;gap:12px;}
-.alloc-legend{display:flex;flex-direction:column;gap:3px;flex:1;}
-.alloc-row{display:flex;align-items:center;gap:6px;font-size:11px;}
-.alloc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.alloc-nm{color:var(--tx-2);flex:1;}
-.alloc-pct{font-weight:600;color:var(--tx-1);font-family:'JetBrains Mono',monospace;font-size:10.5px;}
-.holdings-title{font-size:11px;font-weight:700;color:var(--tx-1);margin-bottom:8px;}
-.tbl{width:100%;border-collapse:collapse;font-size:11.5px;}
-.tbl th{text-align:left;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--tx-3);padding:4px 6px;border-bottom:1px solid var(--bd);}
-.tbl td{padding:5.5px 6px;border-bottom:1px solid var(--bd);color:var(--tx-2);}
-.tbl td:first-child{color:var(--tx-1);font-weight:500;}
-.tbl tbody tr:last-child td{border-bottom:none;}
-.tbl tbody tr:hover td{background:var(--bg-card-h);}
+.pw-m{display:grid;grid-template-columns:1fr 1fr 1fr;gap:11px;margin-bottom:12px}
+.mw-l{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.mw-v{font-size:18px;font-weight:800;letter-spacing:-.3px}
+.mw-c{font-size:10.5px;font-weight:500;display:flex;align-items:center;gap:3px;margin-top:1px}
+.pw-b{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.al-t{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:8px}
+.al-dn{display:flex;align-items:center;gap:11px}
+.al-lg{display:flex;flex-direction:column;gap:3px;flex:1}
+.al-r{display:flex;align-items:center;gap:6px;font-size:11px}
+.al-d{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.al-n{color:var(--t2);flex:1}
+.al-p{font-weight:600;color:var(--t1);font-family:'JetBrains Mono',monospace;font-size:10.5px}
+.hl-t{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:8px}
+.tbl{width:100%;border-collapse:collapse;font-size:11px}
+.tbl th{text-align:left;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--t3);padding:3px 5px;border-bottom:1px solid var(--bd)}
+.tbl td{padding:5px 5px;border-bottom:1px solid var(--bd);color:var(--t2)}
+.tbl td:first-child{color:var(--t1);font-weight:600}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover td{background:var(--cardh)}
 
 /* Right col */
-.right-col{display:flex;flex-direction:column;gap:12px;}
-.sys-ok{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--tx-ok);}
-.sys-ok-dot{width:7px;height:7px;border-radius:50%;background:var(--gr-500);box-shadow:0 0 6px var(--gr-500);animation:pulse 2s infinite;}
-.strat-list{margin-top:10px;display:flex;flex-direction:column;gap:5px;}
-.strat-row{display:flex;align-items:center;justify-content:space-between;padding:6px 9px;background:var(--bg-base);border:1px solid var(--bd);border-radius:7px;transition:border-color var(--t);}
-.strat-row:hover{border-color:var(--bd-h);}
-.strat-nm{font-size:12px;font-weight:500;color:var(--tx-1);}
-.strat-dt{font-size:10px;color:var(--tx-3);font-family:'JetBrains Mono',monospace;}
-.strat-ret{font-size:12px;font-weight:600;}
-.risk-warn-card{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22);border-radius:var(--r);padding:12px 14px;}
-.risk-warn-hd{display:flex;align-items:center;gap:7px;margin-bottom:5px;}
-.risk-warn-lbl{font-size:11.5px;font-weight:700;color:var(--tx-wrn);}
-.risk-warn-val{font-size:14px;font-weight:800;color:var(--tx-wrn);margin-bottom:5px;}
-.risk-warn-desc{font-size:11px;color:var(--tx-2);line-height:1.5;}
-
-/* Strategies page */
-.strats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.strat-card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);padding:15px;cursor:pointer;transition:all var(--t-md);position:relative;overflow:hidden;}
-.strat-card:hover{border-color:var(--bd-act);box-shadow:var(--sh-glow);transform:translateY(-1px);}
-.strat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity var(--t);border-radius:var(--r) var(--r) 0 0;background:var(--grad-accent);}
-.strat-card:hover::before{opacity:1;}
-.sc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
-.sc-nm{font-size:14px;font-weight:700;color:var(--tx-1);}
-.sc-type{font-size:10px;background:rgba(139,92,246,.12);color:var(--pu-400);padding:2px 7px;border-radius:4px;font-weight:600;}
-.sc-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--bd);}
-.sc-m-lbl{font-size:9.5px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px;}
-.sc-m-val{font-size:13px;font-weight:700;}
-.sc-status{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:3px;}
-.status-active{background:rgba(16,185,129,.12);color:var(--gr-400);}
-.status-paused{background:rgba(245,158,11,.1);color:var(--ye-400);}
-.status-inactive{background:rgba(239,68,68,.1);color:var(--re-400);}
-
-/* Backtest */
-.bt-grid{display:grid;grid-template-columns:300px 1fr;gap:14px;}
-.date-row{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-
-/* Reports */
-.report-row{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r-sm);margin-bottom:8px;transition:all var(--t);}
-.report-row:hover{border-color:var(--bd-h);box-shadow:var(--sh-card);}
-.report-ico{font-size:20px;margin-right:12px;flex-shrink:0;}
-.report-info{flex:1;}
-.report-nm{font-size:13px;font-weight:600;color:var(--tx-1);}
-.report-dt{font-size:11px;color:var(--tx-3);margin-top:1px;}
-.report-desc{font-size:11.5px;color:var(--tx-2);margin-top:2px;}
-.report-pdf{display:flex;align-items:center;gap:5px;padding:5px 11px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;color:var(--re-400);font-size:11px;font-weight:600;transition:all var(--t);cursor:pointer;border-style:solid;}
-.report-pdf:hover{background:rgba(239,68,68,.18);}
-
-/* Market Regime page */
-.regime-page-grid{display:grid;grid-template-columns:320px 1fr;gap:14px;}
-.regime-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;margin-top:12px;}
-.reg-stat{background:var(--bg-base);border:1px solid var(--bd);border-radius:var(--r-sm);padding:11px;}
-.reg-stat-lbl{font-size:10px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px;}
-.reg-stat-val{font-size:16px;font-weight:800;}
-.reg-stat-days{font-size:10px;color:var(--tx-3);margin-top:1px;}
-.regime-indicators{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:13px;}
-.ind-card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r-sm);padding:12px;}
-.ind-lbl{font-size:10px;color:var(--tx-3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:4px;}
-.ind-val{font-size:15px;font-weight:800;}
-.ind-chg{font-size:10.5px;font-weight:500;display:flex;align-items:center;gap:3px;margin-top:2px;}
-
-/* Settings */
-.settings-grid{display:grid;grid-template-columns:190px 1fr;gap:14px;}
-.settings-nav{display:flex;flex-direction:column;gap:2px;}
-.settings-nav-btn{display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:var(--r-sm);border:none;background:none;color:var(--tx-2);font-size:13px;font-weight:500;text-align:left;width:100%;cursor:pointer;transition:all var(--t);}
-.settings-nav-btn:hover{background:var(--bg-card);color:var(--tx-1);}
-.settings-nav-btn.on{background:rgba(139,92,246,.1);color:var(--pu-400);}
-.settings-section{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:12px;}
-.settings-sec-title{font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:14px;}
-.settings-row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd);}
-.settings-row:last-child{border-bottom:none;padding-bottom:0;}
-.settings-row-lbl{font-size:13px;font-weight:500;color:var(--tx-1);}
-.settings-row-sub{font-size:11px;color:var(--tx-3);margin-top:2px;}
-.settings-input{background:var(--bg-input);border:1px solid var(--bd);border-radius:6px;padding:7px 12px;color:var(--tx-1);font-size:13px;outline:none;min-width:200px;transition:border-color var(--t);}
-.settings-input:focus{border-color:var(--pu-500);}
-.toggle{width:38px;height:20px;border-radius:20px;border:none;cursor:pointer;position:relative;transition:background var(--t);}
-.toggle.on{background:var(--pu-500);}
-.toggle.off{background:rgba(255,255,255,.2);}
-.toggle::after{content:'';position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform var(--t);}
-.toggle.on::after{transform:translateX(18px);}
-
-/* Help */
-.help-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
-.help-card{background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r);padding:18px;cursor:pointer;transition:all var(--t-md);}
-.help-card:hover{border-color:var(--bd-act);box-shadow:var(--sh-glow);}
-.help-card-ico{font-size:24px;margin-bottom:10px;}
-.help-card-title{font-size:14px;font-weight:700;color:var(--tx-1);margin-bottom:4px;}
-.help-card-desc{font-size:12px;color:var(--tx-2);line-height:1.5;}
-.help-articles{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-.help-art{display:flex;align-items:center;gap:10px;padding:11px 13px;background:var(--bg-card);border:1px solid var(--bd);border-radius:var(--r-sm);cursor:pointer;transition:all var(--t);}
-.help-art:hover{border-color:var(--bd-h);}
-.help-art-ico{font-size:14px;flex-shrink:0;}
-.help-art-title{font-size:12.5px;font-weight:500;color:var(--tx-1);}
-
-/* AI Analysis */
-.ai-analysis-grid{display:grid;grid-template-columns:1fr 296px;gap:14px;}
-.ai-rec-item{display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--bg-base);border:1px solid var(--bd);border-radius:var(--r-sm);margin-bottom:7px;transition:all var(--t);}
-.ai-rec-item:hover{border-color:var(--bd-h);}
-.ai-rec-nm{font-size:13px;font-weight:600;color:var(--tx-1);}
-.ai-rec-conf{font-size:11px;color:var(--tx-3);margin-top:1px;}
-.ai-action-pill{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;}
-.pill-buy{background:rgba(16,185,129,.14);color:var(--gr-400);}
-.pill-hold{background:rgba(245,158,11,.12);color:var(--ye-400);}
-.pill-sell{background:rgba(239,68,68,.12);color:var(--re-400);}
-
-/* Portfolio full */
-.port-tabs{display:flex;gap:3px;background:var(--bg-elevated);border-radius:8px;padding:3px;width:fit-content;margin-bottom:12px;}
-.port-tab{padding:5px 14px;border-radius:6px;border:none;background:none;color:var(--tx-3);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--t);}
-.port-tab.on{background:var(--bg-card);color:var(--tx-1);box-shadow:0 1px 4px rgba(0,0,0,.2);}
-.port-page-grid{display:grid;grid-template-columns:1fr 260px;gap:14px;}
-
-/* Mobile nav */
-.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--bg-glass);border-top:1px solid var(--bd);backdrop-filter:blur(20px);z-index:200;padding:6px 0 env(safe-area-inset-bottom,0);}
-.mob-nav-items{display:flex;justify-content:space-around;align-items:center;}
-.mob-btn{display:flex;flex-direction:column;align-items:center;gap:3px;padding:5px 10px;border:none;background:none;color:var(--tx-3);font-size:10px;font-weight:500;cursor:pointer;transition:color var(--t);min-width:52px;}
-.mob-btn.on,.mob-btn:hover{color:var(--pu-400);}
-.mob-ico{font-size:18px;line-height:1;}
-
-/* Filter bar */
-.filter-bar{display:flex;gap:4px;background:var(--bg-elevated);border-radius:8px;padding:3px;width:fit-content;}
-.filter-btn{padding:5px 14px;border-radius:6px;border:none;background:none;color:var(--tx-3);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--t);}
-.filter-btn.on{background:var(--bg-card);color:var(--tx-1);box-shadow:0 1px 4px rgba(0,0,0,.2);}
-
-/* Toast */
-.toast-host{position:fixed;bottom:20px;right:20px;z-index:999;display:flex;flex-direction:column;gap:7px;pointer-events:none;}
-.toast{background:var(--bg-elevated);border:1px solid var(--bd-h);border-radius:10px;padding:10px 16px;font-size:12px;font-weight:500;color:var(--tx-1);box-shadow:var(--sh-elev);backdrop-filter:blur(16px);display:flex;align-items:center;gap:9px;pointer-events:all;animation:fadeUp .25s ease both;}
-.toast-ico{font-size:15px;}
-.toast-title{font-weight:600;}
-.toast-msg{font-size:11px;color:var(--tx-2);margin-top:1px;}
-
-/* Animations */
-.fade-page{animation:fadeUp .2s ease both;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(5px);}to{opacity:1;transform:none;}}
-
-/* Chart tooltip */
-.chart-tip{background:rgba(8,10,20,.96);border:1px solid var(--bd-h);border-radius:8px;padding:8px 12px;font-size:12px;box-shadow:var(--sh-elev);}
-.tip-lbl{color:var(--tx-2);margin-bottom:4px;font-size:11px;}
-.tip-row{display:flex;align-items:center;gap:6px;margin-top:2px;}
-.tip-dot{width:6px;height:6px;border-radius:50%;}
-.tip-val{color:var(--tx-1);font-weight:600;margin-left:auto;padding-left:8px;font-family:'JetBrains Mono',monospace;}
+.rc{display:flex;flex-direction:column;gap:11px}
+.sys-ok{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--ok);margin-bottom:9px}
+.sys-d{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 6px var(--ok);animation:pulse 2s infinite}
+.sl-it{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;background:var(--bg0);border:1px solid var(--bd);border-radius:7px;margin-bottom:4px;transition:border-color var(--tr)}
+.sl-it:hover{border-color:var(--bdh)}
+.sl-nm{font-size:11.5px;font-weight:500;color:var(--t1)}
+.sl-dt{font-size:10px;color:var(--t3);font-family:'JetBrains Mono',monospace}
+.sl-rt{font-size:12px;font-weight:600}
+.rw-card{background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22);border-radius:var(--r);padding:11px 13px}
+.rw-hd{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.rw-l{font-size:11.5px;font-weight:700;color:var(--wrn)}
+.rw-v{font-size:14px;font-weight:800;color:var(--wrn);margin-bottom:4px}
+.rw-d{font-size:11px;color:var(--t2);line-height:1.5}
 
 /* Footer */
-.footer{border-top:1px solid var(--bd);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--tx-3);margin-top:auto;}
+.foot{border-top:1px solid var(--bd);padding:11px 17px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--t3);flex-shrink:0}
 
+/* Filter bar */
+.fbar{display:flex;gap:3px;background:var(--bg1);border-radius:8px;padding:3px;width:fit-content}
+.fb{padding:5px 13px;border-radius:6px;border:none;background:none;color:var(--t3);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--tr)}
+.fb.on{background:var(--card);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+
+/* Strategies */
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.stc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px;cursor:pointer;transition:all var(--trm);position:relative;overflow:hidden}
+.stc:hover{border-color:var(--bd-act);box-shadow:var(--shg);transform:translateY(-1px)}
+.stc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;background:var(--acc);transition:opacity var(--tr);border-radius:var(--r) var(--r) 0 0}
+.stc:hover::before{opacity:1}
+.stc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px}
+.stc-nm{font-size:14px;font-weight:700;color:var(--t1)}
+.stc-tp{font-size:10px;background:rgba(139,92,246,.12);color:var(--pu4);padding:2px 7px;border-radius:4px;font-weight:600}
+.stc-m{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:9px;padding-top:9px;border-top:1px solid var(--bd)}
+.stc-ml{font-size:9.5px;color:var(--t3);text-transform:uppercase;letter-spacing:.3px;margin-bottom:1px}
+.stc-mv{font-size:13px;font-weight:700}
+.st-ac{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;margin-top:3px}
+.st-a{background:rgba(16,185,129,.12);color:var(--gr4)}
+.st-p{background:rgba(245,158,11,.1);color:var(--ye4)}
+.st-i{background:rgba(239,68,68,.1);color:var(--re4)}
+
+/* Reports */
+.rr{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--card);border:1px solid var(--bd);border-radius:var(--rsm);margin-bottom:7px;transition:all var(--tr)}
+.rr:hover{border-color:var(--bdh);box-shadow:var(--sh)}
+.rr-ic{font-size:19px;margin-right:11px;flex-shrink:0}
+.rr-inf{flex:1}
+.rr-nm{font-size:13px;font-weight:600;color:var(--t1)}
+.rr-dt{font-size:11px;color:var(--t3);margin-top:1px}
+.rr-ds{font-size:11.5px;color:var(--t2);margin-top:2px}
+.rr-pdf{display:flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2);border-radius:6px;color:var(--re4);font-size:11px;font-weight:600;cursor:pointer;transition:background var(--tr)}
+.rr-pdf:hover{background:rgba(239,68,68,.18)}
+
+/* Market Regime page */
+.rpg{display:grid;grid-template-columns:310px 1fr;gap:13px}
+.reg-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:11px}
+.rs{background:var(--bg0);border:1px solid var(--bd);border-radius:var(--rsm);padding:10px}
+.rs-l{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.rs-v{font-size:16px;font-weight:800}
+.rs-d{font-size:10px;color:var(--t3);margin-top:1px}
+.rig{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.ri{background:var(--card);border:1px solid var(--bd);border-radius:var(--rsm);padding:11px}
+.ri-l{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.4px;margin-bottom:3px}
+.ri-v{font-size:15px;font-weight:800}
+.ri-c{font-size:10.5px;font-weight:500;display:flex;align-items:center;gap:3px;margin-top:2px}
+
+/* Settings */
+.setg{display:grid;grid-template-columns:185px 1fr;gap:13px}
+.sn-b{display:flex;align-items:center;gap:9px;padding:7px 11px;border-radius:var(--rsm);border:none;background:none;color:var(--t2);font-size:13px;font-weight:500;width:100%;text-align:left;cursor:pointer;transition:all var(--tr)}
+.sn-b:hover{background:var(--card);color:var(--t1)}
+.sn-b.on{background:rgba(139,92,246,.1);color:var(--pu4)}
+.ss{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:17px;margin-bottom:11px}
+.ss-t{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:13px}
+.set-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--bd)}
+.set-row:last-child{border-bottom:none;padding-bottom:0}
+.set-rl{font-size:13px;font-weight:500;color:var(--t1)}
+.set-rs{font-size:11px;color:var(--t3);margin-top:2px}
+.set-inp{background:var(--inp);border:1px solid var(--bd);border-radius:6px;padding:7px 11px;color:var(--t1);font-size:12.5px;outline:none;min-width:190px;transition:border-color var(--tr)}
+.set-inp:focus{border-color:var(--pu5)}
+
+/* Help */
+.hg{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.hc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:17px;cursor:pointer;transition:all var(--trm)}
+.hc:hover{border-color:var(--bd-act);box-shadow:var(--shg)}
+.hc-ic{font-size:24px;margin-bottom:9px}
+.hc-t{font-size:14px;font-weight:700;color:var(--t1);margin-bottom:4px}
+.hc-d{font-size:12px;color:var(--t2);line-height:1.5}
+.ha{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.ha-it{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--card);border:1px solid var(--bd);border-radius:var(--rsm);cursor:pointer;transition:all var(--tr)}
+.ha-it:hover{border-color:var(--bdh)}
+.ha-ic{font-size:14px;flex-shrink:0}
+.ha-t{font-size:12.5px;font-weight:500;color:var(--t1)}
+
+/* AI Analysis page */
+.aag{display:grid;grid-template-columns:1fr 290px;gap:13px}
+.ar-it{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;background:var(--bg0);border:1px solid var(--bd);border-radius:var(--rsm);margin-bottom:6px;transition:all var(--tr)}
+.ar-it:hover{border-color:var(--bdh)}
+.ar-nm{font-size:13px;font-weight:600;color:var(--t1)}
+.ar-cf{font-size:11px;color:var(--t3);margin-top:1px}
+.ap{font-size:11px;font-weight:700;padding:3px 8px;border-radius:20px}
+.ap-b{background:rgba(16,185,129,.14);color:var(--gr4)}
+.ap-h{background:rgba(245,158,11,.12);color:var(--ye4)}
+.ap-s{background:rgba(239,68,68,.12);color:var(--re4)}
+
+/* Portfolio page */
+.ptabs{display:flex;gap:3px;background:var(--bg1);border-radius:8px;padding:3px;width:fit-content;margin-bottom:12px}
+.ptab{padding:5px 13px;border-radius:6px;border:none;background:none;color:var(--t3);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--tr)}
+.ptab.on{background:var(--card);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.ppg{display:grid;grid-template-columns:1fr 252px;gap:13px}
+
+/* Backtest */
+.btg{display:grid;grid-template-columns:290px 1fr;gap:13px}
+.bt-frm{display:flex;flex-direction:column;gap:10px}
+.dr{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+
+/* Toast */
+.toast-host{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
+.toast{background:var(--bg1);border:1px solid var(--bdh);border-radius:10px;padding:9px 14px;font-size:12px;font-weight:500;color:var(--t1);box-shadow:var(--she);backdrop-filter:blur(16px);display:flex;align-items:center;gap:9px;pointer-events:all;animation:fadeUp .22s ease both}
+.toast-ic{font-size:15px;flex-shrink:0}
+.toast-t{font-weight:600}
+.toast-m{font-size:11px;color:var(--t2);margin-top:1px}
+
+/* Mobile nav */
+.mob{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--glass);border-top:1px solid var(--bd);backdrop-filter:blur(20px);z-index:300;padding:6px 0 env(safe-area-inset-bottom,0)}
+.mob-row{display:flex;justify-content:space-around}
+.mob-b{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 10px;border:none;background:none;color:var(--t3);font-size:10px;font-weight:500;cursor:pointer;transition:color var(--tr);min-width:52px}
+.mob-b.on,.mob-b:hover{color:var(--pu4)}
+.mob-ic{font-size:19px;line-height:1}
+
+/* Animations */
+.fp{animation:fadeUp .18s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+
+/* Responsive */
 @media(max-width:900px){
-  .shell{grid-template-columns:1fr;}
-  .sb{display:none;}
-  .mob-nav{display:block;}
-  .page{padding-bottom:72px;}
-  .stats-row{grid-template-columns:repeat(2,1fr);}
-  .charts-grid{grid-template-columns:1fr;}
-  .mid-grid{grid-template-columns:1fr;}
-  .strats-grid{grid-template-columns:1fr;}
-  .help-grid{grid-template-columns:1fr 1fr;}
-  .settings-grid{grid-template-columns:1fr;}
-  .regime-page-grid{grid-template-columns:1fr;}
-  .port-page-grid{grid-template-columns:1fr;}
-  .ai-analysis-grid{grid-template-columns:1fr;}
-  .bt-grid{grid-template-columns:1fr;}
-  .opt-controls{grid-template-columns:1fr 1fr;}
-  .help-articles{grid-template-columns:1fr;}
+  .shell{grid-template-columns:1fr}
+  .sb{display:none}
+  .mob{display:block}
+  .pg{padding:12px;padding-bottom:72px;gap:11px}
+  .sr{grid-template-columns:repeat(2,1fr)}
+  .cg{grid-template-columns:1fr}
+  .mg{grid-template-columns:1fr}
+  .sg{grid-template-columns:1fr}
+  .hg{grid-template-columns:1fr 1fr}
+  .setg{grid-template-columns:1fr}
+  .rpg{grid-template-columns:1fr}
+  .ppg{grid-template-columns:1fr}
+  .btg{grid-template-columns:1fr}
+  .aag{grid-template-columns:1fr}
+  .opt-ctrl{grid-template-columns:1fr 1fr}
+  .opt-body{grid-template-columns:1fr}
+  .ha{grid-template-columns:1fr}
+  .pw-b{grid-template-columns:1fr}
+  .pm-row{grid-template-columns:repeat(3,1fr)}
+  .bp-grid{grid-template-columns:repeat(3,1fr)}
+  .hd-logo .hd-brand{display:none}
+  .hd-search{max-width:200px}
+}
+@media(max-width:480px){
+  .sr{grid-template-columns:1fr 1fr}
+  .hg{grid-template-columns:1fr}
+  .pm-row{grid-template-columns:repeat(2,1fr)}
 }
 </style>
 </head>
-<body>
-<div id="root"></div>
-<script type="text/javascript">
-const {useState,useEffect,useCallback,useRef} = React;
-
-/* ── Pure SVG Chart System (no Recharts) ── */
-const useSize = (ref) => {
-  const [size, setSize] = React.useState({w:800,h:300});
-  React.useEffect(() => {
-    if (!ref.current) return;
-    const ro = new ResizeObserver(([e]) => setSize({w:e.contentRect.width, h:e.contentRect.height}));
-    ro.observe(ref.current);
-    return () => ro.disconnect();
-  }, []);
-  return size;
-};
-
-const ResponsiveContainer = ({width, height, children}) => {
-  const ref = React.useRef(null);
-  const [w, setW] = React.useState(600);
-  React.useEffect(() => {
-    if (!ref.current) return;
-    const ro = new ResizeObserver(([e]) => setW(e.contentRect.width));
-    ro.observe(ref.current);
-    return () => ro.disconnect();
-  }, []);
-  const child = typeof children === 'function' ? children({width:w, height}) : children;
-  return React.createElement('div', {ref, style:{width:'100%', height, position:'relative'}},
-    React.cloneElement(child, {_w: w, _h: height})
-  );
-};
-
-// Shared SVG chart helpers
-const getMinMax = (data, keys) => {
-  let min = Infinity, max = -Infinity;
-  data.forEach(d => keys.forEach(k => { if(d[k]!==undefined){min=Math.min(min,d[k]);max=Math.max(max,d[k]);}}));
-  return {min: min===Infinity?0:min, max: max===-Infinity?100:max};
-};
-
-const AreaChart = ({data=[], children, margin={top:4,right:8,bottom:20,left:36}, _w=600, _h=220}) => {
-  const W = _w, H = _h;
-  const ml=margin.left||36, mr=margin.right||8, mt=margin.top||4, mb=margin.bottom||20;
-  const cw = W-ml-mr, ch = H-mt-mb;
-  const childArr = React.Children.toArray(children);
-  const areas = childArr.filter(c=>c.type===Area);
-  const xAxisC = childArr.find(c=>c.type===XAxis);
-  const yAxisC = childArr.find(c=>c.type===YAxis);
-  const gridC = childArr.find(c=>c.type===CartesianGrid);
-  const keys = areas.map(a=>a.props.dataKey);
-  const {min, max} = getMinMax(data, keys);
-  const range = max - min || 1;
-  const xScale = (i) => (i / (data.length-1)) * cw;
-  const yScale = (v) => ch - ((v-min)/range)*ch;
-  const xLabels = xAxisC ? [...new Set(data.map(d=>d[xAxisC.props.dataKey||'w']))] : [];
-  const yTicks = yAxisC?.props?.hide ? [] : [0,0.25,0.5,0.75,1].map(t=>min+t*range);
-  return React.createElement('svg', {width:W, height:H, style:{overflow:'visible'}},
-    React.createElement('defs', null,
-      areas.map(a => {
-        const id = 'grad_'+a.props.dataKey;
-        const color = a.props.stroke||'#8b5cf6';
-        return React.createElement('linearGradient',{key:id,id,x1:'0',y1:'0',x2:'0',y2:'1'},
-          React.createElement('stop',{offset:'5%',stopColor:color,stopOpacity:.3}),
-          React.createElement('stop',{offset:'95%',stopColor:color,stopOpacity:0})
-        );
-      })
-    ),
-    React.createElement('g', {transform:`translate(${ml},${mt})`},
-      gridC && [0.25,0.5,0.75,1].map(t=>
-        React.createElement('line',{key:t,x1:0,y1:ch*t,x2:cw,y2:ch*t,stroke:'rgba(255,255,255,.04)',strokeWidth:1})
-      ),
-      yAxisC && !yAxisC.props.hide && yTicks.map((v,i)=>
-        React.createElement('text',{key:i,x:-4,y:yScale(v)+4,textAnchor:'end',fill:'var(--tx-3)',fontSize:10},
-          yAxisC.props.tickFormatter ? yAxisC.props.tickFormatter(v) : Math.round(v)
-        )
-      ),
-      xAxisC && xLabels.map((lbl,i)=>{
-        const idx = data.findIndex(d=>d[xAxisC.props.dataKey||'w']===lbl);
-        return React.createElement('text',{key:lbl,x:xScale(idx),y:ch+14,textAnchor:'middle',fill:'var(--tx-3)',fontSize:10},lbl);
-      }),
-      areas.map(a => {
-        const key = a.props.dataKey;
-        const color = a.props.stroke||'#8b5cf6';
-        const pts = data.map((d,i)=>`${xScale(i)},${yScale(d[key]||0)}`).join(' ');
-        const areapts = `0,${ch} ${pts} ${xScale(data.length-1)},${ch}`;
-        return React.createElement('g',{key:key},
-          React.createElement('polygon',{points:areapts,fill:`url(#grad_${key})`,opacity:.8}),
-          React.createElement('polyline',{points:pts,fill:'none',stroke:color,strokeWidth:a.props.strokeWidth||2,strokeDasharray:a.props.strokeDasharray||'none',strokeLinejoin:'round',strokeLinecap:'round'})
-        );
-      })
-    )
-  );
-};
-
-const Area = (props) => null;
-const XAxis = (props) => null;
-const YAxis = (props) => null;
-const CartesianGrid = (props) => null;
-const Tooltip = (props) => null;
-const ReferenceLine = (props) => null;
-const LineChart = AreaChart;
-const Line = Area;
-
-const BarChart = ({data=[], children, margin={top:4,right:8,bottom:20,left:36}, _w=600, _h=220}) => {
-  const W = _w, H = _h;
-  const ml=margin.left||36, mr=margin.right||8, mt=margin.top||4, mb=margin.bottom||20;
-  const cw = W-ml-mr, ch = H-mt-mb;
-  const childArr = React.Children.toArray(children);
-  const bars = childArr.filter(c=>c.type===Bar);
-  const xAxisC = childArr.find(c=>c.type===XAxis);
-  const yAxisC = childArr.find(c=>c.type===YAxis);
-  const keys = bars.map(b=>b.props.dataKey);
-  const stackIds = [...new Set(bars.map(b=>b.props.stackId).filter(Boolean))];
-  const maxVal = data.reduce((mx,d)=>{
-    const stacks = {};
-    bars.forEach(b=>{if(b.props.stackId){stacks[b.props.stackId]=(stacks[b.props.stackId]||0)+(d[b.props.dataKey]||0);}});
-    return Math.max(mx,...Object.values(stacks),...keys.filter(k=>!bars.find(b=>b.props.dataKey===k&&b.props.stackId)).map(k=>d[k]||0));
-  }, 0) || 100;
-  const bw = cw / data.length;
-  const xLabels = [...new Set(data.map(d=>d[xAxisC?.props?.dataKey||'w']))];
-  const yTicks = [0,0.25,0.5,0.75,1].map(t=>t*maxVal);
-  return React.createElement('svg',{width:W,height:H},
-    React.createElement('g',{transform:`translate(${ml},${mt})`},
-      [0.25,0.5,0.75,1].map(t=>React.createElement('line',{key:t,x1:0,y1:ch*(1-t),x2:cw,y2:ch*(1-t),stroke:'rgba(255,255,255,.04)',strokeWidth:1})),
-      yAxisC && yTicks.map((v,i)=>React.createElement('text',{key:i,x:-4,y:ch*(1-v/maxVal)+4,textAnchor:'end',fill:'var(--tx-3)',fontSize:10},Math.round(v))),
-      data.map((d,di)=>{
-        const x = di*bw + bw*0.1;
-        const barW = bw*0.8;
-        let stackY = {};
-        return React.createElement('g',{key:di},
-          xAxisC && di%Math.ceil(data.length/6)===0 && React.createElement('text',{x:x+barW/2,y:ch+14,textAnchor:'middle',fill:'var(--tx-3)',fontSize:10},d[xAxisC.props.dataKey||'w']),
-          bars.map(b=>{
-            const key = b.props.dataKey;
-            const sid = b.props.stackId;
-            const val = d[key]||0;
-            const bh = (val/maxVal)*ch;
-            const by = sid ? (stackY[sid]||ch)-bh : ch-bh;
-            if(sid) stackY[sid] = by;
-            return React.createElement('rect',{key:key,x,y:by,width:barW,height:bh,fill:b.props.fill||'#8b5cf6',rx:1});
-          })
-        );
-      })
-    )
-  );
-};
-const Bar = (props) => null;
-const PieChart = (props) => null;
-const Pie = (props) => null;
-const Cell = (props) => null;
-
-
-/* ── Mock Data ── */
+<body><div id="root"></div>
+<script>
+/* ── DATA & UTILS ── */
+const R=React,{useState,useEffect,useCallback,useRef,useMemo}=R;
+const cx=(...a)=>a.filter(Boolean).join(' ');
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun'];
+
 const mkCurve=(n=55)=>Array.from({length:n},(_,i)=>{
-  const t=i/(n-1);
-  const base=40+(125-40)*t;
-  const noise=Math.sin(i*0.7)*3+Math.cos(i*1.3)*2;
-  const spy=80+32*t+Math.sin(i*0.5)*2;
-  return{w:MONTHS[Math.floor(i/(n/6))],equity:+(base+noise).toFixed(2),spy:+spy.toFixed(2)};
+  const t=i/(n-1),base=40+85*t;
+  return{w:MONTHS[Math.floor(i*6/n)],eq:+(base+Math.sin(i*.7)*3+Math.cos(i*1.3)*2).toFixed(1),spy:+(78+32*t+Math.sin(i*.5)*2).toFixed(1)};
 });
 const CURVE=mkCurve();
-const mkSpark=(seed,n=20)=>Array.from({length:n},(_,i)=>50+Math.sin(i*seed)*20+i*0.8);
+const mkSp=(s,n=20)=>Array.from({length:n},(_,i)=>50+Math.sin(i*s)*20+i*.8);
 
 const ALLOC=[
-  {name:'Equities',value:45,color:'#8b5cf6'},
-  {name:'Forex',value:25,color:'#60a5fa'},
-  {name:'Crypto',value:15,color:'#34d399'},
-  {name:'Commodities',value:10,color:'#fbbf24'},
-  {name:'Cash',value:5,color:'#6b7280'},
+  {name:'Equities',v:45,c:'#8b5cf6'},{name:'Forex',v:25,c:'#60a5fa'},
+  {name:'Crypto',v:15,c:'#34d399'},{name:'Commodities',v:10,c:'#fbbf24'},{name:'Cash',v:5,c:'#6b7280'}
 ];
 const REGIME=[
-  {name:'Bull',value:72,color:'#10b981'},
-  {name:'Neutral',value:18,color:'#60a5fa'},
-  {name:'Bear',value:10,color:'#ef4444'},
+  {name:'Bull',v:72,c:'#10b981'},{name:'Neutral',v:18,c:'#60a5fa'},{name:'Bear',v:10,c:'#ef4444'}
 ];
-const REGIME_HIST=Array.from({length:50},(_,i)=>({
-  w:MONTHS[Math.floor(i/8)],
-  bull:40+Math.sin(i*0.3)*20+10,
-  neutral:20+Math.cos(i*0.5)*10,
-  bear:10+Math.sin(i*0.8)*8,
+const RHIST=Array.from({length:48},(_,i)=>({
+  w:MONTHS[Math.floor(i*6/48)],bull:40+Math.sin(i*.3)*18+10,neutral:20+Math.cos(i*.5)*8,bear:8+Math.sin(i*.8)*6
 }));
-const STRATEGIES=[
-  {id:1,name:'Momentum Breakout',type:'Momentum',ret:'+34.67%',sharpe:1.67,dd:'-8.34%',status:'active',spark:mkSpark(0.8)},
-  {id:2,name:'Mean Reversion Pro',type:'Mean Rev',ret:'+15.34%',sharpe:1.34,dd:'-5.12%',status:'active',spark:mkSpark(1.2)},
-  {id:3,name:'ML Trend Following',type:'ML',ret:'+21.21%',sharpe:1.89,dd:'-6.78%',status:'active',spark:mkSpark(0.5)},
-  {id:4,name:'RSI Divergence',type:'Oscillator',ret:'-8.91%',sharpe:0.98,dd:'-12.3%',status:'paused',spark:mkSpark(1.8)},
-  {id:5,name:'Ichimoku Cloud',type:'Trend',ret:'+12.45%',sharpe:1.23,dd:'-7.89%',status:'active',spark:mkSpark(2.1)},
-  {id:6,name:'VWAP Strategy',type:'Volume',ret:'+9.32%',sharpe:1.05,dd:'-9.10%',status:'inactive',spark:mkSpark(0.3)},
+const STRATS=[
+  {id:1,nm:'Momentum Breakout',tp:'Momentum',ret:'+34.67%',sh:1.67,dd:'-8.34%',st:'active',sp:mkSp(.8)},
+  {id:2,nm:'Mean Reversion Pro',tp:'Mean Rev',ret:'+15.34%',sh:1.34,dd:'-5.12%',st:'active',sp:mkSp(1.2)},
+  {id:3,nm:'ML Trend Following',tp:'ML/AI',ret:'+21.21%',sh:1.89,dd:'-6.78%',st:'active',sp:mkSp(.5)},
+  {id:4,nm:'RSI Divergence',tp:'Oscillator',ret:'-8.91%',sh:.98,dd:'-12.3%',st:'paused',sp:mkSp(1.8)},
+  {id:5,nm:'Ichimoku Cloud',tp:'Trend',ret:'+12.45%',sh:1.23,dd:'-7.89%',st:'active',sp:mkSp(2.1)},
+  {id:6,nm:'VWAP Strategy',tp:'Volume',ret:'+9.32%',sh:1.05,dd:'-9.10%',st:'inactive',sp:mkSp(.3)},
 ];
 const HOLDINGS=[
-  {sym:'AAPL',type:'Equity',val:'$8,850.00',chg:'+2.45%',up:true},
-  {sym:'EURUSD',type:'Forex',val:'$7,230.00',chg:'-0.35%',up:false},
-  {sym:'BTCUSD',type:'Crypto',val:'$6,780.00',chg:'+3.21%',up:true},
+  {s:'AAPL',t:'Equity',v:'$8,850.00',c:'+2.45%',up:true},
+  {s:'EURUSD',t:'Forex',v:'$7,230.00',c:'-0.35%',up:false},
+  {s:'BTCUSD',t:'Crypto',v:'$6,780.00',c:'+3.21%',up:true},
 ];
 const REPORTS=[
-  {id:1,title:'Performance Report',date:'May 15, 2024 3:30 PM',desc:'Comprehensive performance analysis of all strategies.',ico:'📊'},
-  {id:2,title:'Backtest Report — Momentum Breakout',date:'May 15, 2024 11:45 AM',desc:'Detailed backtest results and analysis.',ico:'▶'},
-  {id:3,title:'Optimization Report — Grid Search',date:'May 15, 2024 6:45 PM',desc:'Parameter optimization results and recommendations.',ico:'⚙'},
-  {id:4,title:'AI Analysis Report',date:'May 14, 2024 9:20 AM',desc:'AI market analysis and strategy recommendations.',ico:'🤖'},
-  {id:5,title:'Portfolio Report',date:'May 17, 2024 5:10 PM',desc:'Portfolio performance and risk analysis.',ico:'💼'},
+  {id:1,tt:'Performance Report',dt:'May 15, 2024 3:30 PM',ds:'Comprehensive performance analysis of all strategies.',ic:'📊'},
+  {id:2,tt:'Backtest Report — Momentum Breakout',dt:'May 15, 2024 11:45 AM',ds:'Detailed backtest results and analysis.',ic:'▶'},
+  {id:3,tt:'Optimization Report — Grid Search',dt:'May 15, 2024 6:45 PM',ds:'Parameter optimization results and recommendations.',ic:'⚙'},
+  {id:4,tt:'AI Analysis Report',dt:'May 14, 2024 9:20 AM',ds:'AI market analysis and strategy recommendations.',ic:'🤖'},
+  {id:5,tt:'Portfolio Report',dt:'May 17, 2024 5:10 PM',ds:'Portfolio performance and risk analysis.',ic:'💼'},
 ];
 
-const cx=(...a)=>a.filter(Boolean).join(' ');
-
-/* ── Toast ── */
-let _tid=0;
-const _bus={ls:[],emit(t){this.ls.forEach(f=>f(t));}};
-const toast={
-  _s(ico,title,msg){_bus.emit({id:++_tid,ico,title,msg});},
-  success(t,m){this._s('✅',t,m);},info(t,m){this._s('ℹ️',t,m);},
-  warn(t,m){this._s('⚠️',t,m);},error(t,m){this._s('❌',t,m);},
-};
+/* ── TOAST ── */
+let _tid=0;const _bus={ls:[],emit(t){this.ls.forEach(f=>f(t))}};
+const toast={_s(i,t,m){_bus.emit({id:++_tid,i,t,m})},
+  success(t,m){this._s('✅',t,m)},info(t,m){this._s('ℹ️',t,m)},
+  warn(t,m){this._s('⚠️',t,m)},error(t,m){this._s('❌',t,m)}};
 const ToastHost=()=>{
   const[ts,setTs]=useState([]);
   useEffect(()=>{
-    const fn=t=>{setTs(p=>[...p,t]);setTimeout(()=>setTs(p=>p.filter(x=>x.id!==t.id)),3500);};
-    _bus.ls.push(fn);return()=>{_bus.ls=_bus.ls.filter(f=>f!==fn);};
+    const fn=t=>{setTs(p=>[...p,t]);setTimeout(()=>setTs(p=>p.filter(x=>x.id!==t.id)),3400)};
+    _bus.ls.push(fn);return()=>{_bus.ls=_bus.ls.filter(f=>f!==fn)};
   },[]);
-  return React.createElement('div',{className:'toast-host'},
-    ts.map(t=>React.createElement('div',{key:t.id,className:'toast'},
-      React.createElement('span',{className:'toast-ico'},t.ico),
-      React.createElement('div',null,
-        React.createElement('div',{className:'toast-title'},t.title),
-        t.msg&&React.createElement('div',{className:'toast-msg'},t.msg)
+  return R.createElement('div',{className:'toast-host'},
+    ts.map(t=>R.createElement('div',{key:t.id,className:'toast'},
+      R.createElement('span',{className:'toast-ic'},t.i),
+      R.createElement('div',null,
+        R.createElement('div',{className:'toast-t'},t.t),
+        t.m&&R.createElement('div',{className:'toast-m'},t.m)
       )
     ))
-  );
+  )
 };
 
-/* ── Chart Tooltip ── */
-const ChartTip=({active,payload,label})=>{
-  if(!active||!payload?.length)return null;
-  return React.createElement('div',{className:'chart-tip'},
-    React.createElement('div',{className:'tip-lbl'},label),
-    payload.map(p=>React.createElement('div',{key:p.name,className:'tip-row'},
-      React.createElement('div',{className:'tip-dot',style:{background:p.color}}),
-      React.createElement('span',{style:{color:'var(--tx-2)',fontSize:11}},p.name||p.dataKey),
-      React.createElement('span',{className:'tip-val'},typeof p.value==='number'?p.value.toFixed(2):p.value)
-    ))
-  );
+/* ── SVG SPARKLINE ── */
+const Spark=({data=[],color='#8b5cf6',h=36})=>{
+  if(data.length<2)return R.createElement('div',{style:{height:h}});
+  const mn=Math.min(...data),mx=Math.max(...data),rng=mx-mn||1;
+  const W=100,H=h;
+  const pts=data.map((v,i)=>`${i/(data.length-1)*W},${H-((v-mn)/rng)*(H-2)+1}`).join(' ');
+  const id='sp'+color.replace(/[^a-z0-9]/gi,'');
+  return R.createElement('svg',{width:'100%',height:H,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block'}},
+    R.createElement('defs',null,R.createElement('linearGradient',{id,x1:'0',y1:'0',x2:'0',y2:'1'},
+      R.createElement('stop',{offset:'0%',stopColor:color,stopOpacity:.28}),
+      R.createElement('stop',{offset:'100%',stopColor:color,stopOpacity:0})
+    )),
+    R.createElement('polygon',{points:`0,${H} ${pts} ${W},${H}`,fill:`url(#${id})`}),
+    R.createElement('polyline',{points:pts,fill:'none',stroke:color,strokeWidth:1.5,strokeLinejoin:'round',strokeLinecap:'round'})
+  )
 };
 
-/* ── SparkLine ── */
-const SparkLine=({data=[],color='#8b5cf6',height=36})=>{
-  if(data.length<2)return React.createElement('div',{style:{height}});
-  const min=Math.min(...data),max=Math.max(...data),range=max-min||1;
-  const W=100,H=height;
-  const pts=data.map((v,i)=>`${(i/(data.length-1))*W},${H-((v-min)/range)*(H-2)+1}`).join(' ');
-  const id=`sg${color.replace(/[^a-z0-9]/gi,'')}`;
-  return React.createElement('svg',{width:'100%',height:H,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block'}},
-    React.createElement('defs',null,
-      React.createElement('linearGradient',{id,x1:'0',y1:'0',x2:'0',y2:'1'},
-        React.createElement('stop',{offset:'0%',stopColor:color,stopOpacity:.28}),
-        React.createElement('stop',{offset:'100%',stopColor:color,stopOpacity:0})
-      )
-    ),
-    React.createElement('polygon',{points:`0,${H} ${pts} ${W},${H}`,fill:`url(#${id})`}),
-    React.createElement('polyline',{points:pts,fill:'none',stroke:color,strokeWidth:1.5,strokeLinejoin:'round',strokeLinecap:'round'})
-  );
-};
-
-/* ── Donut ── */
+/* ── SVG DONUT ── */
 const Donut=({data,size=120,iR=38,oR=56})=>{
-  const total=data.reduce((s,d)=>s+d.value,0);
+  const total=data.reduce((s,d)=>s+d.v,0);
   let angle=-90;
   const paths=data.map(d=>{
-    const pct=d.value/total;
-    const a1=angle*Math.PI/180;
-    const a2=(angle+pct*360-0.5)*Math.PI/180;
+    const pct=d.v/total,a1=angle*Math.PI/180,a2=(angle+pct*360-.5)*Math.PI/180;
     const cx=size/2,cy=size/2;
     const x1=cx+oR*Math.cos(a1),y1=cy+oR*Math.sin(a1);
     const x2=cx+oR*Math.cos(a2),y2=cy+oR*Math.sin(a2);
     const x3=cx+iR*Math.cos(a2),y3=cy+iR*Math.sin(a2);
     const x4=cx+iR*Math.cos(a1),y4=cy+iR*Math.sin(a1);
-    const lg=pct>0.5?1:0;
+    const lg=pct>.5?1:0;
     const path=`M${x1} ${y1} A${oR} ${oR} 0 ${lg} 1 ${x2} ${y2} L${x3} ${y3} A${iR} ${iR} 0 ${lg} 0 ${x4} ${y4} Z`;
     angle+=pct*360;
-    return{path,color:d.color};
+    return{path,c:d.c};
   });
-  return React.createElement('svg',{width:size,height:size,viewBox:`0 0 ${size} ${size}`},
-    paths.map((p,i)=>React.createElement('path',{key:i,d:p.path,fill:p.color,stroke:'rgba(0,0,0,.35)',strokeWidth:.5}))
-  );
+  return R.createElement('svg',{width:size,height:size,viewBox:`0 0 ${size} ${size}`},
+    paths.map((p,i)=>R.createElement('path',{key:i,d:p.path,fill:p.c,stroke:'rgba(0,0,0,.3)',strokeWidth:.5}))
+  )
 };
 
-/* ── Surface Chart ── */
-const SurfaceChart=()=>{
-  const rows=12,cols=12;
-  const quads=[];
-  for(let r=0;r<rows-1;r++){
-    for(let c=0;c<cols-1;c++){
-      const pts=(ri,ci)=>{
-        const x=(ci/(cols-1))*84+8;
-        const z=ri/(rows-1);
-        const cx2=ci/(cols-1);
-        const peak=1-Math.pow(cx2-0.5,2)*4-Math.pow(z-0.4,2)*3;
-        const y=62-peak*48+z*12;
-        return{x,y,shade:Math.max(0,Math.min(1,peak))};
-      };
-      const a=pts(r,c),b=pts(r,c+1),cc=pts(r+1,c),d=pts(r+1,c+1);
-      const sh=(a.shade+b.shade+cc.shade+d.shade)/4;
-      const hue=Math.round(sh*300);
-      const light=30+sh*35;
-      quads.push({
-        path:`M${a.x} ${a.y} L${b.x} ${b.y} L${d.x} ${d.y} L${cc.x} ${cc.y} Z`,
-        color:`hsl(${hue},90%,${light}%)`,z:sh
+/* ── SVG LINE CHART ── */
+const LineChart=({data,keys,colors,height=210,showGrid=true,showX=true,showY=true,dashed=[]})=>{
+  const W=100,H=100;// viewBox units
+  const ml=showY?8:2,mr=2,mt=2,mb=showX?12:2;
+  const cw=W-ml-mr,ch=H-mt-mb;
+  const allVals=data.flatMap(d=>keys.map(k=>d[k]||0));
+  const mn=Math.min(...allVals),mx=Math.max(...allVals),rng=mx-mn||1;
+  const xS=i=>ml+(i/(data.length-1))*cw;
+  const yS=v=>mt+ch-((v-mn)/rng)*ch;
+  const xLabels=[...new Set(data.map(d=>d.w))];
+  const yTicks=[0,.25,.5,.75,1].map(t=>mn+t*rng);
+  const id=k=>'lc'+k+Math.random().toString(36).slice(2,5);
+  return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'visible'}},
+    R.createElement('defs',null,
+      keys.map((k,ki)=>R.createElement('linearGradient',{key:k,id:'lg'+k,x1:'0',y1:'0',x2:'0',y2:'1'},
+        R.createElement('stop',{offset:'5%',stopColor:colors[ki],stopOpacity:.28}),
+        R.createElement('stop',{offset:'95%',stopColor:colors[ki],stopOpacity:0})
+      ))
+    ),
+    showGrid&&[.25,.5,.75,1].map(t=>R.createElement('line',{key:t,x1:ml,y1:mt+ch*(1-t),x2:W-mr,y2:mt+ch*(1-t),stroke:'rgba(255,255,255,.04)',strokeWidth:.3})),
+    showY&&yTicks.filter((_,i)=>i>0).map((v,i)=>R.createElement('text',{key:i,x:ml-1,y:yS(v)+.8,textAnchor:'end',fill:'var(--t3)',fontSize:3},`${Math.round(v)}%`)),
+    showX&&xLabels.map((lb,i)=>{
+      const idx=data.findIndex(d=>d.w===lb);
+      return R.createElement('text',{key:lb,x:xS(idx),y:H-1,textAnchor:'middle',fill:'var(--t3)',fontSize:3},lb)
+    }),
+    keys.map((k,ki)=>{
+      const pts=data.map((d,i)=>`${xS(i)},${yS(d[k]||0)}`).join(' ');
+      const apts=`${ml},${mt+ch} ${pts} ${xS(data.length-1)},${mt+ch}`;
+      const isDash=dashed.includes(k);
+      return R.createElement('g',{key:k},
+        !isDash&&R.createElement('polygon',{points:apts,fill:`url(#lg${k})`,opacity:.9}),
+        R.createElement('polyline',{points:pts,fill:'none',stroke:colors[ki],strokeWidth:isDash?.5:.7,strokeDasharray:isDash?'2 1.5':'none',strokeLinejoin:'round',strokeLinecap:'round',opacity:isDash?.5:1})
+      )
+    })
+  )
+};
+
+/* ── SVG BAR CHART ── */
+const BarChart=({data,keys,colors,height=200})=>{
+  const W=100,H=100,ml=8,mr=2,mt=2,mb=12,cw=W-ml-mr,ch=H-mt-mb;
+  const maxV=data.reduce((mx,d)=>{
+    const sv={};keys.forEach(k=>{sv[k]=(sv[k]||0)+(d[k]||0)});
+    return Math.max(mx,...Object.values(sv));
+  },0)||100;
+  const bw=cw/data.length,xLabels=[...new Set(data.map(d=>d.w))];
+  return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'visible'}},
+    [.25,.5,.75,1].map(t=>R.createElement('line',{key:t,x1:ml,y1:mt+ch*(1-t),x2:W-mr,y2:mt+ch*(1-t),stroke:'rgba(255,255,255,.04)',strokeWidth:.3})),
+    [.25,.5,.75,1].map(t=>R.createElement('text',{key:t,x:ml-1,y:mt+ch*(1-t)+.8,textAnchor:'end',fill:'var(--t3)',fontSize:3},Math.round(t*maxV))),
+    data.map((d,di)=>{
+      const x=ml+di*bw+bw*.1,bww=bw*.8;
+      let sy=mt+ch;
+      const bars=keys.map((k,ki)=>{
+        const bh=(d[k]||0)/maxV*ch;
+        sy-=bh;
+        return R.createElement('rect',{key:k,x,y:sy,width:bww,height:bh,fill:colors[ki],rx:.5})
       });
-    }
+      return R.createElement('g',{key:di},
+        bars,
+        di%Math.ceil(data.length/6)===0&&R.createElement('text',{x:x+bww/2,y:H-1,textAnchor:'middle',fill:'var(--t3)',fontSize:3},d.w)
+      )
+    })
+  )
+};
+
+/* ── 3D SURFACE ── */
+const Surface=()=>{
+  const rows=13,cols=13,quads=[];
+  for(let r=0;r<rows-1;r++)for(let c=0;c<cols-1;c++){
+    const pt=(ri,ci)=>{
+      const x=ci/(cols-1)*84+8,z=ri/(rows-1),cx2=ci/(cols-1);
+      const pk=1-Math.pow(cx2-.5,2)*4-Math.pow(z-.4,2)*3;
+      return{x,y:62-pk*48+z*12,sh:Math.max(0,Math.min(1,pk))};
+    };
+    const a=pt(r,c),b=pt(r,c+1),cc=pt(r+1,c),d=pt(r+1,c+1);
+    const sh=(a.sh+b.sh+cc.sh+d.sh)/4;
+    quads.push({path:`M${a.x} ${a.y} L${b.x} ${b.y} L${d.x} ${d.y} L${cc.x} ${cc.y} Z`,c:`hsl(${Math.round(sh*300)},90%,${30+sh*35}%)`,z:sh});
   }
   quads.sort((a,b)=>a.z-b.z);
-  return React.createElement('svg',{width:'100%',height:'100%',viewBox:'0 0 100 80',preserveAspectRatio:'xMidYMid meet'},
-    quads.map((q,i)=>React.createElement('path',{key:i,d:q.path,fill:q.color,stroke:'rgba(0,0,0,.3)',strokeWidth:.15}))
-  );
+  return R.createElement('svg',{width:'100%',height:'100%',viewBox:'0 0 100 80',preserveAspectRatio:'xMidYMid meet'},
+    quads.map((q,i)=>R.createElement('path',{key:i,d:q.path,fill:q.c,stroke:'rgba(0,0,0,.28)',strokeWidth:.15}))
+  )
 };
 
 /* ── NAV ── */
 const NAV=[
-  {id:'dashboard',ico:'⊞',lbl:'Dashboard'},
-  {id:'strategies',ico:'📋',lbl:'Strategies'},
-  {id:'backtest',ico:'▶',lbl:'Backtest'},
-  {id:'optimize',ico:'⚙',lbl:'Optimize',badge:'New'},
-  {id:'ai',ico:'🤖',lbl:'AI Analysis',dot:true},
-  {id:'portfolio',ico:'💼',lbl:'Portfolio'},
-  {id:'reports',ico:'📊',lbl:'Reports'},
-  {id:'regime',ico:'🌐',lbl:'Market Regime'},
-  {id:'settings',ico:'⚙️',lbl:'Settings'},
+  {id:'dashboard',ic:'⊞',lb:'Dashboard'},
+  {id:'strategies',ic:'📋',lb:'Strategies'},
+  {id:'backtest',ic:'▶',lb:'Backtest'},
+  {id:'optimize',ic:'⚙',lb:'Optimize',bx:'New'},
+  {id:'ai',ic:'🤖',lb:'AI Analysis',dt:true},
+  {id:'portfolio',ic:'💼',lb:'Portfolio'},
+  {id:'reports',ic:'📊',lb:'Reports'},
+  {id:'regime',ic:'🌐',lb:'Market Regime'},
+  {id:'settings',ic:'⚙️',lb:'Settings'},
 ];
 
-/* ── Sidebar ── */
-const Sidebar=({page,go,onLogout})=>React.createElement('nav',{className:'sb'},
-  NAV.map(n=>React.createElement('button',{key:n.id,className:cx('sb-item',page===n.id&&'on'),onClick:()=>go(n.id)},
-    React.createElement('span',{className:'sb-ico'},n.ico),
-    React.createElement('span',{className:'sb-lbl'},n.lbl),
-    n.badge&&React.createElement('span',{className:'sb-badge'},n.badge),
-    n.dot&&React.createElement('span',{className:'sb-dot'})
+/* ── SIDEBAR ── */
+const Sidebar=({page,go,logout})=>R.createElement('nav',{className:'sb'},
+  NAV.map(n=>R.createElement('button',{key:n.id,className:cx('sb-it',page===n.id&&'on'),onClick:()=>go(n.id)},
+    R.createElement('span',{className:'sb-ic'},n.ic),
+    R.createElement('span',{className:'sb-lb'},n.lb),
+    n.bx&&R.createElement('span',{className:'sb-bx'},n.bx),
+    n.dt&&R.createElement('span',{className:'sb-dt'})
   )),
-  React.createElement('div',{className:'sb-spacer'}),
-  React.createElement('div',{className:'sb-ai'},
-    React.createElement('div',{className:'sb-ai-brain'},'🧠'),
-    React.createElement('div',{className:'sb-ai-title'},'Quantoryx AI'),
-    React.createElement('div',{className:'sb-ai-sub'},'Smarter insights.\nBetter trades.'),
-    React.createElement('button',{className:'sb-ai-btn',onClick:()=>go('ai')},'▶ Run AI Analysis →')
+  R.createElement('div',{className:'sb-sp'}),
+  R.createElement('div',{className:'sb-ai'},
+    R.createElement('div',{className:'sb-ai-br'},'🧠'),
+    R.createElement('div',{className:'sb-ai-t'},'Quantoryx AI'),
+    R.createElement('div',{className:'sb-ai-s'},'Smarter insights.\nBetter trades.'),
+    R.createElement('button',{className:'sb-ai-b',onClick:()=>go('ai')},'▶ Run AI Analysis →')
   ),
-  React.createElement('div',{className:'sb-footer'},
-    React.createElement('button',{className:cx('sb-item',page==='help'&&'on'),onClick:()=>go('help')},
-      React.createElement('span',{className:'sb-ico'},'❓'),
-      React.createElement('span',{className:'sb-lbl'},'Help & Docs')
+  R.createElement('div',{className:'sb-ft'},
+    R.createElement('button',{className:cx('sb-it',page==='help'&&'on'),onClick:()=>go('help')},
+      R.createElement('span',{className:'sb-ic'},'❓'),R.createElement('span',{className:'sb-lb'},'Help & Docs')
     ),
-    React.createElement('button',{className:'sb-item',onClick:onLogout},
-      React.createElement('span',{className:'sb-ico'},'🚪'),
-      React.createElement('span',{className:'sb-lbl'},'Logout')
+    R.createElement('button',{className:'sb-it',onClick:logout},
+      R.createElement('span',{className:'sb-ic'},'🚪'),R.createElement('span',{className:'sb-lb'},'Logout')
     )
   )
 );
 
-/* ── Header ── */
-const Header=({dark,toggleTheme,go})=>React.createElement('header',{className:'hd'},
-  React.createElement('div',{className:'hd-logo',onClick:()=>go('dashboard')},
-    React.createElement('div',{className:'hd-logo-icon'},'Q'),
-    React.createElement('div',{style:{display:'flex',flexDirection:'column',lineHeight:1.25}},
-      React.createElement('span',{className:'hd-logo-name'},'QUANTORYX'),
-      React.createElement('span',{className:'hd-logo-tag'},'AI-Powered Trading Platform')
+/* ── HEADER ── */
+const Header=({dark,toggle,go})=>R.createElement('header',{className:'hd'},
+  R.createElement('div',{className:'hd-logo',onClick:()=>go('dashboard')},
+    R.createElement('div',{className:'hd-Q'},'Q'),
+    R.createElement('div',{className:'hd-brand'},
+      R.createElement('span',{className:'hd-name'},'QUANTORYX'),
+      R.createElement('span',{className:'hd-tag'},'AI-Powered Trading Platform')
     )
   ),
-  React.createElement('button',{className:'hd-search','aria-label':'Search'},
-    React.createElement('span',{style:{fontSize:13,color:'var(--tx-3)'}},'🔍'),
-    React.createElement('span',{className:'hd-search-q'},'Search strategies, backtests, insights...'),
-    React.createElement('span',{className:'hd-kbd'},'Ctrl + K')
+  R.createElement('button',{className:'hd-search'},
+    R.createElement('span',{className:'hd-sq'},'🔍'),
+    R.createElement('span',{className:'hd-sph'},'Search strategies, backtests, insights...'),
+    R.createElement('span',{className:'hd-kbd'},'Ctrl + K')
   ),
-  React.createElement('div',{className:'hd-gap'}),
-  React.createElement('div',{className:'hd-mkt'},
-    React.createElement('div',{className:'hd-dot'}),
-    'Markets Open'
-  ),
-  React.createElement('div',{className:'hd-actions'},
-    React.createElement('div',{className:'hd-notif'},
-      React.createElement('button',{className:'hd-btn'},'🔔'),
-      React.createElement('div',{className:'hd-notif-badge'},'3')
+  R.createElement('div',{className:'hd-gap'}),
+  R.createElement('div',{className:'hd-mkt'},R.createElement('div',{className:'hd-dot'}),'Markets Open'),
+  R.createElement('div',{className:'hd-acts'},
+    R.createElement('div',{style:{position:'relative'}},
+      R.createElement('button',{className:'hd-ico'},'🔔'),
+      R.createElement('div',{className:'hd-badge'},'3')
     ),
-    React.createElement('button',{className:'hd-btn',onClick:toggleTheme,title:'Toggle theme'},dark?'☀️':'🌙'),
-    React.createElement('button',{className:'hd-btn',onClick:()=>go('settings')},'⚙'),
-    React.createElement('div',{className:'hd-avatar'},'👤')
+    R.createElement('button',{className:'hd-ico',onClick:toggle,title:'Toggle theme'},dark?'☀️':'🌙'),
+    R.createElement('button',{className:'hd-ico',onClick:()=>go('settings')},'⚙'),
+    R.createElement('div',{className:'hd-av',onClick:()=>go('settings')},'👤')
   )
 );
 
-/* ════════════════════════════════════════
-   DASHBOARD
-════════════════════════════════════════ */
+/* ── MOBILE NAV ── */
+const MobNav=({page,go})=>R.createElement('nav',{className:'mob'},
+  R.createElement('div',{className:'mob-row'},
+    [{id:'dashboard',ic:'⊞',lb:'Home'},{id:'strategies',ic:'📋',lb:'Strats'},{id:'ai',ic:'🤖',lb:'AI'},{id:'portfolio',ic:'💼',lb:'Portfolio'},{id:'settings',ic:'⚙️',lb:'More'}]
+    .map(n=>R.createElement('button',{key:n.id,className:cx('mob-b',page===n.id&&'on'),onClick:()=>go(n.id)},
+      R.createElement('span',{className:'mob-ic'},n.ic),n.lb
+    ))
+  )
+);
+
+/* ══════════ DASHBOARD ══════════ */
 const Dashboard=({go})=>{
-  const[aiRunning,setAiRunning]=useState(false);
+  const[aiRun,setAiRun]=useState(false);
   const stats=[
-    {lbl:'Total Strategies',val:'28',sub:'+12% vs last month',color:'#8b5cf6',ico:'ico-pu',cls:'s-pu',spark:mkSpark(0.8)},
-    {lbl:'Total Backtests',val:'156',sub:'+18% vs last month',color:'#60a5fa',ico:'ico-bl',cls:'s-bl',spark:mkSpark(1.2)},
-    {lbl:'Total Return',val:'+24.67%',sub:'+3.31% vs last month',color:'#10b981',ico:'ico-gr',cls:'s-gr',spark:mkSpark(0.9),vc:'up'},
-    {lbl:'Max Drawdown',val:'-8.34%',sub:'-2.11% vs last month',color:'#f87171',ico:'ico-rd',cls:'s-rd',spark:mkSpark(1.5),vc:'down'},
-    {lbl:'Sharpe Ratio',val:'1.67',sub:'+0.28 vs last month',color:'#67e8f9',ico:'ico-cy',cls:'s-cy',spark:mkSpark(1.8)},
-    {lbl:'Win Rate',val:'62.4%',sub:'+4.32% vs last month',color:'#fbbf24',ico:'ico-or',cls:'s-or',spark:mkSpark(0.6),vc:'up'},
+    {lb:'Total Strategies',v:'28',sub:'+12% vs last month',col:'#8b5cf6',ic:'ic-pu',cls:'sc-pu',sp:mkSp(.8),ico:'📋'},
+    {lb:'Total Backtests',v:'156',sub:'+18% vs last month',col:'#60a5fa',ic:'ic-bl',cls:'sc-bl',sp:mkSp(1.2),ico:'▶'},
+    {lb:'Total Return',v:'+24.67%',sub:'+3.31% vs last month',col:'#10b981',ic:'ic-gr',cls:'sc-gr',sp:mkSp(.9),ico:'📈',vc:'up'},
+    {lb:'Max Drawdown',v:'-8.34%',sub:'-2.11% vs last month',col:'#f87171',ic:'ic-rd',cls:'sc-rd',sp:mkSp(1.5),ico:'📉',vc:'down'},
+    {lb:'Sharpe Ratio',v:'1.67',sub:'+0.28 vs last month',col:'#67e8f9',ic:'ic-cy',cls:'sc-cy',sp:mkSp(1.8),ico:'📊'},
+    {lb:'Win Rate',v:'62.4%',sub:'+4.32% vs last month',col:'#fbbf24',ic:'ic-or',cls:'sc-or',sp:mkSp(.6),ico:'🎯',vc:'up'},
   ];
-  const handleAI=()=>{
-    setAiRunning(true);
-    setTimeout(()=>{setAiRunning(false);toast.success('AI Analysis Complete','Bullish signal · 72% confidence');},2200);
-  };
-  const STAT_ICOS={'Total Strategies':'📋','Total Backtests':'▶','Total Return':'📈','Max Drawdown':'📉','Sharpe Ratio':'📊','Win Rate':'🎯'};
-
-  return React.createElement('div',{className:'page fade-page'},
-
-    /* Stats row */
-    React.createElement('div',{className:'stats-row'},
-      stats.map(s=>React.createElement('div',{key:s.lbl,className:cx('stat',s.cls)},
-        React.createElement('div',{className:'stat-top'},
-          React.createElement('span',{className:'stat-lbl'},s.lbl),
-          React.createElement('span',{className:cx('stat-ico',s.ico)},STAT_ICOS[s.lbl])
+  const runAI=()=>{setAiRun(true);setTimeout(()=>{setAiRun(false);toast.success('AI Analysis Complete','Bullish · 72% confidence')},2200)};
+  return R.createElement('div',{className:'pg fp'},
+    /* Stat cards */
+    R.createElement('div',{className:'sr'},
+      stats.map(s=>R.createElement('div',{key:s.lb,className:cx('sc',s.cls),onClick:()=>toast.info(s.lb,s.v)},
+        R.createElement('div',{className:'sc-top'},
+          R.createElement('span',{className:'sc-lbl'},s.lb),
+          R.createElement('span',{className:cx('sc-ic',s.ic)},s.ico)
         ),
-        React.createElement('div',{className:cx('stat-val',s.vc),style:{color:s.color}},s.val),
-        React.createElement('div',{className:'stat-chg',style:{color:s.color}},'↑ ',s.sub),
-        React.createElement(SparkLine,{data:s.spark,color:s.color,height:36})
+        R.createElement('div',{className:cx('sc-val',s.vc),style:{color:s.col}},s.v),
+        R.createElement('div',{className:cx('sc-sub',s.vc||'neu')},'↑ ',s.sub),
+        R.createElement(Spark,{data:s.sp,color:s.col,h:34})
       ))
     ),
-
     /* Charts grid */
-    React.createElement('div',{className:'charts-grid'},
-
+    R.createElement('div',{className:'cg'},
       /* Performance Overview */
-      React.createElement('div',{className:'card cp'},
-        React.createElement('div',{className:'perf-hd'},
-          React.createElement('div',{className:'perf-title'},
-            React.createElement('span',{style:{color:'var(--tx-3)',fontWeight:400}},'≡'),' Performance Overview'
-          ),
-          React.createElement('div',{className:'perf-controls'},
-            React.createElement('select',{className:'sel-sm'},
-              React.createElement('option',null,'Equity Curve'),
-              React.createElement('option',null,'Returns')
-            ),
-            React.createElement('select',{className:'sel-sm'},
-              React.createElement('option',null,'1Y'),
-              React.createElement('option',null,'6M'),
-              React.createElement('option',null,'YTD')
-            )
+      R.createElement('div',{className:'card cp'},
+        R.createElement('div',{className:'perf-hd'},
+          R.createElement('div',{className:'perf-tt'},'≡ Performance Overview'),
+          R.createElement('div',{className:'perf-ct'},
+            R.createElement('select',{className:'sel'},R.createElement('option',null,'Equity Curve'),R.createElement('option',null,'Returns')),
+            R.createElement('select',{className:'sel'},R.createElement('option',null,'1Y'),R.createElement('option',null,'6M'),R.createElement('option',null,'YTD'))
           )
         ),
-        React.createElement('div',{className:'leg'},
-          React.createElement('div',{className:'leg-item'},
-            React.createElement('div',{className:'leg-line',style:{background:'#8b5cf6'}}),' Quantoryx Strategy'
-          ),
-          React.createElement('div',{className:'leg-item'},
-            React.createElement('div',{className:cx('leg-line','leg-dash')}),' Buy & Hold (SPY)'
+        R.createElement('div',{className:'leg'},
+          R.createElement('div',{className:'leg-i'},R.createElement('div',{className:'leg-l',style:{background:'#8b5cf6'}}),' Quantoryx Strategy'),
+          R.createElement('div',{className:'leg-i'},R.createElement('div',{className:cx('leg-l','leg-d')}),' Buy & Hold (SPY)')
+        ),
+        R.createElement(LineChart,{data:CURVE,keys:['eq','spy'],colors:['#a78bfa','rgba(255,255,255,.2)'],height:212,dashed:['spy']}),
+        R.createElement('div',{style:{display:'flex',justifyContent:'flex-end',gap:6,marginTop:4}},
+          R.createElement('span',{style:{background:'#8b5cf6',color:'#fff',fontSize:10,fontWeight:700,padding:'2px 7px',borderRadius:4}},'+24.67%'),
+          R.createElement('span',{style:{background:'rgba(107,114,128,.28)',color:'#d1d5db',fontSize:10,fontWeight:700,padding:'2px 7px',borderRadius:4}},'+12.34%')
+        ),
+        R.createElement('div',{className:'pm-row'},
+          [['CAGR','24.67%','c-ok'],['Max Drawdown','-8.34%','c-err'],['Sharpe Ratio','1.67','c-n'],['Sortino Ratio','2.45','c-n'],['Win Rate','62.4%','c-ok']].map(([l,v,c])=>
+            R.createElement('div',{key:l},R.createElement('div',{className:'pm-l'},l),R.createElement('div',{className:cx('pm-v',c)},v))
           )
-        ),
-        React.createElement(ResponsiveContainer,{width:'100%',height:212},
-          React.createElement(AreaChart,{data:CURVE,margin:{top:4,right:8,bottom:0,left:-20}},
-            React.createElement('defs',null,
-              React.createElement('linearGradient',{id:'eg',x1:'0',y1:'0',x2:'0',y2:'1'},
-                React.createElement('stop',{offset:'5%',stopColor:'#8b5cf6',stopOpacity:.32}),
-                React.createElement('stop',{offset:'95%',stopColor:'#8b5cf6',stopOpacity:0})
-              ),
-              React.createElement('linearGradient',{id:'sg',x1:'0',y1:'0',x2:'0',y2:'1'},
-                React.createElement('stop',{offset:'5%',stopColor:'#6b7280',stopOpacity:.08}),
-                React.createElement('stop',{offset:'95%',stopColor:'#6b7280',stopOpacity:0})
-              )
-            ),
-            React.createElement(CartesianGrid,{strokeDasharray:'3 3',stroke:'rgba(255,255,255,.04)',vertical:false}),
-            React.createElement(XAxis,{dataKey:'w',tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false,minTickGap:40}),
-            React.createElement(YAxis,{tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false,width:36,tickFormatter:v=>`${v}%`}),
-            React.createElement(Tooltip,{content:React.createElement(ChartTip,null)}),
-            React.createElement(Area,{type:'monotone',dataKey:'spy',stroke:'rgba(255,255,255,.18)',strokeWidth:1.5,strokeDasharray:'5 4',fill:'url(#sg)',dot:false,name:'Buy & Hold (SPY)'}),
-            React.createElement(Area,{type:'monotone',dataKey:'equity',stroke:'#a78bfa',strokeWidth:2.2,fill:'url(#eg)',dot:false,name:'Quantoryx Strategy'})
-          )
-        ),
-        React.createElement('div',{style:{display:'flex',justifyContent:'flex-end',gap:6,marginTop:4}},
-          React.createElement('span',{style:{background:'#8b5cf6',color:'#fff',fontSize:10,fontWeight:700,padding:'2px 7px',borderRadius:4}},'+24.67%'),
-          React.createElement('span',{style:{background:'rgba(107,114,128,.28)',color:'#d1d5db',fontSize:10,fontWeight:700,padding:'2px 7px',borderRadius:4}},'+12.34%')
-        ),
-        React.createElement('div',{className:'perf-metrics'},
-          [['CAGR','24.67%','pm-ok'],['Max Drawdown','-8.34%','pm-err'],['Sharpe Ratio','1.67','pm-neu'],['Sortino Ratio','2.45','pm-neu'],['Win Rate','62.4%','pm-ok']]
-          .map(([l,v,c])=>React.createElement('div',{key:l},
-            React.createElement('div',{className:'pm-lbl'},l),
-            React.createElement('div',{className:cx('pm-val',c)},v)
-          ))
         )
       ),
-
       /* AI Market Insight */
-      React.createElement('div',{className:'ai-card'},
-        React.createElement('div',{className:'ai-hd'},
-          React.createElement('div',{className:'ai-hd-lbl'},'🤖 AI Market Insight'),
-          React.createElement('span',{className:'ai-badge-q'},'⚡ Quantoryx AI')
+      R.createElement('div',{className:'ai-card'},
+        R.createElement('div',{className:'ai-hd'},
+          R.createElement('div',{className:'ai-hl'},'🤖 AI Market Insight'),
+          R.createElement('span',{className:'ai-bq'},'⚡ Quantoryx AI')
         ),
-        React.createElement('div',{className:'ai-signal sig-bull'},'Bullish'),
-        React.createElement('div',{className:'ai-conf-row'},'Confidence: ',React.createElement('span',null,'72%')),
-        React.createElement('div',{className:'conf-bar'},React.createElement('div',{className:'conf-fill',style:{width:'72%'}})),
-        React.createElement('div',{className:'ai-desc'},'Market shows bullish momentum with strong volume confirmation across major indices.'),
-        React.createElement('div',null,
-          React.createElement('div',{className:'ai-factors-lbl'},'Key Factors:'),
+        R.createElement('div',{className:'ai-sig'},'Bullish'),
+        R.createElement('div',{className:'ai-cr'},'Confidence: ',R.createElement('span',null,'72%')),
+        R.createElement('div',{className:'conf-b'},R.createElement('div',{className:'conf-f',style:{width:'72%'}})),
+        R.createElement('div',{className:'ai-desc'},'Market shows bullish momentum with strong volume confirmation across major indices.'),
+        R.createElement('div',null,
+          R.createElement('div',{className:'ai-fl'},'Key Factors:'),
           ['Increasing Volume','Bullish Momentum','Positive News Sentiment','Strong Market Breadth'].map(f=>
-            React.createElement('div',{key:f,className:'ai-fac'},React.createElement('span',{className:'fac-ck'},'✓'),f)
+            R.createElement('div',{key:f,className:'ai-fac'},R.createElement('span',{className:'ai-ck'},'✓'),f)
           )
         ),
-        React.createElement('div',{className:'ai-acts'},
-          React.createElement('button',{className:'btn btn-p btn-sm',onClick:handleAI,disabled:aiRunning},aiRunning?'⟳ Analysing…':'⚡ Run AI Analysis'),
-          React.createElement('button',{className:'btn btn-g btn-sm',onClick:()=>go('reports')},'View Report')
+        R.createElement('div',{className:'ai-acts'},
+          R.createElement('button',{className:'btn btn-p btn-sm',onClick:runAI,disabled:aiRun},aiRun?'⟳ Analysing…':'⚡ Run AI Analysis'),
+          R.createElement('button',{className:'btn btn-g btn-sm',onClick:()=>go('reports')},'View Report')
         )
       ),
-
       /* Market Regime */
-      React.createElement('div',{className:cx('card','regime-card')},
-        React.createElement('div',{className:'regime-card-hd'},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,color:'var(--tx-1)',display:'flex',alignItems:'center',gap:7}},
-            '🌐 Market Regime'
+      R.createElement('div',{className:cx('card','reg-card')},
+        R.createElement('div',{className:'reg-hd'},R.createElement('div',{className:'reg-hdt'},'🌐 Market Regime')),
+        R.createElement('div',{className:'reg-dw'},
+          R.createElement(Donut,{data:REGIME,size:130,iR:40,oR:58}),
+          R.createElement('div',{className:'reg-ctr'},
+            R.createElement('div',{className:'reg-cn'},'Bull Market'),
+            R.createElement('div',{className:'reg-cp'},'72%')
           )
         ),
-        React.createElement('div',{className:'regime-donut-wrap'},
-          React.createElement(Donut,{data:REGIME,size:130,iR:40,oR:58}),
-          React.createElement('div',{className:'regime-center'},
-            React.createElement('div',{className:'reg-name'},'Bull Market'),
-            React.createElement('div',{className:'reg-pct-txt'},'72%')
-          )
-        ),
-        React.createElement('div',{className:'reg-legend'},
-          REGIME.map(r=>React.createElement('div',{key:r.name,className:'reg-row'},
-            React.createElement('div',{className:'reg-lbl-txt'},
-              React.createElement('div',{className:'reg-dot',style:{background:r.color}}),r.name
-            ),
-            React.createElement('div',{className:'reg-pct-val'},r.value+'%')
+        R.createElement('div',{className:'reg-leg'},
+          REGIME.map(r=>R.createElement('div',{key:r.name,className:'reg-row'},
+            R.createElement('div',{className:'reg-lft'},R.createElement('div',{className:'reg-d',style:{background:r.c}}),r.name),
+            R.createElement('div',{className:'reg-pv'},r.v+'%')
           ))
         )
       )
     ),
-
-    /* Mid Grid */
-    React.createElement('div',{className:'mid-grid'},
-
-      /* Optimize */
-      React.createElement('div',{className:'card cp'},
-        React.createElement('div',{className:'opt-hd'},
-          React.createElement('div',null,
-            React.createElement('div',{className:'opt-title'},'⚙ Optimize Strategy'),
-            React.createElement('div',{className:'opt-sub'},'Find the best parameters for your strategy')
-          )
+    /* Mid grid */
+    R.createElement('div',{className:'mg'},
+      /* Optimize Strategy */
+      R.createElement('div',{className:'card cp'},
+        R.createElement('div',{className:'opt-tt'},'⚙ Optimize Strategy'),
+        R.createElement('div',{className:'opt-st'},'Find the best parameters for your strategy'),
+        R.createElement('div',{className:'opt-ctrl'},
+          R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Strategy'),R.createElement('select',{className:'fs'},STRATS.map(s=>R.createElement('option',{key:s.id},s.nm)))),
+          R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Optimization Type'),R.createElement('select',{className:'fs'},['Grid Search','Bayesian','Genetic'].map(t=>R.createElement('option',{key:t},t)))),
+          R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Metric'),R.createElement('select',{className:'fs'},['Sharpe Ratio','Total Return','Sortino'].map(t=>R.createElement('option',{key:t},t)))),
+          R.createElement('button',{className:'btn btn-p btn-md',style:{marginTop:16},onClick:()=>{toast.info('Optimization started','Running grid search…')}},'▶ Start Optimization')
         ),
-        React.createElement('div',{className:'opt-controls'},
-          React.createElement('div',{className:'form-grp'},
-            React.createElement('div',{className:'form-lbl'},'Strategy'),
-            React.createElement('select',{className:'form-sel'},
-              React.createElement('option',null,'Momentum Breakout'),
-              React.createElement('option',null,'Mean Reversion Pro')
+        R.createElement('div',{className:'opt-body'},
+          R.createElement('div',null,
+            R.createElement('div',{className:'pr-lbl'},'Parameter Ranges'),
+            [{lb:'Lookback Period',v:45,mx:100},{lb:'Breakout Threshold',v:2.3,mx:5},{lb:'Stop Loss (%)',v:3.0,mx:10},{lb:'Take Profit (%)',v:6.0,mx:20},{lb:'Sharpe Ratio',v:1.87,mx:3}].map(p=>
+              R.createElement('div',{key:p.lb,className:'sl-row'},
+                R.createElement('div',{className:'sl-hd'},R.createElement('span',{className:'sl-l'},p.lb),R.createElement('span',{className:'sl-v'},p.v),R.createElement('span',{className:'sl-m'},p.mx)),
+                R.createElement('input',{type:'range',className:'slider',defaultValue:p.v,min:0,max:p.mx})
+              )
             )
           ),
-          React.createElement('div',{className:'form-grp'},
-            React.createElement('div',{className:'form-lbl'},'Optimization Type'),
-            React.createElement('select',{className:'form-sel'},
-              React.createElement('option',null,'Grid Search'),
-              React.createElement('option',null,'Bayesian')
-            )
-          ),
-          React.createElement('div',{className:'form-grp'},
-            React.createElement('div',{className:'form-lbl'},'Metric'),
-            React.createElement('select',{className:'form-sel'},
-              React.createElement('option',null,'Sharpe Ratio'),
-              React.createElement('option',null,'Total Return')
-            )
-          ),
-          React.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Optimization started','Running grid search…')},'▶ Start Optimization')
-        ),
-        React.createElement('div',{className:'opt-body'},
-          React.createElement('div',null,
-            React.createElement('div',{className:'param-ranges-lbl'},'Parameter Ranges'),
-            [
-              {lbl:'Lookback Period',val:45,max:100},
-              {lbl:'Breakout Threshold',val:2.3,max:5.0},
-              {lbl:'Stop Loss (%)',val:3.0,max:10},
-              {lbl:'Take Profit (%)',val:6.0,max:20},
-              {lbl:'Sharpe Ratio',val:1.87,max:3.0},
-            ].map(p=>React.createElement('div',{key:p.lbl,className:'sl-row'},
-              React.createElement('div',{className:'sl-hd'},
-                React.createElement('span',{className:'sl-lbl'},p.lbl),
-                React.createElement('span',{className:'sl-val'},p.val),
-                React.createElement('span',{className:'sl-max'},p.max)
-              ),
-              React.createElement('input',{type:'range',className:'slider',defaultValue:p.val,min:0,max:p.max})
-            ))
-          ),
-          React.createElement('div',{className:'surf-wrap'},
-            React.createElement('div',{className:'surf-title'},'Optimization Results'),
-            React.createElement('div',{className:'surf-canvas'},
-              React.createElement(SurfaceChart,null),
-              React.createElement('div',{className:'surf-tooltip'},
-                React.createElement('div',null,'Sharpe: 1.87'),
-                React.createElement('div',null,'LP: 45, BT: 2.3')
-              ),
-              React.createElement('div',{className:'surf-axis-x'},'Lookback Period'),
-              React.createElement('div',{className:'surf-axis-y'},'Sharpe Ratio')
+          R.createElement('div',{style:{display:'flex',flexDirection:'column'}},
+            R.createElement('div',{className:'surf-tt'},'Optimization Results'),
+            R.createElement('div',{className:'surf-c'},
+              R.createElement(Surface,null),
+              R.createElement('div',{className:'surf-tip'},R.createElement('div',null,'Sharpe: 1.87'),R.createElement('div',null,'LP: 45, BT: 2.3')),
+              R.createElement('div',{className:'surf-ax surf-axb'},'Lookback Period'),
+              R.createElement('div',{className:'surf-ax surf-axl'},'Sharpe Ratio')
             )
           )
         ),
-        React.createElement('div',{className:'best-params-lbl'},'Best Parameters'),
-        React.createElement('div',{className:'best-params'},
-          [['Lookback Period','45'],['Breakout Threshold','2.3'],['Stop Loss (%)','3.0'],['Take Profit (%)','6.0'],['Sharpe Ratio','1.87']]
-          .map(([k,v])=>React.createElement('div',{key:k,className:'param-box'},
-            React.createElement('div',{className:'param-k'},k),
-            React.createElement('div',{className:'param-v'},v)
-          ))
+        R.createElement('div',{className:'bp-lbl'},'Best Parameters'),
+        R.createElement('div',{className:'bp-grid'},
+          [['Lookback Period','45'],['Breakout Threshold','2.3'],['Stop Loss (%)','3.0'],['Take Profit (%)','6.0'],['Sharpe Ratio','1.87']].map(([k,v])=>
+            R.createElement('div',{key:k,className:'bp-box'},R.createElement('div',{className:'bp-k'},k),R.createElement('div',{className:'bp-v'},v))
+          )
         )
       ),
-
       /* Portfolio Overview */
-      React.createElement('div',{className:'card cp'},
-        React.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:13}},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,color:'var(--tx-1)',display:'flex',alignItems:'center',gap:7}},'💼 Portfolio Overview'),
-          React.createElement('button',{className:'btn btn-g btn-sm',onClick:()=>go('portfolio')},'View Details')
+      R.createElement('div',{className:'card cp'},
+        R.createElement('div',{style:{display:'flex',alignItems:'center',justifyContent:'space-between',marginBottom:12}},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,color:'var(--t1)',display:'flex',alignItems:'center',gap:7}},'💼 Portfolio Overview'),
+          R.createElement('button',{className:'btn btn-g btn-sm',onClick:()=>go('portfolio')},'View Details')
         ),
-        React.createElement('div',{className:'port-metrics'},
-          React.createElement('div',null,
-            React.createElement('div',{className:'m-lbl'},'Total Equity'),
-            React.createElement('div',{className:'m-val'},'$126,430.50'),
-            React.createElement('div',{className:'m-chg up'},'↑ 12.34%')
-          ),
-          React.createElement('div',null,
-            React.createElement('div',{className:'m-lbl'},'Day Change'),
-            React.createElement('div',{className:'m-val up'},'+$1,234.50'),
-            React.createElement('div',{className:'m-chg up'},'↑ 0.98%')
-          ),
-          React.createElement('div',null,
-            React.createElement('div',{className:'m-lbl'},'Cash Balance'),
-            React.createElement('div',{className:'m-val'},'$8,430.50')
-          )
+        R.createElement('div',{className:'pw-m'},
+          R.createElement('div',null,R.createElement('div',{className:'mw-l'},'Total Equity'),R.createElement('div',{className:'mw-v'},'$126,430.50'),R.createElement('div',{className:'mw-c up'},'↑ 12.34%')),
+          R.createElement('div',null,R.createElement('div',{className:'mw-l'},'Day Change'),R.createElement('div',{className:'mw-v up'},'+$1,234.50'),R.createElement('div',{className:'mw-c up'},'↑ 0.98%')),
+          R.createElement('div',null,R.createElement('div',{className:'mw-l'},'Cash Balance'),R.createElement('div',{className:'mw-v'},'$8,430.50'))
         ),
-        React.createElement('div',{className:'port-body'},
-          React.createElement('div',null,
-            React.createElement('div',{className:'alloc-title'},'Allocation'),
-            React.createElement('div',{className:'donut-alloc'},
-              React.createElement('div',{style:{position:'relative',flexShrink:0}},
-                React.createElement(Donut,{data:ALLOC,size:110,iR:32,oR:50}),
-                React.createElement('div',{style:{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',textAlign:'center'}},
-                  React.createElement('div',{style:{fontSize:12,fontWeight:800,color:'var(--tx-1)'}},'$126,430'),
-                  React.createElement('div',{style:{fontSize:9,color:'var(--tx-3)'}},'Total Equity')
+        R.createElement('div',{className:'pw-b'},
+          R.createElement('div',null,
+            R.createElement('div',{className:'al-t'},'Allocation'),
+            R.createElement('div',{className:'al-dn'},
+              R.createElement('div',{style:{position:'relative',flexShrink:0}},
+                R.createElement(Donut,{data:ALLOC,size:106,iR:30,oR:49}),
+                R.createElement('div',{style:{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',textAlign:'center'}},
+                  R.createElement('div',{style:{fontSize:11,fontWeight:800,color:'var(--t1)'}},'$126,430'),
+                  R.createElement('div',{style:{fontSize:8,color:'var(--t3)'}},'Total Equity')
                 )
               ),
-              React.createElement('div',{className:'alloc-legend'},
-                ALLOC.map(a=>React.createElement('div',{key:a.name,className:'alloc-row'},
-                  React.createElement('div',{className:'alloc-dot',style:{background:a.color}}),
-                  React.createElement('span',{className:'alloc-nm'},a.name),
-                  React.createElement('span',{className:'alloc-pct'},a.value+'%')
+              R.createElement('div',{className:'al-lg'},
+                ALLOC.map(a=>R.createElement('div',{key:a.name,className:'al-r'},
+                  R.createElement('div',{className:'al-d',style:{background:a.c}}),
+                  R.createElement('span',{className:'al-n'},a.name),
+                  R.createElement('span',{className:'al-p'},a.v+'%')
                 ))
               )
             )
           ),
-          React.createElement('div',null,
-            React.createElement('div',{className:'holdings-title'},'Top Holdings'),
-            React.createElement('table',{className:'tbl'},
-              React.createElement('thead',null,
-                React.createElement('tr',null,
-                  React.createElement('th',null,'Asset Acc.'),
-                  React.createElement('th',null,'Type'),
-                  React.createElement('th',null,'Value'),
-                  React.createElement('th',null,'Change')
-                )
-              ),
-              React.createElement('tbody',null,
-                HOLDINGS.map(h=>React.createElement('tr',{key:h.sym},
-                  React.createElement('td',null,h.sym),
-                  React.createElement('td',null,h.type),
-                  React.createElement('td',null,h.val),
-                  React.createElement('td',{className:h.up?'up':'down'},h.chg)
-                ))
-              )
+          R.createElement('div',null,
+            R.createElement('div',{className:'hl-t'},'Top Holdings'),
+            R.createElement('table',{className:'tbl'},
+              R.createElement('thead',null,R.createElement('tr',null,['Asset Acc.','Type','Value','Change'].map(h=>R.createElement('th',{key:h},h)))),
+              R.createElement('tbody',null,HOLDINGS.map(h=>R.createElement('tr',{key:h.s},
+                R.createElement('td',null,h.s),R.createElement('td',null,h.t),R.createElement('td',null,h.v),R.createElement('td',{className:h.up?'up':'down'},h.c)
+              )))
             )
           )
         )
       ),
-
       /* Right col */
-      React.createElement('div',{className:'right-col'},
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:12,fontWeight:700,color:'var(--tx-1)',marginBottom:7,display:'flex',alignItems:'center',gap:6}},
-            '💻 System Status'
-          ),
-          React.createElement('div',{className:'sys-ok'},
-            React.createElement('div',{className:'sys-ok-dot'}),'All Systems Operational'
-          ),
-          React.createElement('div',{className:'strat-list'},
-            [
-              {nm:'Momentum Breakout',dt:'May 18, 2024',ret:'+12.34%',up:true},
-              {nm:'Mean Reversion Pro',dt:'May 17, 2024',ret:'+8.21%',up:true},
-              {nm:'ML Trend Following',dt:'May 16, 2024',ret:'-1.45%',up:false},
-              {nm:'RSI Divergence',dt:'May 15, 2024',ret:'+6.78%',up:true},
-              {nm:'Ichimoku Cloud',dt:'May 14, 2024',ret:'+9.31%',up:true},
-            ].map(s=>React.createElement('div',{key:s.nm,className:'strat-row'},
-              React.createElement('div',null,
-                React.createElement('div',{className:'strat-nm'},s.nm),
-                React.createElement('div',{className:'strat-dt'},s.dt)
-              ),
-              React.createElement('div',{className:cx('strat-ret',s.up?'up':'down')},s.ret)
-            ))
+      R.createElement('div',{className:'rc'},
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:12,fontWeight:700,color:'var(--t1)',marginBottom:8,display:'flex',alignItems:'center',gap:6}},'💻 System Status'),
+          R.createElement('div',{className:'sys-ok'},R.createElement('div',{className:'sys-d'}),'All Systems Operational'),
+          [{nm:'Momentum Breakout',dt:'May 18, 2024',rt:'+12.34%',up:true},{nm:'Mean Reversion Pro',dt:'May 17, 2024',rt:'+8.21%',up:true},{nm:'ML Trend Following',dt:'May 16, 2024',rt:'-1.45%',up:false},{nm:'RSI Divergence',dt:'May 15, 2024',rt:'+6.78%',up:true},{nm:'Ichimoku Cloud',dt:'May 14, 2024',rt:'+9.31%',up:true}].map(s=>
+            R.createElement('div',{key:s.nm,className:'sl-it'},
+              R.createElement('div',null,R.createElement('div',{className:'sl-nm'},s.nm),R.createElement('div',{className:'sl-dt'},s.dt)),
+              R.createElement('div',{className:cx('sl-rt',s.up?'up':'down')},s.rt)
+            )
           )
         ),
-        React.createElement('div',{className:'risk-warn-card'},
-          React.createElement('div',{className:'risk-warn-hd'},
-            React.createElement('span',null,'⚠'),
-            React.createElement('span',{className:'risk-warn-lbl'},'Risk Warning')
-          ),
-          React.createElement('div',{className:'risk-warn-val'},'Medium Risk'),
-          React.createElement('div',{className:'risk-warn-desc'},'Market volatility is elevated. Use proper position sizing and risk management.')
+        R.createElement('div',{className:'rw-card'},
+          R.createElement('div',{className:'rw-hd'},R.createElement('span',null,'⚠'),R.createElement('span',{className:'rw-l'},'Risk Warning')),
+          R.createElement('div',{className:'rw-v'},'Medium Risk'),
+          R.createElement('div',{className:'rw-d'},'Market volatility is elevated. Use proper position sizing and risk management.')
         )
       )
     ),
-
-    React.createElement('div',{className:'footer'},
-      React.createElement('span',null,'Quantoryx v4.0'),
-      React.createElement('span',null,'© 2024 Quantoryx. All rights reserved.'),
-      React.createElement('span',null,'~ Build. Backtest. Optimize. Trade Smarter.')
+    R.createElement('div',{className:'foot'},
+      R.createElement('span',null,'Quantoryx v4.0'),
+      R.createElement('span',null,'© 2024 Quantoryx. All rights reserved.'),
+      R.createElement('span',null,'~ Build. Backtest. Optimize. Trade Smarter.')
     )
-  );
+  )
 };
 
-/* ════ STRATEGIES ════ */
+/* ══════════ STRATEGIES ══════════ */
 const StrategiesPage=({go})=>{
-  const[filter,setFilter]=useState('All');
-  const FILTERS=['All','Active','Inactive','Favorites'];
-  const filtered=filter==='All'?STRATEGIES:STRATEGIES.filter(s=>filter==='Active'?s.status==='active':filter==='Inactive'?s.status!=='active':true);
-  return React.createElement('div',{className:'page fade-page'},
-    React.createElement('div',{className:'pg-hd'},
-      React.createElement('div',null,
-        React.createElement('div',{className:'pg-title'},'Strategies'),
-        React.createElement('div',{className:'pg-sub'},`${STRATEGIES.length} strategies configured`)
-      ),
-      React.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Create Strategy','Opening strategy builder...')},'+ Create New')
+  const[f,setF]=useState('All');
+  const filtered=f==='All'?STRATS:STRATS.filter(s=>f==='Active'?s.st==='active':f==='Inactive'?s.st!=='active':true);
+  return R.createElement('div',{className:'pg fp'},
+    R.createElement('div',{className:'pgh'},
+      R.createElement('div',null,R.createElement('div',{className:'pgt'},'Strategies'),R.createElement('div',{className:'pgs'},`${STRATS.length} strategies configured`)),
+      R.createElement('div',{className:'pga'},R.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Create Strategy','Opening strategy builder...')},'+ Create New'))
     ),
-    React.createElement('div',{className:'filter-bar',style:{marginBottom:4}},
-      FILTERS.map(f=>React.createElement('button',{key:f,className:cx('filter-btn',filter===f&&'on'),onClick:()=>setFilter(f)},f))
+    R.createElement('div',{className:'fbar',style:{marginBottom:2}},
+      ['All','Active','Inactive','Favorites'].map(x=>R.createElement('button',{key:x,className:cx('fb',f===x&&'on'),onClick:()=>setF(x)},x))
     ),
-    React.createElement('div',{className:'strats-grid'},
-      filtered.map(s=>React.createElement('div',{key:s.id,className:'strat-card',onClick:()=>go('backtest')},
-        React.createElement('div',{className:'sc-top'},
-          React.createElement('div',null,
-            React.createElement('div',{className:'sc-nm'},s.name),
-            React.createElement('div',{className:cx('sc-status',`status-${s.status}`)},
-              s.status==='active'?'● Active':s.status==='paused'?'◐ Paused':'○ Inactive'
+    R.createElement('div',{className:'sg'},
+      filtered.map(s=>R.createElement('div',{key:s.id,className:'stc',onClick:()=>go('backtest')},
+        R.createElement('div',{className:'stc-top'},
+          R.createElement('div',null,
+            R.createElement('div',{className:'stc-nm'},s.nm),
+            R.createElement('div',{className:cx('st-ac',s.st==='active'?'st-a':s.st==='paused'?'st-p':'st-i')},
+              s.st==='active'?'● Active':s.st==='paused'?'◐ Paused':'○ Inactive'
             )
           ),
-          React.createElement('div',{className:'sc-type'},s.type)
+          R.createElement('div',{className:'stc-tp'},s.tp)
         ),
-        React.createElement(SparkLine,{data:s.spark,color:s.status==='active'?'#10b981':'#6b7280',height:42}),
-        React.createElement('div',{className:'sc-metrics'},
-          React.createElement('div',null,React.createElement('div',{className:'sc-m-lbl'},'Return'),React.createElement('div',{className:cx('sc-m-val',s.ret.startsWith('+')?'up':'down')},s.ret)),
-          React.createElement('div',null,React.createElement('div',{className:'sc-m-lbl'},'Sharpe'),React.createElement('div',{className:'sc-m-val'},s.sharpe)),
-          React.createElement('div',null,React.createElement('div',{className:'sc-m-lbl'},'Max DD'),React.createElement('div',{className:'sc-m-val down'},s.dd))
+        R.createElement(Spark,{data:s.sp,color:s.st==='active'?'#10b981':'#6b7280',h:42}),
+        R.createElement('div',{className:'stc-m'},
+          R.createElement('div',null,R.createElement('div',{className:'stc-ml'},'Return'),R.createElement('div',{className:cx('stc-mv',s.ret.startsWith('+')?'up':'down')},s.ret)),
+          R.createElement('div',null,R.createElement('div',{className:'stc-ml'},'Sharpe'),R.createElement('div',{className:'stc-mv'},s.sh)),
+          R.createElement('div',null,R.createElement('div',{className:'stc-ml'},'Max DD'),R.createElement('div',{className:'stc-mv down'},s.dd))
         )
       ))
     )
-  );
+  )
 };
 
-/* ════ BACKTEST ════ */
-const BacktestPage=({go})=>{
-  const[running,setRunning]=useState(false);
-  const[done,setDone]=useState(false);
-  const run=()=>{setRunning(true);setDone(false);setTimeout(()=>{setRunning(false);setDone(true);toast.success('Backtest Complete','Momentum Breakout · +34.67% return');},2500);};
-  return React.createElement('div',{className:'page fade-page'},
-    React.createElement('div',{className:'pg-hd'},
-      React.createElement('div',null,React.createElement('div',{className:'pg-title'},'Backtest'),React.createElement('div',{className:'pg-sub'},'Test your strategy against historical data')),
-      React.createElement('button',{className:'btn btn-p btn-md'},'+ New Backtest')
+/* ══════════ BACKTEST ══════════ */
+const BacktestPage=()=>{
+  const[run,setRun]=useState(false);const[done,setDone]=useState(false);
+  const go2=()=>{setRun(true);setDone(false);setTimeout(()=>{setRun(false);setDone(true);toast.success('Backtest Complete','Momentum Breakout · +34.67%')},2500)};
+  return R.createElement('div',{className:'pg fp'},
+    R.createElement('div',{className:'pgh'},
+      R.createElement('div',null,R.createElement('div',{className:'pgt'},'Backtest'),R.createElement('div',{className:'pgs'},'Test your strategy against historical data')),
+      R.createElement('button',{className:'btn btn-p btn-md'},'+ New Backtest')
     ),
-    React.createElement('div',{className:'bt-grid'},
-      React.createElement('div',{className:'card cp',style:{display:'flex',flexDirection:'column',gap:11}},
-        React.createElement('div',{className:'form-grp'},React.createElement('div',{className:'form-lbl'},'Strategy'),React.createElement('select',{className:'form-sel'},STRATEGIES.map(s=>React.createElement('option',{key:s.id},s.name)))),
-        React.createElement('div',{className:'form-grp'},React.createElement('div',{className:'form-lbl'},'Symbol'),React.createElement('input',{className:'form-inp',defaultValue:'EURUSD'})),
-        React.createElement('div',null,
-          React.createElement('div',{className:'form-lbl',style:{marginBottom:4}},'Date Range'),
-          React.createElement('div',{className:'date-row'},
-            React.createElement('input',{className:'form-inp',type:'date',defaultValue:'2024-01-01'}),
-            React.createElement('input',{className:'form-inp',type:'date',defaultValue:'2024-12-31'})
-          )
+    R.createElement('div',{className:'btg'},
+      R.createElement('div',{className:'card cp bt-frm'},
+        R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Strategy'),R.createElement('select',{className:'fs'},STRATS.map(s=>R.createElement('option',{key:s.id},s.nm)))),
+        R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Symbol'),R.createElement('input',{className:'fi',defaultValue:'EURUSD'})),
+        R.createElement('div',null,
+          R.createElement('div',{className:'fl',style:{marginBottom:4}},'Date Range'),
+          R.createElement('div',{className:'dr'},R.createElement('input',{className:'fi',type:'date',defaultValue:'2024-01-01'}),R.createElement('input',{className:'fi',type:'date',defaultValue:'2024-12-31'}))
         ),
-        React.createElement('div',{className:'form-grp'},React.createElement('div',{className:'form-lbl'},'Initial Capital'),React.createElement('input',{className:'form-inp',defaultValue:'$100,000'})),
-        React.createElement('div',{className:'form-grp'},
-          React.createElement('div',{className:'form-lbl'},'Timeframe'),
-          React.createElement('select',{className:'form-sel'},['1M','5M','15M','1H','4H','1D'].map(t=>React.createElement('option',{key:t},t)))
-        ),
-        React.createElement('button',{className:'btn btn-p btn-lg btn-full',onClick:run,disabled:running},running?'⟳ Running Backtest…':'▶ Run Backtest'),
-        done&&React.createElement('div',{style:{background:'rgba(16,185,129,.08)',border:'1px solid rgba(16,185,129,.2)',borderRadius:8,padding:'10px 12px',fontSize:12}},
-          React.createElement('div',{style:{color:'var(--tx-ok)',fontWeight:700,marginBottom:6}},'✓ Backtest Complete'),
-          [['Total Return','+34.67%','up'],['Max Drawdown','-8.34%','down'],['Sharpe Ratio','1.67',''],['Win Rate','62.4%','up'],['Total Trades','158',''],['Profit Factor','2.56','']].map(([k,v,c])=>
-            React.createElement('div',{key:k,style:{display:'flex',justifyContent:'space-between',padding:'3px 0',borderBottom:'1px solid var(--bd)',fontSize:11}},
-              React.createElement('span',{style:{color:'var(--tx-2)'}},k),
-              React.createElement('span',{className:c||'',style:{fontWeight:600}},v)
+        R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Initial Capital'),R.createElement('input',{className:'fi',defaultValue:'$100,000'})),
+        R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Timeframe'),R.createElement('select',{className:'fs'},['1M','5M','15M','1H','4H','1D'].map(t=>R.createElement('option',{key:t},t)))),
+        R.createElement('button',{className:'btn btn-p btn-lg btn-fl',onClick:go2,disabled:run},run?'⟳ Running Backtest…':'▶ Run Backtest'),
+        done&&R.createElement('div',{style:{background:'rgba(16,185,129,.08)',border:'1px solid rgba(16,185,129,.2)',borderRadius:8,padding:'10px 12px'}},
+          R.createElement('div',{style:{color:'var(--ok)',fontWeight:700,marginBottom:6,fontSize:12}},'✓ Backtest Complete'),
+          [['Total Return','+34.67%','up'],['CAGR','28.3%','up'],['Max Drawdown','-8.34%','down'],['Sharpe Ratio','1.67',''],['Win Rate','62.4%','up'],['Total Trades','158',''],['Profit Factor','2.56','']].map(([k,v,c])=>
+            R.createElement('div',{key:k,style:{display:'flex',justifyContent:'space-between',padding:'3px 0',borderBottom:'1px solid var(--bd)',fontSize:11}},
+              R.createElement('span',{style:{color:'var(--t2)'}},k),R.createElement('span',{className:c,style:{fontWeight:600}},v)
             )
           )
         )
       ),
-      React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:13}},
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:10}},'Equity Curve'),
-          React.createElement('div',{style:{position:'relative'}},
-            React.createElement(ResponsiveContainer,{width:'100%',height:220},
-              React.createElement(AreaChart,{data:CURVE,margin:{top:4,right:8,bottom:0,left:-20}},
-                React.createElement('defs',null,
-                  React.createElement('linearGradient',{id:'btg',x1:'0',y1:'0',x2:'0',y2:'1'},
-                    React.createElement('stop',{offset:'5%',stopColor:'#8b5cf6',stopOpacity:.3}),
-                    React.createElement('stop',{offset:'95%',stopColor:'#8b5cf6',stopOpacity:0})
-                  )
-                ),
-                React.createElement(CartesianGrid,{strokeDasharray:'3 3',stroke:'rgba(255,255,255,.04)',vertical:false}),
-                React.createElement(XAxis,{dataKey:'w',tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false}),
-                React.createElement(YAxis,{tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false,width:36,tickFormatter:v=>`${v}%`}),
-                React.createElement(Tooltip,{content:React.createElement(ChartTip,null)}),
-                React.createElement(Area,{type:'monotone',dataKey:'equity',stroke:'#a78bfa',strokeWidth:2,fill:'url(#btg)',dot:false,name:'Strategy'})
-              )
-            ),
-            React.createElement('div',{style:{position:'absolute',top:8,right:8,background:'var(--grad-ok)',color:'#fff',fontSize:10,fontWeight:700,padding:'2px 7px',borderRadius:4}},'+34.67%')
-          )
+      R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9,display:'flex',alignItems:'center',justifyContent:'space-between'}},
+            'Equity Curve',
+            R.createElement('span',{style:{background:'#10b981',color:'#fff',fontSize:10,fontWeight:700,padding:'2px 7px',borderRadius:4}},'+34.67%')
+          ),
+          R.createElement(LineChart,{data:CURVE,keys:['eq'],colors:['#a78bfa'],height:210})
         ),
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:12,fontWeight:700,marginBottom:10}},'Performance Metrics'),
-          React.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:9}},
-            [['Total Return','+34.67%','up'],['CAGR','28.3%','up'],['Max DD','-8.34%','down'],['Sharpe','1.67',''],['Win Rate','62.4%','up'],['Profit Factor','2.56',''],['Trades','158',''],['Expectancy','+3.67%','up']].map(([l,v,c])=>
-              React.createElement('div',{key:l,style:{background:'var(--bg-base)',borderRadius:8,padding:'9px 11px',border:'1px solid var(--bd)'}},
-                React.createElement('div',{style:{fontSize:10,color:'var(--tx-3)',textTransform:'uppercase',letterSpacing:'.4px',marginBottom:2}},l),
-                React.createElement('div',{className:cx(c==='up'?'pm-ok':c==='down'?'pm-err':'pm-neu','pm-val'),style:{fontSize:14}},v)
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:12,fontWeight:700,marginBottom:9}},'Performance Metrics'),
+          R.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}},
+            [['Total Return','+34.67%','up'],['Max DD','-8.34%','down'],['Sharpe','1.67',''],['Win Rate','62.4%','up'],['CAGR','28.3%','up'],['Profit Factor','2.56',''],['Trades','158',''],['Expectancy','+3.67%','up']].map(([l,v,c])=>
+              R.createElement('div',{key:l,style:{background:'var(--bg0)',borderRadius:8,padding:'8px 10px',border:'1px solid var(--bd)'}},
+                R.createElement('div',{style:{fontSize:9.5,color:'var(--t3)',textTransform:'uppercase',letterSpacing:'.4px',marginBottom:2}},l),
+                R.createElement('div',{className:cx(c==='up'?'c-ok':c==='down'?'c-err':'c-n','pm-v'),style:{fontSize:14}},v)
               )
             )
           )
         )
       )
     )
-  );
+  )
 };
 
-/* ════ OPTIMIZE ════ */
+/* ══════════ OPTIMIZE ══════════ */
 const OptimizePage=()=>{
-  const[running,setRunning]=useState(false);
-  return React.createElement('div',{className:'page fade-page'},
-    React.createElement('div',{className:'pg-hd'},
-      React.createElement('div',null,React.createElement('div',{className:'pg-title'},'Optimize Strategy'),React.createElement('div',{className:'pg-sub'},'Find the best parameters for your strategy')),
-      React.createElement('button',{className:'btn btn-p btn-md'},'+ New Optimization')
+  const[run,setRun]=useState(false);
+  return R.createElement('div',{className:'pg fp'},
+    R.createElement('div',{className:'pgh'},
+      R.createElement('div',null,R.createElement('div',{className:'pgt'},'Optimize Strategy'),R.createElement('div',{className:'pgs'},'Find the best parameters for your strategy')),
+      R.createElement('button',{className:'btn btn-p btn-md'},'+ New Optimization')
     ),
-    React.createElement('div',{className:'card cp'},
-      React.createElement('div',{className:'opt-controls'},
-        React.createElement('div',{className:'form-grp'},React.createElement('div',{className:'form-lbl'},'Strategy'),React.createElement('select',{className:'form-sel'},STRATEGIES.map(s=>React.createElement('option',{key:s.id},s.name)))),
-        React.createElement('div',{className:'form-grp'},React.createElement('div',{className:'form-lbl'},'Optimization Type'),React.createElement('select',{className:'form-sel'},['Grid Search','Bayesian','Genetic','Random'].map(t=>React.createElement('option',{key:t},t)))),
-        React.createElement('div',{className:'form-grp'},React.createElement('div',{className:'form-lbl'},'Metric'),React.createElement('select',{className:'form-sel'},['Sharpe Ratio','Sortino','Total Return'].map(t=>React.createElement('option',{key:t},t)))),
-        React.createElement('button',{className:'btn btn-p btn-md',onClick:()=>{setRunning(true);setTimeout(()=>{setRunning(false);toast.success('Optimization Complete','Best Sharpe: 1.87');},3000);}},running?'⟳ Optimizing…':'⚡ Start Optimization')
+    R.createElement('div',{className:'card cp'},
+      R.createElement('div',{className:'opt-ctrl'},
+        R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Strategy'),R.createElement('select',{className:'fs'},STRATS.map(s=>R.createElement('option',{key:s.id},s.nm)))),
+        R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Optimization Type'),R.createElement('select',{className:'fs'},['Grid Search','Bayesian','Genetic','Random'].map(t=>R.createElement('option',{key:t},t)))),
+        R.createElement('div',{className:'fg'},R.createElement('div',{className:'fl'},'Metric'),R.createElement('select',{className:'fs'},['Sharpe Ratio','Sortino','Total Return'].map(t=>R.createElement('option',{key:t},t)))),
+        R.createElement('button',{className:'btn btn-p btn-md',style:{marginTop:16},onClick:()=>{setRun(true);setTimeout(()=>{setRun(false);toast.success('Optimization Complete','Best Sharpe: 1.87 · LP:45, BT:2.3')},3000)}},run?'⟳ Optimizing…':'⚡ Start Optimization')
       )
     ),
-    React.createElement('div',{style:{display:'grid',gridTemplateColumns:'310px 1fr',gap:14,marginTop:2}},
-      React.createElement('div',{className:'card cp'},
-        React.createElement('div',{className:'param-ranges-lbl'},'Parameter Ranges'),
-        [{lbl:'Lookback Period',val:45,max:100},{lbl:'Breakout Threshold',val:2.3,max:5.0},{lbl:'Stop Loss (%)',val:3.0,max:10},{lbl:'Take Profit (%)',val:6.0,max:20},{lbl:'Sharpe Ratio',val:1.87,max:3.0}].map(p=>
-          React.createElement('div',{key:p.lbl,className:'sl-row'},
-            React.createElement('div',{className:'sl-hd'},React.createElement('span',{className:'sl-lbl'},p.lbl),React.createElement('span',{className:'sl-val'},p.val),React.createElement('span',{className:'sl-max'},p.max)),
-            React.createElement('input',{type:'range',className:'slider',defaultValue:p.val,min:0,max:p.max})
+    R.createElement('div',{style:{display:'grid',gridTemplateColumns:'300px 1fr',gap:13}},
+      R.createElement('div',{className:'card cp'},
+        R.createElement('div',{className:'pr-lbl'},'Parameter Ranges'),
+        [{lb:'Lookback Period',v:45,mx:100},{lb:'Breakout Threshold',v:2.3,mx:5},{lb:'Stop Loss (%)',v:3.0,mx:10},{lb:'Take Profit (%)',v:6.0,mx:20},{lb:'Sharpe Ratio',v:1.87,mx:3}].map(p=>
+          R.createElement('div',{key:p.lb,className:'sl-row'},
+            R.createElement('div',{className:'sl-hd'},R.createElement('span',{className:'sl-l'},p.lb),R.createElement('span',{className:'sl-v'},p.v),R.createElement('span',{className:'sl-m'},p.mx)),
+            R.createElement('input',{type:'range',className:'slider',defaultValue:p.v,min:0,max:p.mx})
           )
         ),
-        React.createElement('button',{className:'btn btn-p btn-full',style:{marginTop:12}},'▶ Start Optimization')
+        R.createElement('button',{className:'btn btn-p btn-fl',style:{marginTop:11}},'▶ Start Optimization')
       ),
-      React.createElement('div',{className:'card cp surf-wrap'},
-        React.createElement('div',{className:'surf-title'},'Optimization Results'),
-        React.createElement('div',{className:'surf-canvas',style:{minHeight:230}},
-          React.createElement(SurfaceChart,null),
-          React.createElement('div',{className:'surf-tooltip'},React.createElement('div',null,'Sharpe: 1.87'),React.createElement('div',null,'LP: 45, BT: 2.3')),
-          React.createElement('div',{className:'surf-axis-x'},'Lookback Period'),
-          React.createElement('div',{className:'surf-axis-y'},'Sharpe Ratio')
+      R.createElement('div',{className:'card cp',style:{display:'flex',flexDirection:'column'}},
+        R.createElement('div',{className:'surf-tt'},'Optimization Results'),
+        R.createElement('div',{className:'surf-c',style:{minHeight:230}},
+          R.createElement(Surface,null),
+          R.createElement('div',{className:'surf-tip'},R.createElement('div',null,'Sharpe: 1.87'),R.createElement('div',null,'LP: 45, BT: 2.3')),
+          R.createElement('div',{className:'surf-ax surf-axb'},'Lookback Period'),
+          R.createElement('div',{className:'surf-ax surf-axl'},'Sharpe Ratio')
         ),
-        React.createElement('div',{className:'best-params-lbl',style:{marginTop:14}},'Best Parameters'),
-        React.createElement('div',{className:'best-params'},
+        R.createElement('div',{className:'bp-lbl',style:{marginTop:12}},'Best Parameters'),
+        R.createElement('div',{className:'bp-grid'},
           [['LP','45'],['BT','2.3'],['SL','3.0'],['TP','6.0'],['SR','1.87']].map(([k,v])=>
-            React.createElement('div',{key:k,className:'param-box'},React.createElement('div',{className:'param-k'},k),React.createElement('div',{className:'param-v'},v))
+            R.createElement('div',{key:k,className:'bp-box'},R.createElement('div',{className:'bp-k'},k),R.createElement('div',{className:'bp-v'},v))
           )
         )
       )
     )
-  );
+  )
 };
 
-/* ════ AI ANALYSIS ════ */
+/* ══════════ AI ANALYSIS ══════════ */
 const AIPage=()=>{
-  const[running,setRunning]=useState(false);
-  return React.createElement('div',{className:'page fade-page'},
-    React.createElement('div',{className:'pg-hd'},
-      React.createElement('div',null,React.createElement('div',{className:'pg-title'},'AI Analysis'),React.createElement('div',{className:'pg-sub'},'AI-powered market analysis and strategy recommendations')),
-      React.createElement('button',{className:'btn btn-p btn-md',onClick:()=>{setRunning(true);setTimeout(()=>{setRunning(false);toast.success('Analysis complete','Bullish · 72%');},2000);}},running?'⟳ Analysing…':'⚡ Run New Analysis')
+  const[run,setRun]=useState(false);
+  return R.createElement('div',{className:'pg fp'},
+    R.createElement('div',{className:'pgh'},
+      R.createElement('div',null,R.createElement('div',{className:'pgt'},'AI Analysis'),R.createElement('div',{className:'pgs'},'AI-powered market analysis and strategy recommendations')),
+      R.createElement('button',{className:'btn btn-p btn-md',onClick:()=>{setRun(true);setTimeout(()=>{setRun(false);toast.success('Analysis complete','Bullish · 72%')},2000)}},run?'⟳ Analysing…':'⚡ Run New Analysis')
     ),
-    React.createElement('div',{className:'ai-analysis-grid'},
-      React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:13}},
-        React.createElement('div',{className:'ai-card'},
-          React.createElement('div',{className:'ai-hd'},React.createElement('div',{className:'ai-hd-lbl'},'🤖 AI Market Sentiment'),React.createElement('span',{className:'ai-badge-q'},'⚡ Quantoryx AI')),
-          React.createElement('div',{className:'ai-signal sig-bull'},'Bullish'),
-          React.createElement('div',{className:'ai-conf-row'},'Confidence: ',React.createElement('span',null,'72%')),
-          React.createElement('div',{className:'conf-bar'},React.createElement('div',{className:'conf-fill',style:{width:'72%'}})),
-          React.createElement('div',{className:'ai-desc'},'Market shows bullish momentum with strong volume confirmation across major indices.')
+    R.createElement('div',{className:'aag'},
+      R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+        R.createElement('div',{className:'ai-card'},
+          R.createElement('div',{className:'ai-hd'},R.createElement('div',{className:'ai-hl'},'🤖 AI Market Sentiment'),R.createElement('span',{className:'ai-bq'},'⚡ Quantoryx AI')),
+          R.createElement('div',{className:'ai-sig'},'Bullish'),
+          R.createElement('div',{className:'ai-cr'},'Confidence: ',R.createElement('span',null,'72%')),
+          R.createElement('div',{className:'conf-b'},R.createElement('div',{className:'conf-f',style:{width:'72%'}})),
+          R.createElement('div',{className:'ai-desc'},'Market shows bullish momentum with strong volume confirmation across major indices.')
         ),
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:10}},'Key Insights'),
-          ['Market shows bullish momentum with strong volume confirmation across major indices.','Tech sector leading the rally with AAPL, MSFT, NVDA showing strong signals.','Consider taking profits on overextended positions in the short term.','RSI approaching overbought territory — watch for pullback opportunities.'].map((txt,i)=>
-            React.createElement('div',{key:i,style:{display:'flex',gap:8,padding:'6px 0',borderBottom:'1px solid var(--bd)',fontSize:12,color:'var(--tx-2)',lineHeight:1.5}},
-              React.createElement('span',{style:{color:'var(--pu-400)',marginTop:1,flexShrink:0}},'→'),txt
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9}},'Key Insights'),
+          ['Market shows bullish momentum with strong volume confirmation across major indices.','Tech sector leading the rally — AAPL, MSFT, NVDA showing strong signals.','Consider taking profits on overextended positions in the short term.','RSI approaching overbought territory — watch for pullback opportunities.'].map((t,i)=>
+            R.createElement('div',{key:i,style:{display:'flex',gap:8,padding:'6px 0',borderBottom:'1px solid var(--bd)',fontSize:12,color:'var(--t2)',lineHeight:1.55}},
+              R.createElement('span',{style:{color:'var(--pu4)',flexShrink:0,marginTop:1}},'→'),t
             )
           )
         ),
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:12,fontWeight:700,marginBottom:10}},'Market Analysis'),
-          React.createElement(ResponsiveContainer,{width:'100%',height:160},
-            React.createElement(AreaChart,{data:CURVE,margin:{top:4,right:8,bottom:0,left:-20}},
-              React.createElement('defs',null,React.createElement('linearGradient',{id:'aig',x1:'0',y1:'0',x2:'0',y2:'1'},React.createElement('stop',{offset:'5%',stopColor:'#10b981',stopOpacity:.3}),React.createElement('stop',{offset:'95%',stopColor:'#10b981',stopOpacity:0}))),
-              React.createElement(CartesianGrid,{strokeDasharray:'3 3',stroke:'rgba(255,255,255,.04)',vertical:false}),
-              React.createElement(XAxis,{dataKey:'w',tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false}),
-              React.createElement(YAxis,{hide:true}),
-              React.createElement(Tooltip,{content:React.createElement(ChartTip,null)}),
-              React.createElement(Area,{type:'monotone',dataKey:'equity',stroke:'#34d399',strokeWidth:2,fill:'url(#aig)',dot:false})
-            )
-          )
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:12,fontWeight:700,marginBottom:9}},'Market Analysis Chart'),
+          R.createElement(LineChart,{data:CURVE,keys:['eq'],colors:['#34d399'],height:155})
         )
       ),
-      React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:12}},'AI Recommendations'),
-          [{nm:'Momentum Breakout',conf:'Confidence: 87%',act:'Strong Buy',pill:'pill-buy'},{nm:'Mean Reversion Pro',conf:'Confidence: 65%',act:'Hold',pill:'pill-hold'},{nm:'ML Trend Following',conf:'Confidence: 78%',act:'Strong Buy',pill:'pill-buy'}].map(r=>
-            React.createElement('div',{key:r.nm,className:'ai-rec-item'},
-              React.createElement('div',null,React.createElement('div',{className:'ai-rec-nm'},r.nm),React.createElement('div',{className:'ai-rec-conf'},r.conf)),
-              React.createElement('div',{className:cx('ai-action-pill',r.pill)},r.act)
+      R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:11}},
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:11}},'AI Recommendations'),
+          [{nm:'Momentum Breakout',cf:'Confidence: 87%',ac:'Strong Buy',ap:'ap-b'},{nm:'Mean Reversion Pro',cf:'Confidence: 65%',ac:'Hold',ap:'ap-h'},{nm:'ML Trend Following',cf:'Confidence: 78%',ac:'Strong Buy',ap:'ap-b'}].map(r=>
+            R.createElement('div',{key:r.nm,className:'ar-it'},
+              R.createElement('div',null,R.createElement('div',{className:'ar-nm'},r.nm),R.createElement('div',{className:'ar-cf'},r.cf)),
+              R.createElement('div',{className:cx('ap',r.ap)},r.ac)
             )
           )
         ),
-        React.createElement('div',{className:'card cp'},
-          React.createElement('button',{className:'btn btn-p btn-full btn-md',onClick:()=>toast.info('Report','Generating full AI report…')},'📋 View Full Report')
+        R.createElement('div',{className:'card cp'},
+          R.createElement('button',{className:'btn btn-p btn-fl btn-md',onClick:()=>toast.info('Report','Generating full AI report…')},'📋 View Full Report')
         )
       )
     )
-  );
+  )
 };
 
-/* ════ PORTFOLIO ════ */
-const PortfolioPage=({go})=>{
+/* ══════════ PORTFOLIO ══════════ */
+const PortfolioPage=()=>{
   const[tab,setTab]=useState('Overview');
-  return React.createElement('div',{className:'page fade-page'},
-    React.createElement('div',{className:'pg-hd'},
-      React.createElement('div',null,React.createElement('div',{className:'pg-title'},'Portfolio'),React.createElement('div',{className:'pg-sub'},'Track your assets and performance')),
-      React.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Add Asset','Opening asset form...')},'+ Add Asset')
+  return R.createElement('div',{className:'pg fp'},
+    R.createElement('div',{className:'pgh'},
+      R.createElement('div',null,R.createElement('div',{className:'pgt'},'Portfolio'),R.createElement('div',{className:'pgs'},'Track your assets and performance')),
+      R.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Add Asset','Opening asset form…')},'+ Add Asset')
     ),
-    React.createElement('div',{className:'stats-row',style:{gridTemplateColumns:'repeat(4,1fr)'}},
-      [{lbl:'Total Equity',val:'$126,430.50',sub:'+12.34%',color:'#8b5cf6',cls:'s-pu'},{lbl:'Day Change',val:'+$1,234.50',sub:'+0.98%',color:'#10b981',cls:'s-gr'},{lbl:'Cash Balance',val:'$8,430.50',sub:'Available',color:'#60a5fa',cls:'s-bl'},{lbl:'Total Return',val:'+24.67%',sub:'All time',color:'#10b981',cls:'s-gr'}].map(s=>
-        React.createElement('div',{key:s.lbl,className:cx('stat',s.cls)},
-          React.createElement('div',{className:'stat-lbl'},s.lbl),
-          React.createElement('div',{className:'stat-val',style:{color:s.color,marginTop:6}},s.val),
-          React.createElement('div',{className:'stat-chg',style:{color:s.color}},'↑ ',s.sub)
+    R.createElement('div',{className:'sr',style:{gridTemplateColumns:'repeat(4,1fr)'}},
+      [{lb:'Total Equity',v:'$126,430.50',sub:'+12.34%',col:'#8b5cf6',cls:'sc-pu'},{lb:'Day Change',v:'+$1,234.50',sub:'+0.98%',col:'#10b981',cls:'sc-gr'},{lb:'Cash Balance',v:'$8,430.50',sub:'Available',col:'#60a5fa',cls:'sc-bl'},{lb:'Total Return',v:'+24.67%',sub:'All time',col:'#10b981',cls:'sc-gr'}].map(s=>
+        R.createElement('div',{key:s.lb,className:cx('sc',s.cls)},
+          R.createElement('div',{className:'sc-lbl'},s.lb),
+          R.createElement('div',{className:'sc-val',style:{color:s.col,marginTop:5}},s.v),
+          R.createElement('div',{className:'sc-sub up'},'↑ ',s.sub)
         )
       )
     ),
-    React.createElement('div',{className:'port-tabs'},
-      ['Overview','Holdings','Allocation','Performance','History'].map(t=>React.createElement('button',{key:t,className:cx('port-tab',tab===t&&'on'),onClick:()=>setTab(t)},t))
+    R.createElement('div',{className:'ptabs'},
+      ['Overview','Holdings','Allocation','Performance','History'].map(t=>R.createElement('button',{key:t,className:cx('ptab',tab===t&&'on'),onClick:()=>setTab(t)},t))
     ),
-    React.createElement('div',{className:'port-page-grid'},
-      React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:13}},
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:10}},'Top Holdings'),
-          React.createElement('table',{className:'tbl'},
-            React.createElement('thead',null,React.createElement('tr',null,['Asset','Type','Value','Change'].map(h=>React.createElement('th',{key:h},h)))),
-            React.createElement('tbody',null,
-              [{sym:'AAPL',type:'Equity',val:'$8,850.00',chg:'+2.45%',up:true},{sym:'EURUSD',type:'Forex',val:'$7,230.00',chg:'-0.35%',up:false},{sym:'BTCUSD',type:'Crypto',val:'$6,780.00',chg:'+3.21%',up:true},{sym:'GOLD',type:'Commodity',val:'$4,340.00',chg:'+0.87%',up:true},{sym:'MSFT',type:'Equity',val:'$5,120.00',chg:'+1.24%',up:true}].map(h=>
-                React.createElement('tr',{key:h.sym},React.createElement('td',null,h.sym),React.createElement('td',null,h.type),React.createElement('td',null,h.val),React.createElement('td',{className:h.up?'up':'down'},h.chg))
+    R.createElement('div',{className:'ppg'},
+      R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9}},'Top Holdings'),
+          R.createElement('table',{className:'tbl'},
+            R.createElement('thead',null,R.createElement('tr',null,['Asset','Type','Value','Change'].map(h=>R.createElement('th',{key:h},h)))),
+            R.createElement('tbody',null,
+              [{s:'AAPL',t:'Equity',v:'$8,850.00',c:'+2.45%',up:true},{s:'EURUSD',t:'Forex',v:'$7,230.00',c:'-0.35%',up:false},{s:'BTCUSD',t:'Crypto',v:'$6,780.00',c:'+3.21%',up:true},{s:'GOLD',t:'Commodity',v:'$4,340.00',c:'+0.87%',up:true},{s:'MSFT',t:'Equity',v:'$5,120.00',c:'+1.24%',up:true}].map(h=>
+                R.createElement('tr',{key:h.s},R.createElement('td',null,h.s),R.createElement('td',null,h.t),R.createElement('td',null,h.v),R.createElement('td',{className:h.up?'up':'down'},h.c))
               )
             )
           )
         ),
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:10}},'Performance Chart'),
-          React.createElement(ResponsiveContainer,{width:'100%',height:180},
-            React.createElement(AreaChart,{data:CURVE,margin:{top:4,right:8,bottom:0,left:-20}},
-              React.createElement('defs',null,React.createElement('linearGradient',{id:'ppg',x1:'0',y1:'0',x2:'0',y2:'1'},React.createElement('stop',{offset:'5%',stopColor:'#8b5cf6',stopOpacity:.3}),React.createElement('stop',{offset:'95%',stopColor:'#8b5cf6',stopOpacity:0}))),
-              React.createElement(CartesianGrid,{strokeDasharray:'3 3',stroke:'rgba(255,255,255,.04)',vertical:false}),
-              React.createElement(XAxis,{dataKey:'w',tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false}),
-              React.createElement(YAxis,{tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false,width:38}),
-              React.createElement(Tooltip,{content:React.createElement(ChartTip,null)}),
-              React.createElement(Area,{type:'monotone',dataKey:'equity',stroke:'#a78bfa',strokeWidth:2,fill:'url(#ppg)',dot:false})
-            )
-          )
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9}},'Performance Chart'),
+          R.createElement(LineChart,{data:CURVE,keys:['eq'],colors:['#8b5cf6'],height:175})
         )
       ),
-      React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:13}},
-        React.createElement('div',{className:'card cp'},
-          React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:12}},'Allocation'),
-          React.createElement('div',{style:{display:'flex',justifyContent:'center',position:'relative',marginBottom:10}},
-            React.createElement(Donut,{data:ALLOC,size:140,iR:42,oR:62}),
-            React.createElement('div',{style:{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',textAlign:'center'}},
-              React.createElement('div',{style:{fontSize:13,fontWeight:800}},'$126,430'),
-              React.createElement('div',{style:{fontSize:9,color:'var(--tx-3)'}},'Total Equity')
+      R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+        R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:11}},'Allocation'),
+          R.createElement('div',{style:{display:'flex',justifyContent:'center',position:'relative',marginBottom:10}},
+            R.createElement(Donut,{data:ALLOC,size:140,iR:42,oR:62}),
+            R.createElement('div',{style:{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',textAlign:'center'}},
+              R.createElement('div',{style:{fontSize:13,fontWeight:800}},'$126,430'),
+              R.createElement('div',{style:{fontSize:9,color:'var(--t3)'}},'Total Equity')
             )
           ),
-          ALLOC.map(a=>React.createElement('div',{key:a.name,style:{display:'flex',alignItems:'center',gap:8,padding:'5px 0',fontSize:12}},
-            React.createElement('div',{style:{width:8,height:8,borderRadius:'50%',background:a.color,flexShrink:0}}),
-            React.createElement('span',{style:{color:'var(--tx-2)',flex:1}},a.name),
-            React.createElement('span',{style:{fontWeight:600,fontFamily:'JetBrains Mono,monospace'}},a.value+'%')
+          ALLOC.map(a=>R.createElement('div',{key:a.name,style:{display:'flex',alignItems:'center',gap:8,padding:'5px 0',fontSize:12}},
+            R.createElement('div',{style:{width:8,height:8,borderRadius:'50%',background:a.c,flexShrink:0}}),
+            R.createElement('span',{style:{color:'var(--t2)',flex:1}},a.name),
+            R.createElement('span',{style:{fontWeight:600,fontFamily:'JetBrains Mono,monospace'}},a.v+'%')
           ))
         )
       )
     )
-  );
+  )
 };
 
-/* ════ REPORTS ════ */
+/* ══════════ REPORTS ══════════ */
 const ReportsPage=()=>{
   const[tab,setTab]=useState('All Reports');
-  return React.createElement('div',{className:'page fade-page'},
-    React.createElement('div',{className:'pg-hd'},
-      React.createElement('div',null,React.createElement('div',{className:'pg-title'},'Reports'),React.createElement('div',{className:'pg-sub'},'Download and view strategy reports')),
-      React.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Generate Report','Preparing...')},'📊 Generate Report')
+  return R.createElement('div',{className:'pg fp'},
+    R.createElement('div',{className:'pgh'},
+      R.createElement('div',null,R.createElement('div',{className:'pgt'},'Reports'),R.createElement('div',{className:'pgs'},'Download and view strategy reports')),
+      R.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Generate Report','Preparing…')},'📊 Generate Report')
     ),
-    React.createElement('div',{className:'filter-bar',style:{marginBottom:4}},
-      ['All Reports','Performance','Backtest','Optimization','AI Analysis'].map(t=>React.createElement('button',{key:t,className:cx('filter-btn',tab===t&&'on'),onClick:()=>setTab(t)},t))
+    R.createElement('div',{className:'fbar',style:{marginBottom:4}},
+      ['All Reports','Performance','Backtest','Optimization','AI Analysis'].map(t=>R.createElement('button',{key:t,className:cx('fb',tab===t&&'on'),onClick:()=>setTab(t)},t))
     ),
-    React.createElement('div',null,
-      REPORTS.map(r=>React.createElement('div',{key:r.id,className:'report-row'},
-        React.createElement('span',{className:'report-ico'},r.ico),
-        React.createElement('div',{className:'report-info'},
-          React.createElement('div',{className:'report-nm'},r.title),
-          React.createElement('div',{className:'report-dt'},r.date),
-          React.createElement('div',{className:'report-desc'},r.desc)
-        ),
-        React.createElement('button',{className:'report-pdf',onClick:()=>toast.info('Downloading','PDF prepared.')},'📄 PDF')
-      ))
-    )
-  );
+    REPORTS.map(r=>R.createElement('div',{key:r.id,className:'rr'},
+      R.createElement('span',{className:'rr-ic'},r.ic),
+      R.createElement('div',{className:'rr-inf'},
+        R.createElement('div',{className:'rr-nm'},r.tt),
+        R.createElement('div',{className:'rr-dt'},r.dt),
+        R.createElement('div',{className:'rr-ds'},r.ds)
+      ),
+      R.createElement('button',{className:'rr-pdf',onClick:()=>toast.info('Downloading','PDF ready.')},'📄 PDF')
+    ))
+  )
 };
 
-/* ════ MARKET REGIME ════ */
-const RegimePage=()=>React.createElement('div',{className:'page fade-page'},
-  React.createElement('div',{className:'pg-hd'},
-    React.createElement('div',null,React.createElement('div',{className:'pg-title'},'Market Regime'),React.createElement('div',{className:'pg-sub'},'Current market regime analysis'))
-  ),
-  React.createElement('div',{className:'regime-page-grid'},
-    React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:13}},
-      React.createElement('div',{className:'card cp'},
-        React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:14}},'Current Regime'),
-        React.createElement('div',{style:{display:'flex',justifyContent:'center',position:'relative',marginBottom:10}},
-          React.createElement(Donut,{data:REGIME,size:155,iR:47,oR:69}),
-          React.createElement('div',{style:{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',textAlign:'center'}},
-            React.createElement('div',{style:{fontSize:15,fontWeight:800,color:'#10b981'}},'Bull Market'),
-            React.createElement('div',{style:{fontSize:13,color:'var(--tx-2)'}},'72%')
+/* ══════════ MARKET REGIME ══════════ */
+const RegimePage=()=>R.createElement('div',{className:'pg fp'},
+  R.createElement('div',{className:'pgh'},R.createElement('div',null,R.createElement('div',{className:'pgt'},'Market Regime'),R.createElement('div',{className:'pgs'},'Current market regime analysis'))),
+  R.createElement('div',{className:'rpg'},
+    R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+      R.createElement('div',{className:'card cp'},
+        R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:13}},'Current Regime'),
+        R.createElement('div',{style:{display:'flex',justifyContent:'center',position:'relative',marginBottom:10}},
+          R.createElement(Donut,{data:REGIME,size:155,iR:47,oR:69}),
+          R.createElement('div',{style:{position:'absolute',top:'50%',left:'50%',transform:'translate(-50%,-50%)',textAlign:'center'}},
+            R.createElement('div',{style:{fontSize:15,fontWeight:800,color:'#10b981'}},'Bull Market'),
+            R.createElement('div',{style:{fontSize:13,color:'var(--t2)'}},'72%')
           )
         ),
-        React.createElement('div',{style:{fontSize:12,color:'var(--tx-2)',lineHeight:1.6,marginBottom:12}},'The market is currently in a Bull regime with strong positive trend.'),
-        React.createElement('div',{className:'reg-legend'},
-          REGIME.map(r=>React.createElement('div',{key:r.name,className:'reg-row'},
-            React.createElement('div',{className:'reg-lbl-txt'},React.createElement('div',{className:'reg-dot',style:{background:r.color}}),r.name),
-            React.createElement('div',{className:'reg-pct-val'},r.value+'%')
-          ))
+        R.createElement('div',{style:{fontSize:12,color:'var(--t2)',lineHeight:1.6,marginBottom:11}},'The market is currently in a Bull regime with strong positive trend.'),
+        R.createElement('div',{className:'reg-leg'},
+          REGIME.map(r=>R.createElement('div',{key:r.name,className:'reg-row'},R.createElement('div',{className:'reg-lft'},R.createElement('div',{className:'reg-d',style:{background:r.c}}),r.name),R.createElement('div',{className:'reg-pv'},r.v+'%')))
         ),
-        React.createElement('div',{className:'regime-stats'},
-          [{lbl:'Bull Markets',val:'72%',days:'(290 days)',c:'var(--tx-ok)'},{lbl:'Neutral Markets',val:'18%',days:'(65 days)',c:'var(--tx-2)'},{lbl:'Bear Markets',val:'10%',days:'(36 days)',c:'var(--tx-err)'}].map(r=>
-            React.createElement('div',{key:r.lbl,className:'reg-stat'},
-              React.createElement('div',{className:'reg-stat-lbl'},r.lbl),
-              React.createElement('div',{className:'reg-stat-val',style:{color:r.c}},r.val),
-              React.createElement('div',{className:'reg-stat-days'},r.days)
-            )
+        R.createElement('div',{className:'reg-stats'},
+          [{lb:'Bull Markets',v:'72%',d:'(290 days)',c:'var(--ok)'},{lb:'Neutral Markets',v:'18%',d:'(65 days)',c:'var(--t2)'},{lb:'Bear Markets',v:'10%',d:'(36 days)',c:'var(--err)'}].map(r=>
+            R.createElement('div',{key:r.lb,className:'rs'},R.createElement('div',{className:'rs-l'},r.lb),R.createElement('div',{className:'rs-v',style:{color:r.c}},r.v),R.createElement('div',{className:'rs-d'},r.d))
           )
         )
       )
     ),
-    React.createElement('div',{style:{display:'flex',flexDirection:'column',gap:13}},
-      React.createElement('div',{className:'card cp'},
-        React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:10}},'Regime History'),
-        React.createElement(ResponsiveContainer,{width:'100%',height:220},
-          React.createElement(BarChart,{data:REGIME_HIST,margin:{top:4,right:8,bottom:0,left:-20},barCategoryGap:'2%'},
-            React.createElement(CartesianGrid,{strokeDasharray:'3 3',stroke:'rgba(255,255,255,.04)',vertical:false}),
-            React.createElement(XAxis,{dataKey:'w',tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false,minTickGap:40}),
-            React.createElement(YAxis,{tick:{fill:'var(--tx-3)',fontSize:10},axisLine:false,tickLine:false,width:34}),
-            React.createElement(Tooltip,{content:React.createElement(ChartTip,null)}),
-            React.createElement(Bar,{dataKey:'bull',fill:'#10b981',stackId:'a',name:'Bull'}),
-            React.createElement(Bar,{dataKey:'neutral',fill:'#60a5fa',stackId:'a',name:'Neutral'}),
-            React.createElement(Bar,{dataKey:'bear',fill:'#ef4444',stackId:'a',name:'Bear'})
-          )
-        )
+    R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
+      R.createElement('div',{className:'card cp'},
+        R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9}},'Regime History'),
+        R.createElement(BarChart,{data:RHIST,keys:['bull','neutral','bear'],colors:['#10b981','#60a5fa','#ef4444'],height:215})
       ),
-      React.createElement('div',{className:'card cp'},
-        React.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:12}},'Regime Indicators'),
-        React.createElement('div',{className:'regime-indicators'},
-          [{lbl:'Trend Strength',val:'Strong',chg:'+0.78',up:true},{lbl:'Volatility',val:'Low',chg:'-0.43',up:true},{lbl:'Momentum',val:'Strong',chg:'+0.69',up:true},{lbl:'Market Breadth',val:'Strong',chg:'+0.67',up:true}].map(ind=>
-            React.createElement('div',{key:ind.lbl,className:'ind-card'},
-              React.createElement('div',{className:'ind-lbl'},ind.lbl),
-              React.createElement('div',{className:'ind-val',style:{color:'var(--tx-ok)'}},ind.val),
-              React.createElement('div',{className:cx('ind-chg',ind.up?'up':'down')},ind.up?'↑':'↓',' ',ind.chg)
+      R.createElement('div',{className:'card cp'},
+        R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:11}},'Regime Indicators'),
+        R.createElement('div',{className:'rig'},
+          [{lb:'Trend Strength',v:'Strong',c:'+0.78',up:true},{lb:'Volatility',v:'Low',c:'-0.43',up:true},{lb:'Momentum',v:'Strong',c:'+0.69',up:true},{lb:'Market Breadth',v:'Strong',c:'+0.67',up:true}].map(ind=>
+            R.createElement('div',{key:ind.lb,className:'ri'},
+              R.createElement('div',{className:'ri-l'},ind.lb),
+              R.createElement('div',{className:'ri-v',style:{color:'var(--ok)'}},ind.v),
+              R.createElement('div',{className:cx('ri-c',ind.up?'up':'down')},ind.up?'↑':'↓',' ',ind.c)
             )
           )
         )
@@ -1637,120 +1190,97 @@ const RegimePage=()=>React.createElement('div',{className:'page fade-page'},
   )
 );
 
-/* ════ SETTINGS ════ */
-const SettingsPage=({dark,toggleTheme})=>{
+/* ══════════ SETTINGS ══════════ */
+const SettingsPage=({dark,toggle})=>{
   const[sec,setSec]=useState('General');
-  return React.createElement('div',{className:'page fade-page'},
-    React.createElement('div',{className:'pg-hd'},React.createElement('div',{className:'pg-title'},'Settings')),
-    React.createElement('div',{className:'settings-grid'},
-      React.createElement('div',{className:'settings-nav'},
-        ['General','Account','Trading','Notifications','API'].map(t=>
-          React.createElement('button',{key:t,className:cx('settings-nav-btn',sec===t&&'on'),onClick:()=>setSec(t)},t)
-        )
+  return R.createElement('div',{className:'pg fp'},
+    R.createElement('div',{className:'pgh'},R.createElement('div',{className:'pgt'},'Settings')),
+    R.createElement('div',{className:'setg'},
+      R.createElement('div',null,
+        ['General','Account','Trading','Notifications','API'].map(t=>R.createElement('button',{key:t,className:cx('sn-b',sec===t&&'on'),onClick:()=>setSec(t)},t))
       ),
-      React.createElement('div',null,
-        React.createElement('div',{className:'settings-section'},
-          React.createElement('div',{className:'settings-sec-title'},'Profile Settings'),
-          [{lbl:'Full Name',el:React.createElement('input',{className:'settings-input',defaultValue:'Anwaar Ahmad'})},
-           {lbl:'Email',el:React.createElement('input',{className:'settings-input',defaultValue:'anwaar@example.com'})},
-           {lbl:'Timezone',el:React.createElement('select',{className:'settings-input'},React.createElement('option',null,'[UTC+05:00] Islamabad, Karachi'))}
-          ].map(r=>React.createElement('div',{key:r.lbl,className:'settings-row'},React.createElement('div',{className:'settings-row-lbl'},r.lbl),r.el))
+      R.createElement('div',null,
+        R.createElement('div',{className:'ss'},
+          R.createElement('div',{className:'ss-t'},'Profile Settings'),
+          [{lb:'Full Name',el:R.createElement('input',{className:'set-inp',defaultValue:'Anwaar Ahmad'})},
+           {lb:'Email',el:R.createElement('input',{className:'set-inp',defaultValue:'anwaar@example.com'})},
+           {lb:'Timezone',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'[UTC+05:00] Islamabad, Karachi'))}
+          ].map(r=>R.createElement('div',{key:r.lb,className:'set-row'},R.createElement('div',{className:'set-rl'},r.lb),r.el))
         ),
-        React.createElement('div',{className:'settings-section'},
-          React.createElement('div',{className:'settings-sec-title'},'Preferences'),
-          [{lbl:'Theme',el:React.createElement('select',{className:'settings-input',defaultValue:dark?'dark':'light'},React.createElement('option',{value:'dark'},'Dark'),React.createElement('option',{value:'light'},'Light'))},
-           {lbl:'Language',el:React.createElement('select',{className:'settings-input'},React.createElement('option',null,'English'))},
-           {lbl:'Currency',el:React.createElement('select',{className:'settings-input'},React.createElement('option',null,'USD ($)'))},
-           {lbl:'Date Format',el:React.createElement('input',{className:'settings-input',defaultValue:'May 18, 2024'})}
-          ].map(r=>React.createElement('div',{key:r.lbl,className:'settings-row'},React.createElement('div',{className:'settings-row-lbl'},r.lbl),r.el))
+        R.createElement('div',{className:'ss'},
+          R.createElement('div',{className:'ss-t'},'Preferences'),
+          [{lb:'Theme',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'Dark'),R.createElement('option',null,'Light'))},
+           {lb:'Language',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'English'))},
+           {lb:'Currency',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'USD ($)'))},
+           {lb:'Date Format',el:R.createElement('input',{className:'set-inp',defaultValue:'May 18, 2024'})}
+          ].map(r=>R.createElement('div',{key:r.lb,className:'set-row'},R.createElement('div',{className:'set-rl'},r.lb),r.el))
         ),
-        React.createElement('div',{className:'settings-section'},
-          React.createElement('div',{className:'settings-sec-title'},'Security'),
-          React.createElement('div',{style:{display:'flex',gap:10,flexWrap:'wrap'}},
-            React.createElement('button',{className:'btn btn-g btn-md'},'🔑 Change Password'),
-            React.createElement('button',{className:'btn btn-g btn-md'},'🛡 Two-Factor Authentication')
+        R.createElement('div',{className:'ss'},
+          R.createElement('div',{className:'ss-t'},'Security'),
+          R.createElement('div',{style:{display:'flex',gap:9,flexWrap:'wrap'}},
+            R.createElement('button',{className:'btn btn-g btn-md',onClick:()=>toast.info('Password','Change password flow...')},'🔑 Change Password'),
+            R.createElement('button',{className:'btn btn-g btn-md',onClick:()=>toast.info('2FA','Two-factor authentication enabled')},'🛡 Two-Factor Authentication')
           ),
-          React.createElement('div',{style:{fontSize:12,color:'var(--tx-ok)',marginTop:10}},'● 2FA Enabled')
+          R.createElement('div',{style:{fontSize:12,color:'var(--ok)',marginTop:9}},'● 2FA Enabled')
         )
       )
     )
-  );
+  )
 };
 
-/* ════ HELP ════ */
-const HelpPage=()=>React.createElement('div',{className:'page fade-page'},
-  React.createElement('div',{className:'pg-hd'},
-    React.createElement('div',null,React.createElement('div',{className:'pg-title'},'Help & Documentation'),React.createElement('div',{className:'pg-sub'},'Find guides, tutorials and support')),
-    React.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Support','Opening support chat...')},'💬 Contact Support')
+/* ══════════ HELP ══════════ */
+const HelpPage=()=>R.createElement('div',{className:'pg fp'},
+  R.createElement('div',{className:'pgh'},
+    R.createElement('div',null,R.createElement('div',{className:'pgt'},'Help & Documentation'),R.createElement('div',{className:'pgs'},'Find guides, tutorials and support')),
+    R.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Support','Opening support chat…')},'💬 Contact Support')
   ),
-  React.createElement('div',{style:{background:'var(--bg-card)',border:'1px solid var(--bd)',borderRadius:12,padding:'9px 14px',marginBottom:4,display:'flex',alignItems:'center',gap:8}},
-    React.createElement('span',null,'🔍'),
-    React.createElement('input',{style:{flex:1,background:'none',border:'none',outline:'none',color:'var(--tx-1)',fontSize:13},placeholder:'Search documentation...'})
+  R.createElement('div',{style:{background:'var(--card)',border:'1px solid var(--bd)',borderRadius:10,padding:'8px 13px',marginBottom:4,display:'flex',alignItems:'center',gap:8}},
+    R.createElement('span',null,'🔍'),R.createElement('input',{style:{flex:1,background:'none',border:'none',outline:'none',color:'var(--t1)',fontSize:13},placeholder:'Search documentation…'})
   ),
-  React.createElement('div',{style:{fontSize:14,fontWeight:700,margin:'10px 0 8px'}},'Getting Started'),
-  React.createElement('div',{className:'help-grid'},
-    [{ico:'🚀',title:'Quick Start Guide',desc:'Get up and running in 5 minutes.'},{ico:'📖',title:'User Manual',desc:'Comprehensive guide to all features.'},{ico:'🎬',title:'Video Tutorials',desc:'Step-by-step video instructions.'}].map(h=>
-      React.createElement('div',{key:h.title,className:'help-card'},
-        React.createElement('div',{className:'help-card-ico'},h.ico),
-        React.createElement('div',{className:'help-card-title'},h.title),
-        React.createElement('div',{className:'help-card-desc'},h.desc)
-      )
+  R.createElement('div',{style:{fontSize:14,fontWeight:700,margin:'10px 0 8px'}},'Getting Started'),
+  R.createElement('div',{className:'hg'},
+    [{ic:'🚀',t:'Quick Start Guide',d:'Get up and running in 5 minutes.'},{ic:'📖',t:'User Manual',d:'Comprehensive guide to all features.'},{ic:'🎬',t:'Video Tutorials',d:'Step-by-step video instructions.'}].map(h=>
+      R.createElement('div',{key:h.t,className:'hc'},R.createElement('div',{className:'hc-ic'},h.ic),R.createElement('div',{className:'hc-t'},h.t),R.createElement('div',{className:'hc-d'},h.d))
     )
   ),
-  React.createElement('div',{style:{fontSize:14,fontWeight:700,margin:'14px 0 8px'}},'Documentation'),
-  React.createElement('div',{className:'help-articles'},
-    [{ico:'📊',t:'Platform Overview'},{ico:'📋',t:'Trading Strategies'},{ico:'▶',t:'Backtesting Guide'},{ico:'⚙',t:'Optimization Guide'},{ico:'🤖',t:'AI Documentation'},{ico:'💼',t:'Risk Management'}].map(a=>
-      React.createElement('div',{key:a.t,className:'help-art'},React.createElement('span',{className:'help-art-ico'},a.ico),React.createElement('div',{className:'help-art-title'},a.t))
+  R.createElement('div',{style:{fontSize:14,fontWeight:700,margin:'13px 0 8px'}},'Documentation'),
+  R.createElement('div',{className:'ha'},
+    [{ic:'📊',t:'Platform Overview'},{ic:'📋',t:'Trading Strategies'},{ic:'▶',t:'Backtesting Guide'},{ic:'⚙',t:'Optimization Guide'},{ic:'🤖',t:'AI Documentation'},{ic:'💼',t:'Risk Management'}].map(a=>
+      R.createElement('div',{key:a.t,className:'ha-it'},R.createElement('span',{className:'ha-ic'},a.ic),R.createElement('div',{className:'ha-t'},a.t))
     )
   ),
-  React.createElement('div',{style:{marginTop:14}},
-    React.createElement('button',{className:'btn btn-p btn-lg',onClick:()=>toast.info('Support','Team will respond shortly.')},'💬 Contact Support')
-  )
+  R.createElement('div',{style:{marginTop:13}},R.createElement('button',{className:'btn btn-p btn-lg',onClick:()=>toast.info('Support','Team will respond shortly.')},'💬 Contact Support'))
 );
 
-/* ════ MOBILE NAV ════ */
-const MobileNav=({page,go})=>React.createElement('nav',{className:'mob-nav'},
-  React.createElement('div',{className:'mob-nav-items'},
-    [{id:'dashboard',ico:'⊞',lbl:'Dashboard'},{id:'strategies',ico:'📋',lbl:'Strategy'},{id:'ai',ico:'🤖',lbl:'AI'},{id:'portfolio',ico:'💼',lbl:'Portfolio'},{id:'settings',ico:'⚙️',lbl:'More'}].map(n=>
-      React.createElement('button',{key:n.id,className:cx('mob-btn',page===n.id&&'on'),onClick:()=>go(n.id)},
-        React.createElement('span',{className:'mob-ico'},n.ico),n.lbl
-      )
-    )
-  )
-);
-
-/* ════ APP ════ */
+/* ══════════ APP ══════════ */
 const App=()=>{
   const[page,setPage]=useState('dashboard');
   const[dark,setDark]=useState(true);
   const go=useCallback(p=>setPage(p),[]);
-  const toggleTheme=()=>setDark(d=>!d);
-  useEffect(()=>{document.body.classList.toggle('lm',!dark);},[dark]);
-
-  const renderPage=()=>{
+  const toggle=()=>setDark(d=>!d);
+  useEffect(()=>{document.body.classList.toggle('lm',!dark)},[dark]);
+  const render=()=>{
     switch(page){
-      case 'dashboard': return React.createElement(Dashboard,{go});
-      case 'strategies': return React.createElement(StrategiesPage,{go});
-      case 'backtest': return React.createElement(BacktestPage,{go});
-      case 'optimize': return React.createElement(OptimizePage,null);
-      case 'ai': return React.createElement(AIPage,null);
-      case 'portfolio': return React.createElement(PortfolioPage,{go});
-      case 'reports': return React.createElement(ReportsPage,null);
-      case 'regime': return React.createElement(RegimePage,null);
-      case 'settings': return React.createElement(SettingsPage,{dark,toggleTheme});
-      case 'help': return React.createElement(HelpPage,null);
-      default: return React.createElement(Dashboard,{go});
+      case 'dashboard': return R.createElement(Dashboard,{go});
+      case 'strategies': return R.createElement(StrategiesPage,{go});
+      case 'backtest': return R.createElement(BacktestPage,null);
+      case 'optimize': return R.createElement(OptimizePage,null);
+      case 'ai': return R.createElement(AIPage,null);
+      case 'portfolio': return R.createElement(PortfolioPage,null);
+      case 'reports': return R.createElement(ReportsPage,null);
+      case 'regime': return R.createElement(RegimePage,null);
+      case 'settings': return R.createElement(SettingsPage,{dark,toggle});
+      case 'help': return R.createElement(HelpPage,null);
+      default: return R.createElement(Dashboard,{go});
     }
   };
-
-  return React.createElement('div',{className:cx('shell',!dark&&'lm')},
-    React.createElement(Header,{dark,toggleTheme,go}),
-    React.createElement(Sidebar,{page,go,onLogout:()=>toast.info('Signing out','See you next session.')}),
-    React.createElement('div',{className:'page-area',key:page},renderPage()),
-    React.createElement(MobileNav,{page,go}),
-    React.createElement(ToastHost,null)
-  );
+  return R.createElement('div',{className:cx('shell',!dark&&'lm')},
+    R.createElement(Header,{dark,toggle,go}),
+    R.createElement(Sidebar,{page,go,logout:()=>toast.info('Signing out','See you next session.')}),
+    R.createElement('div',{className:'pa',key:page},render()),
+    R.createElement(MobNav,{page,go}),
+    R.createElement(ToastHost,null)
+  )
 };
-
-ReactDOM.render(React.createElement(App,null),document.getElementById('root'));
+ReactDOM.render(R.createElement(App,null),document.getElementById('root'));
 </script></body></html>
