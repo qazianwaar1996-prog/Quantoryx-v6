@@ -1,0 +1,13 @@
+.git
+.gitignore
+.cache
+.local
+.pythonlibs
+.upm
+frontend
+original-uploads
+backend/**/__pycache__
+backend/data/*.db
+backend/logs/*.log
+data
+*.pyc

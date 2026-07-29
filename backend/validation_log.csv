@@ -1,0 +1,16 @@
+timestamp,category,item,status,message
+2026-07-22 11:54:42,INTEGRATION,engine.backtest_engine,SUCCESS,Imported 'BacktestEngine' successfully.
+2026-07-22 11:54:42,INTEGRATION,optimizer.param_ranges,SUCCESS,Imported 'generate_combinations' successfully.
+2026-07-22 11:54:42,INTEGRATION,optimizer.optimizer_engine,SUCCESS,Imported 'OptimizerEngine' successfully.
+2026-07-22 11:54:42,INTEGRATION,market_regime.detector,SUCCESS,Imported 'MarketRegimeDetector' successfully.
+2026-07-22 11:54:42,INTEGRATION,market_regime.analyzer,SUCCESS,Imported 'MarketRegimeAnalyzer' successfully.
+2026-07-22 11:54:42,INTEGRATION,walk_forward.validation_engine,SUCCESS,Imported 'WalkForwardValidator' successfully.
+2026-07-22 11:54:42,INTEGRATION,risk.risk_manager,SUCCESS,Imported 'RiskManager' successfully.
+2026-07-22 11:54:42,INTEGRATION,portfolio.portfolio_manager,SUCCESS,Imported 'PortfolioManager' successfully.
+2026-07-22 11:54:42,INTEGRATION,paper_trading.paper_engine,SUCCESS,Imported 'PaperTradingEngine' successfully.
+2026-07-22 11:54:42,INTEGRATION,ai_engine.decision_engine,SUCCESS,Imported 'AIDecisionEngine' successfully.
+2026-07-22 11:55:24,REPORT_AUDIT,portfolio_report.csv,SUCCESS,Schema verified. Size: 126.35 KB
+2026-07-22 11:55:24,REPORT_AUDIT,paper_trade_log.csv,SUCCESS,Schema verified. Size: 0.82 KB
+2026-07-22 11:55:24,REPORT_AUDIT,ai_decision_log.csv,SUCCESS,Schema verified. Size: 2.97 KB
+2026-07-22 11:55:24,REPORT_AUDIT,ai_performance_report.csv,SUCCESS,Schema verified. Size: 0.18 KB
+2026-07-22 11:55:24,REPORT_AUDIT,walk_forward_report.csv,SUCCESS,Schema verified. Size: 5.97 KB

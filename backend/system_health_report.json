@@ -1,0 +1,39 @@
+{
+    "timestamp": "2026-07-22 11:54:42",
+    "status": "WARNING",
+    "modules_validation": {
+        "engine.backtest_engine": "OK",
+        "optimizer.param_ranges": "OK",
+        "optimizer.optimizer_engine": "OK",
+        "market_regime.detector": "OK",
+        "market_regime.analyzer": "OK",
+        "walk_forward.validation_engine": "OK",
+        "risk.risk_manager": "OK",
+        "portfolio.portfolio_manager": "OK",
+        "paper_trading.paper_engine": "OK",
+        "ai_engine.decision_engine": "OK"
+    },
+    "static_code_analysis": {
+        "scanned_files_count": 0,
+        "unused_imports": {},
+        "duplicate_line_matches_count": 0
+    },
+    "report_audit": {
+        "portfolio_report.csv": "OK (126.35 KB)",
+        "paper_trade_log.csv": "OK (0.82 KB)",
+        "ai_decision_log.csv": "OK (2.97 KB)",
+        "ai_performance_report.csv": "OK (0.18 KB)",
+        "walk_forward_report.csv": "OK (5.97 KB)"
+    },
+    "benchmarks": {
+        "execution_status": "SUCCESS",
+        "execution_time_seconds": 42.053,
+        "peak_memory_usage_mb": 5.0
+    },
+    "warnings": [
+        "Performance limit reached. Pipeline run took 42.05 seconds."
+    ],
+    "recommendations": [
+        "Consider enabling parameter constraints or pre-calculating regimes to optimize runtime."
+    ]
+}

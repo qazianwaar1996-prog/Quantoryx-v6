@@ -1,0 +1,1 @@
+- [Railway FastAPI deployment](railway-fastapi-deployment.md) — this monorepo must deploy from `/` with an explicit Python container entrypoint, not static-site detection.

@@ -1,0 +1,15 @@
+# Local runtime output
+data/
+backend/data/*.db
+backend/**/*.log
+
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.venv/
+
+# Replit and local tooling
+.cache/
+.local/
+.pythonlibs/
+.upm/
