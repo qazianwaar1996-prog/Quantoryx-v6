@@ -6,7 +6,6 @@
 <title>Quantoryx v7 — AI-Powered Trading Platform</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.8.0/Recharts.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root {
@@ -556,7 +555,151 @@ select option{background:var(--bg-elevated);color:var(--tx-1);}
 <div id="root"></div>
 <script type="text/javascript">
 const {useState,useEffect,useCallback,useRef} = React;
-const {AreaChart,Area,LineChart,Line,BarChart,Bar,PieChart,Pie,Cell,XAxis,YAxis,CartesianGrid,Tooltip,ResponsiveContainer,ReferenceLine} = Recharts;
+
+/* ── Pure SVG Chart System (no Recharts) ── */
+const useSize = (ref) => {
+  const [size, setSize] = React.useState({w:800,h:300});
+  React.useEffect(() => {
+    if (!ref.current) return;
+    const ro = new ResizeObserver(([e]) => setSize({w:e.contentRect.width, h:e.contentRect.height}));
+    ro.observe(ref.current);
+    return () => ro.disconnect();
+  }, []);
+  return size;
+};
+
+const ResponsiveContainer = ({width, height, children}) => {
+  const ref = React.useRef(null);
+  const [w, setW] = React.useState(600);
+  React.useEffect(() => {
+    if (!ref.current) return;
+    const ro = new ResizeObserver(([e]) => setW(e.contentRect.width));
+    ro.observe(ref.current);
+    return () => ro.disconnect();
+  }, []);
+  const child = typeof children === 'function' ? children({width:w, height}) : children;
+  return React.createElement('div', {ref, style:{width:'100%', height, position:'relative'}},
+    React.cloneElement(child, {_w: w, _h: height})
+  );
+};
+
+// Shared SVG chart helpers
+const getMinMax = (data, keys) => {
+  let min = Infinity, max = -Infinity;
+  data.forEach(d => keys.forEach(k => { if(d[k]!==undefined){min=Math.min(min,d[k]);max=Math.max(max,d[k]);}}));
+  return {min: min===Infinity?0:min, max: max===-Infinity?100:max};
+};
+
+const AreaChart = ({data=[], children, margin={top:4,right:8,bottom:20,left:36}, _w=600, _h=220}) => {
+  const W = _w, H = _h;
+  const ml=margin.left||36, mr=margin.right||8, mt=margin.top||4, mb=margin.bottom||20;
+  const cw = W-ml-mr, ch = H-mt-mb;
+  const childArr = React.Children.toArray(children);
+  const areas = childArr.filter(c=>c.type===Area);
+  const xAxisC = childArr.find(c=>c.type===XAxis);
+  const yAxisC = childArr.find(c=>c.type===YAxis);
+  const gridC = childArr.find(c=>c.type===CartesianGrid);
+  const keys = areas.map(a=>a.props.dataKey);
+  const {min, max} = getMinMax(data, keys);
+  const range = max - min || 1;
+  const xScale = (i) => (i / (data.length-1)) * cw;
+  const yScale = (v) => ch - ((v-min)/range)*ch;
+  const xLabels = xAxisC ? [...new Set(data.map(d=>d[xAxisC.props.dataKey||'w']))] : [];
+  const yTicks = yAxisC?.props?.hide ? [] : [0,0.25,0.5,0.75,1].map(t=>min+t*range);
+  return React.createElement('svg', {width:W, height:H, style:{overflow:'visible'}},
+    React.createElement('defs', null,
+      areas.map(a => {
+        const id = 'grad_'+a.props.dataKey;
+        const color = a.props.stroke||'#8b5cf6';
+        return React.createElement('linearGradient',{key:id,id,x1:'0',y1:'0',x2:'0',y2:'1'},
+          React.createElement('stop',{offset:'5%',stopColor:color,stopOpacity:.3}),
+          React.createElement('stop',{offset:'95%',stopColor:color,stopOpacity:0})
+        );
+      })
+    ),
+    React.createElement('g', {transform:`translate(${ml},${mt})`},
+      gridC && [0.25,0.5,0.75,1].map(t=>
+        React.createElement('line',{key:t,x1:0,y1:ch*t,x2:cw,y2:ch*t,stroke:'rgba(255,255,255,.04)',strokeWidth:1})
+      ),
+      yAxisC && !yAxisC.props.hide && yTicks.map((v,i)=>
+        React.createElement('text',{key:i,x:-4,y:yScale(v)+4,textAnchor:'end',fill:'var(--tx-3)',fontSize:10},
+          yAxisC.props.tickFormatter ? yAxisC.props.tickFormatter(v) : Math.round(v)
+        )
+      ),
+      xAxisC && xLabels.map((lbl,i)=>{
+        const idx = data.findIndex(d=>d[xAxisC.props.dataKey||'w']===lbl);
+        return React.createElement('text',{key:lbl,x:xScale(idx),y:ch+14,textAnchor:'middle',fill:'var(--tx-3)',fontSize:10},lbl);
+      }),
+      areas.map(a => {
+        const key = a.props.dataKey;
+        const color = a.props.stroke||'#8b5cf6';
+        const pts = data.map((d,i)=>`${xScale(i)},${yScale(d[key]||0)}`).join(' ');
+        const areapts = `0,${ch} ${pts} ${xScale(data.length-1)},${ch}`;
+        return React.createElement('g',{key:key},
+          React.createElement('polygon',{points:areapts,fill:`url(#grad_${key})`,opacity:.8}),
+          React.createElement('polyline',{points:pts,fill:'none',stroke:color,strokeWidth:a.props.strokeWidth||2,strokeDasharray:a.props.strokeDasharray||'none',strokeLinejoin:'round',strokeLinecap:'round'})
+        );
+      })
+    )
+  );
+};
+
+const Area = (props) => null;
+const XAxis = (props) => null;
+const YAxis = (props) => null;
+const CartesianGrid = (props) => null;
+const Tooltip = (props) => null;
+const ReferenceLine = (props) => null;
+const LineChart = AreaChart;
+const Line = Area;
+
+const BarChart = ({data=[], children, margin={top:4,right:8,bottom:20,left:36}, _w=600, _h=220}) => {
+  const W = _w, H = _h;
+  const ml=margin.left||36, mr=margin.right||8, mt=margin.top||4, mb=margin.bottom||20;
+  const cw = W-ml-mr, ch = H-mt-mb;
+  const childArr = React.Children.toArray(children);
+  const bars = childArr.filter(c=>c.type===Bar);
+  const xAxisC = childArr.find(c=>c.type===XAxis);
+  const yAxisC = childArr.find(c=>c.type===YAxis);
+  const keys = bars.map(b=>b.props.dataKey);
+  const stackIds = [...new Set(bars.map(b=>b.props.stackId).filter(Boolean))];
+  const maxVal = data.reduce((mx,d)=>{
+    const stacks = {};
+    bars.forEach(b=>{if(b.props.stackId){stacks[b.props.stackId]=(stacks[b.props.stackId]||0)+(d[b.props.dataKey]||0);}});
+    return Math.max(mx,...Object.values(stacks),...keys.filter(k=>!bars.find(b=>b.props.dataKey===k&&b.props.stackId)).map(k=>d[k]||0));
+  }, 0) || 100;
+  const bw = cw / data.length;
+  const xLabels = [...new Set(data.map(d=>d[xAxisC?.props?.dataKey||'w']))];
+  const yTicks = [0,0.25,0.5,0.75,1].map(t=>t*maxVal);
+  return React.createElement('svg',{width:W,height:H},
+    React.createElement('g',{transform:`translate(${ml},${mt})`},
+      [0.25,0.5,0.75,1].map(t=>React.createElement('line',{key:t,x1:0,y1:ch*(1-t),x2:cw,y2:ch*(1-t),stroke:'rgba(255,255,255,.04)',strokeWidth:1})),
+      yAxisC && yTicks.map((v,i)=>React.createElement('text',{key:i,x:-4,y:ch*(1-v/maxVal)+4,textAnchor:'end',fill:'var(--tx-3)',fontSize:10},Math.round(v))),
+      data.map((d,di)=>{
+        const x = di*bw + bw*0.1;
+        const barW = bw*0.8;
+        let stackY = {};
+        return React.createElement('g',{key:di},
+          xAxisC && di%Math.ceil(data.length/6)===0 && React.createElement('text',{x:x+barW/2,y:ch+14,textAnchor:'middle',fill:'var(--tx-3)',fontSize:10},d[xAxisC.props.dataKey||'w']),
+          bars.map(b=>{
+            const key = b.props.dataKey;
+            const sid = b.props.stackId;
+            const val = d[key]||0;
+            const bh = (val/maxVal)*ch;
+            const by = sid ? (stackY[sid]||ch)-bh : ch-bh;
+            if(sid) stackY[sid] = by;
+            return React.createElement('rect',{key:key,x,y:by,width:barW,height:bh,fill:b.props.fill||'#8b5cf6',rx:1});
+          })
+        );
+      })
+    )
+  );
+};
+const Bar = (props) => null;
+const PieChart = (props) => null;
+const Pie = (props) => null;
+const Cell = (props) => null;
+
 
 /* ── Mock Data ── */
 const MONTHS=['Jan','Feb','Mar','Apr','May','Jun'];
