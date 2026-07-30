@@ -32,6 +32,7 @@
   --sbw:188px;--hdh:52px;--r:12px;--rsm:8px;--rlg:16px;
   --tr:.14s ease;--trm:.22s ease;
 }
+.lm,.lm *{color-scheme:light}
 .lm{
   --bg0:#f0f2f9;--bg1:#fff;--bg2:#e8eaf4;
   --card:rgba(255,255,255,.92);--cardh:#fff;--sb:#fff;
@@ -129,7 +130,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .cp{padding:15px}
 
 /* ── STAT CARDS ── */
-.sr{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;min-width:0}
+.sr{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;min-width:0}.sr-4{grid-template-columns:repeat(4,1fr)}
 .sc{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:12px 13px;cursor:pointer;transition:all var(--trm);position:relative;overflow:hidden}
 .sc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity var(--tr);border-radius:var(--r) var(--r) 0 0}
 .sc:hover{border-color:var(--bd-act);box-shadow:var(--shg)}
@@ -216,6 +217,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .fi{background:var(--inp);border:1px solid var(--bd);border-radius:6px;padding:7px 10px;color:var(--t1);font-size:12px;outline:none;width:100%;transition:border-color var(--tr)}
 .fi:focus{border-color:var(--pu5)}
 .opt-body{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:2px}
+.opt-pg-grid{display:grid;grid-template-columns:300px 1fr;gap:13px}
 .pr-lbl{font-size:11px;font-weight:700;color:var(--t1);margin-bottom:7px}
 .sl-row{margin-bottom:7px}
 .sl-hd{display:flex;justify-content:space-between;margin-bottom:3px}
@@ -276,7 +278,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .foot{border-top:1px solid var(--bd);padding:11px 17px;display:flex;align-items:center;justify-content:space-between;font-size:11px;color:var(--t3);flex-shrink:0}
 
 /* Filter bar */
-.fbar{display:flex;gap:3px;background:var(--bg1);border-radius:8px;padding:3px;width:fit-content}
+.fbar{display:flex;gap:3px;background:var(--bg1);border-radius:8px;padding:3px;width:100%;overflow-x:auto}
 .fb{padding:5px 13px;border-radius:6px;border:none;background:none;color:var(--t3);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--tr)}
 .fb.on{background:var(--card);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.2)}
 
@@ -360,7 +362,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .ap-s{background:rgba(239,68,68,.12);color:var(--re4)}
 
 /* Portfolio page */
-.ptabs{display:flex;gap:3px;background:var(--bg1);border-radius:8px;padding:3px;width:fit-content;margin-bottom:12px}
+.ptabs{display:flex;gap:3px;background:var(--bg1);border-radius:8px;padding:3px;width:fit-content;margin-bottom:12px;max-width:100%;overflow-x:auto}
 .ptab{padding:5px 13px;border-radius:6px;border:none;background:none;color:var(--t3);font-size:12px;font-weight:500;cursor:pointer;transition:all var(--tr)}
 .ptab.on{background:var(--card);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,.2)}
 .ppg{display:grid;grid-template-columns:1fr 252px;gap:13px}
@@ -369,6 +371,7 @@ select option{background:var(--bg1);color:var(--t1)}
 .btg{display:grid;grid-template-columns:290px 1fr;gap:13px}
 .bt-frm{display:flex;flex-direction:column;gap:10px}
 .dr{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.bt-metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 
 /* Toast */
 .toast-host{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:6px;pointer-events:none}
@@ -395,6 +398,7 @@ select option{background:var(--bg1);color:var(--t1)}
   .mob{display:block}
   .pg{padding:12px;padding-bottom:76px;gap:11px}
   .sr{grid-template-columns:repeat(2,1fr)}
+  .sr-4{grid-template-columns:repeat(2,1fr)}
   .cg{grid-template-columns:1fr}
   .mg{grid-template-columns:1fr}
   .sg{grid-template-columns:1fr}
@@ -406,6 +410,8 @@ select option{background:var(--bg1);color:var(--t1)}
   .aag{grid-template-columns:1fr}
   .opt-ctrl{grid-template-columns:1fr 1fr}
   .opt-body{grid-template-columns:1fr}
+  .opt-pg-grid{grid-template-columns:1fr}
+  .rig{grid-template-columns:repeat(2,1fr)}
   .ha{grid-template-columns:1fr}
   .pw-b{grid-template-columns:1fr}
   .pm-row{grid-template-columns:repeat(3,1fr)}
@@ -419,6 +425,7 @@ select option{background:var(--bg1);color:var(--t1)}
   .rc{flex-direction:row;flex-wrap:wrap}
   .rc>*{flex:1;min-width:280px}
   .btg{grid-template-columns:1fr}
+  .bt-metrics-grid{grid-template-columns:repeat(2,1fr)}
   .cg>*:not(:first-child){margin-top:0}
 }
 @media(max-width:480px){
@@ -429,6 +436,8 @@ select option{background:var(--bg1);color:var(--t1)}
   .bp-grid{grid-template-columns:repeat(3,1fr)}
   .opt-ctrl{grid-template-columns:1fr}
   svg{max-width:100%}
+  .toast-host{bottom:72px;right:12px;left:12px}
+  .toast{font-size:11px}
 }
 </style>
 </head>
@@ -540,15 +549,16 @@ const Donut=({data,size=120,iR=38,oR=56})=>{
 /* ── SVG LINE CHART ── */
 const LineChart=({data,keys,colors,height=210,showGrid=true,showX=true,showY=true,dashed=[]})=>{
   const W=100,H=100;// viewBox units
-  const ml=showY?8:2,mr=2,mt=2,mb=showX?12:2;
+  const ml=showY?11:2,mr=2,mt=3,mb=showX?13:2;
   const cw=W-ml-mr,ch=H-mt-mb;
   const allVals=data.flatMap(d=>keys.map(k=>d[k]||0));
   const mn=Math.min(...allVals),mx=Math.max(...allVals),rng=mx-mn||1;
   const xS=i=>ml+(i/(data.length-1))*cw;
   const yS=v=>mt+ch-((v-mn)/rng)*ch;
-  const xLabels=[...new Set(data.map(d=>d.w))];
   const yTicks=[0,.25,.5,.75,1].map(t=>mn+t*rng);
-  const id=k=>'lc'+k+Math.random().toString(36).slice(2,5);
+  // Evenly spaced X labels: pick 6 evenly distributed indices
+  const xStep=Math.floor((data.length-1)/5);
+  const xIdxs=[0,1,2,3,4,5].map(i=>Math.min(i*xStep,data.length-1));
   return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'hidden'}},
     R.createElement('defs',null,
       keys.map((k,ki)=>R.createElement('linearGradient',{key:k,id:'lg'+k,x1:'0',y1:'0',x2:'0',y2:'1'},
@@ -557,11 +567,8 @@ const LineChart=({data,keys,colors,height=210,showGrid=true,showX=true,showY=tru
       ))
     ),
     showGrid&&[.25,.5,.75,1].map(t=>R.createElement('line',{key:t,x1:ml,y1:mt+ch*(1-t),x2:W-mr,y2:mt+ch*(1-t),stroke:'rgba(255,255,255,.04)',strokeWidth:.3})),
-    showY&&yTicks.filter((_,i)=>i>0).map((v,i)=>R.createElement('text',{key:i,x:ml-1,y:yS(v)+.8,textAnchor:'end',fill:'var(--t3)',fontSize:3},`${Math.round(v)}%`)),
-    showX&&xLabels.map((lb,i)=>{
-      const idx=data.findIndex(d=>d.w===lb);
-      return R.createElement('text',{key:lb,x:xS(idx),y:H-1,textAnchor:'middle',fill:'var(--t3)',fontSize:3},lb)
-    }),
+    showY&&yTicks.filter((_,i)=>i>0).map((v,i)=>R.createElement('text',{key:i,x:ml-1,y:yS(v)+1.5,textAnchor:'end',fill:'var(--t3)',fontSize:4.5},`${Math.round(v)}%`)),
+    showX&&xIdxs.map((idx)=>R.createElement('text',{key:idx,x:xS(idx),y:H-1,textAnchor:'middle',fill:'var(--t3)',fontSize:4.5},data[idx].w)),
     keys.map((k,ki)=>{
       const pts=data.map((d,i)=>`${xS(i)},${yS(d[k]||0)}`).join(' ');
       const apts=`${ml},${mt+ch} ${pts} ${xS(data.length-1)},${mt+ch}`;
@@ -576,7 +583,7 @@ const LineChart=({data,keys,colors,height=210,showGrid=true,showX=true,showY=tru
 
 /* ── SVG BAR CHART ── */
 const BarChart=({data,keys,colors,height=200})=>{
-  const W=100,H=100,ml=8,mr=2,mt=2,mb=12,cw=W-ml-mr,ch=H-mt-mb;
+  const W=100,H=100,ml=11,mr=2,mt=3,mb=13,cw=W-ml-mr,ch=H-mt-mb;
   const maxV=data.reduce((mx,d)=>{
     const sv={};keys.forEach(k=>{sv[k]=(sv[k]||0)+(d[k]||0)});
     return Math.max(mx,...Object.values(sv));
@@ -584,7 +591,7 @@ const BarChart=({data,keys,colors,height=200})=>{
   const bw=cw/data.length,xLabels=[...new Set(data.map(d=>d.w))];
   return R.createElement('svg',{width:'100%',height,viewBox:`0 0 ${W} ${H}`,preserveAspectRatio:'none',style:{display:'block',overflow:'hidden'}},
     [.25,.5,.75,1].map(t=>R.createElement('line',{key:t,x1:ml,y1:mt+ch*(1-t),x2:W-mr,y2:mt+ch*(1-t),stroke:'rgba(255,255,255,.04)',strokeWidth:.3})),
-    [.25,.5,.75,1].map(t=>R.createElement('text',{key:t,x:ml-1,y:mt+ch*(1-t)+.8,textAnchor:'end',fill:'var(--t3)',fontSize:3},Math.round(t*maxV))),
+    [.25,.5,.75,1].map(t=>R.createElement('text',{key:t,x:ml-1,y:mt+ch*(1-t)+1.5,textAnchor:'end',fill:'var(--t3)',fontSize:4.5},Math.round(t*maxV))),
     data.map((d,di)=>{
       const x=ml+di*bw+bw*.1,bww=bw*.8;
       let sy=mt+ch;
@@ -595,7 +602,7 @@ const BarChart=({data,keys,colors,height=200})=>{
       });
       return R.createElement('g',{key:di},
         bars,
-        di%Math.ceil(data.length/6)===0&&R.createElement('text',{x:x+bww/2,y:H-1,textAnchor:'middle',fill:'var(--t3)',fontSize:3},d.w)
+        di%Math.ceil(data.length/6)===0&&R.createElement('text',{x:x+bww/2,y:H-1,textAnchor:'middle',fill:'var(--t3)',fontSize:4.5},d.w)
       )
     })
   )
@@ -603,18 +610,21 @@ const BarChart=({data,keys,colors,height=200})=>{
 
 /* ── 3D SURFACE ── */
 const Surface=()=>{
-  const rows=13,cols=13,quads=[];
-  for(let r=0;r<rows-1;r++)for(let c=0;c<cols-1;c++){
-    const pt=(ri,ci)=>{
-      const x=ci/(cols-1)*84+8,z=ri/(rows-1),cx2=ci/(cols-1);
-      const pk=1-Math.pow(cx2-.5,2)*4-Math.pow(z-.4,2)*3;
-      return{x,y:62-pk*48+z*12,sh:Math.max(0,Math.min(1,pk))};
-    };
-    const a=pt(r,c),b=pt(r,c+1),cc=pt(r+1,c),d=pt(r+1,c+1);
-    const sh=(a.sh+b.sh+cc.sh+d.sh)/4;
-    quads.push({path:`M${a.x} ${a.y} L${b.x} ${b.y} L${d.x} ${d.y} L${cc.x} ${cc.y} Z`,c:`hsl(${Math.round(sh*300)},90%,${30+sh*35}%)`,z:sh});
-  }
-  quads.sort((a,b)=>a.z-b.z);
+  const quads=useMemo(()=>{
+    const rows=13,cols=13,qs=[];
+    for(let r=0;r<rows-1;r++)for(let c=0;c<cols-1;c++){
+      const pt=(ri,ci)=>{
+        const x=ci/(cols-1)*84+8,z=ri/(rows-1),cx2=ci/(cols-1);
+        const pk=1-Math.pow(cx2-.5,2)*4-Math.pow(z-.4,2)*3;
+        return{x,y:62-pk*48+z*12,sh:Math.max(0,Math.min(1,pk))};
+      };
+      const a=pt(r,c),b=pt(r,c+1),cc=pt(r+1,c),d=pt(r+1,c+1);
+      const sh=(a.sh+b.sh+cc.sh+d.sh)/4;
+      qs.push({path:`M${a.x} ${a.y} L${b.x} ${b.y} L${d.x} ${d.y} L${cc.x} ${cc.y} Z`,c:`hsl(${Math.round(sh*300)},90%,${30+sh*35}%)`,z:sh});
+    }
+    qs.sort((a,b)=>a.z-b.z);
+    return qs;
+  },[]);
   return R.createElement('svg',{width:'100%',height:'100%',viewBox:'0 0 100 80',preserveAspectRatio:'xMidYMid meet'},
     quads.map((q,i)=>R.createElement('path',{key:i,d:q.path,fill:q.c,stroke:'rgba(0,0,0,.28)',strokeWidth:.15}))
   )
@@ -645,7 +655,7 @@ const Sidebar=({page,go,logout})=>R.createElement('nav',{className:'sb'},
   R.createElement('div',{className:'sb-ai'},
     R.createElement('div',{className:'sb-ai-br'},'🧠'),
     R.createElement('div',{className:'sb-ai-t'},'Quantoryx AI'),
-    R.createElement('div',{className:'sb-ai-s'},'Smarter insights.\nBetter trades.'),
+    R.createElement('div',{className:'sb-ai-s'},R.createElement('span',null,'Smarter insights.'),R.createElement('br',null),R.createElement('span',null,'Better trades.')),
     R.createElement('button',{className:'sb-ai-b',onClick:()=>go('ai')},'▶ Run AI Analysis →')
   ),
   R.createElement('div',{className:'sb-ft'},
@@ -660,14 +670,14 @@ const Sidebar=({page,go,logout})=>R.createElement('nav',{className:'sb'},
 
 /* ── HEADER ── */
 const Header=({dark,toggle,go})=>R.createElement('header',{className:'hd'},
-  R.createElement('div',{className:'hd-logo',onClick:()=>go('dashboard')},
+  R.createElement('div',{className:'hd-logo',onClick:()=>go('dashboard'),role:'button',tabIndex:0,onKeyDown:e=>(e.key==='Enter'||e.key===' ')&&go('dashboard')},
     R.createElement('div',{className:'hd-Q'},'Q'),
     R.createElement('div',{className:'hd-brand'},
       R.createElement('span',{className:'hd-name'},'QUANTORYX'),
       R.createElement('span',{className:'hd-tag'},'AI-Powered Trading Platform')
     )
   ),
-  R.createElement('button',{className:'hd-search'},
+  R.createElement('button',{className:'hd-search',onClick:()=>toast.info('Search','Search functionality coming soon…')},
     R.createElement('span',{className:'hd-sq'},'🔍'),
     R.createElement('span',{className:'hd-sph'},'Search strategies, backtests, insights...'),
     R.createElement('span',{className:'hd-kbd'},'Ctrl + K')
@@ -686,14 +696,38 @@ const Header=({dark,toggle,go})=>R.createElement('header',{className:'hd'},
 );
 
 /* ── MOBILE NAV ── */
-const MobNav=({page,go})=>R.createElement('nav',{className:'mob'},
-  R.createElement('div',{className:'mob-row'},
-    [{id:'dashboard',ic:'⊞',lb:'Home'},{id:'strategies',ic:'📋',lb:'Strats'},{id:'ai',ic:'🤖',lb:'AI'},{id:'portfolio',ic:'💼',lb:'Portfolio'},{id:'settings',ic:'⚙️',lb:'More'}]
-    .map(n=>R.createElement('button',{key:n.id,className:cx('mob-b',page===n.id&&'on'),onClick:()=>go(n.id)},
-      R.createElement('span',{className:'mob-ic'},n.ic),n.lb
-    ))
+const MobNav=({page,go})=>{
+  const[more,setMore]=useState(false);
+  const morePages=[
+    {id:'backtest',ic:'▶',lb:'Backtest'},{id:'optimize',ic:'⚙',lb:'Optimize'},
+    {id:'reports',ic:'📊',lb:'Reports'},{id:'regime',ic:'🌐',lb:'Regime'},
+    {id:'help',ic:'❓',lb:'Help'},{id:'settings',ic:'⚙️',lb:'Settings'},
+  ];
+  const mainPages=[{id:'dashboard',ic:'⊞',lb:'Home'},{id:'strategies',ic:'📋',lb:'Strats'},{id:'ai',ic:'🤖',lb:'AI'},{id:'portfolio',ic:'💼',lb:'Portfolio'}];
+  const isMore=morePages.some(p=>p.id===page);
+  return R.createElement(R.Fragment,null,
+    more&&R.createElement('div',{style:{position:'fixed',inset:0,background:'var(--bg0)',zIndex:299,padding:'16px',paddingBottom:'80px',overflowY:'auto'}},
+      R.createElement('div',{style:{fontSize:16,fontWeight:700,marginBottom:16,color:'var(--t1)'}},'More Pages'),
+      R.createElement('div',{style:{display:'grid',gridTemplateColumns:'1fr 1fr',gap:10}},
+        morePages.map(p=>R.createElement('button',{key:p.id,
+          style:{display:'flex',flexDirection:'column',alignItems:'center',gap:6,padding:'16px 8px',background:'var(--card)',border:'1px solid '+(page===p.id?'var(--bd-act)':'var(--bd)'),borderRadius:12,color:page===p.id?'var(--pu4)':'var(--t2)',fontSize:12,fontWeight:600,cursor:'pointer'},
+          onClick:()=>{go(p.id);setMore(false)}},
+          R.createElement('span',{style:{fontSize:24}},p.ic),p.lb
+        ))
+      )
+    ),
+    R.createElement('nav',{className:'mob'},
+      R.createElement('div',{className:'mob-row'},
+        mainPages.map(n=>R.createElement('button',{key:n.id,className:cx('mob-b',page===n.id&&'on'),onClick:()=>{setMore(false);go(n.id)}},
+          R.createElement('span',{className:'mob-ic'},n.ic),n.lb
+        )),
+        R.createElement('button',{className:cx('mob-b',(more||isMore)&&'on'),onClick:()=>setMore(m=>!m)},
+          R.createElement('span',{className:'mob-ic'},'⋯'),more?'Close':'More'
+        )
+      )
+    )
   )
-);
+};
 
 /* ══════════ DASHBOARD ══════════ */
 const Dashboard=({go})=>{
@@ -707,6 +741,8 @@ const Dashboard=({go})=>{
     {lb:'Win Rate',v:'62.4%',sub:'+4.32% vs last month',col:'#fbbf24',ic:'ic-or',cls:'sc-or',sp:mkSp(.6),ico:'🎯',vc:'up'},
   ];
   const runAI=()=>{setAiRun(true);setTimeout(()=>{setAiRun(false);toast.success('AI Analysis Complete','Bullish · 72% confidence')},2200)};
+  const[mounted,setMounted]=useState(false);
+  useEffect(()=>{setTimeout(()=>setMounted(true),100)},[]);
   return R.createElement('div',{className:'pg fp'},
     /* Stat cards */
     R.createElement('div',{className:'sr'},
@@ -716,7 +752,7 @@ const Dashboard=({go})=>{
           R.createElement('span',{className:cx('sc-ic',s.ic)},s.ico)
         ),
         R.createElement('div',{className:cx('sc-val',s.vc),style:{color:s.col}},s.v),
-        R.createElement('div',{className:cx('sc-sub',s.vc||'neu')},'↑ ',s.sub),
+        R.createElement('div',{className:cx('sc-sub',s.vc||'neu')},s.vc==='down'?'↓ ':'↑ ',s.sub),
         R.createElement(Spark,{data:s.sp,color:s.col,h:34})
       ))
     ),
@@ -754,7 +790,7 @@ const Dashboard=({go})=>{
         ),
         R.createElement('div',{className:'ai-sig'},'Bullish'),
         R.createElement('div',{className:'ai-cr'},'Confidence: ',R.createElement('span',null,'72%')),
-        R.createElement('div',{className:'conf-b'},R.createElement('div',{className:'conf-f',style:{width:'72%'}})),
+        R.createElement('div',{className:'conf-b'},R.createElement('div',{className:'conf-f',style:{width:mounted?'72%':'0%'}})),
         R.createElement('div',{className:'ai-desc'},'Market shows bullish momentum with strong volume confirmation across major indices.'),
         R.createElement('div',null,
           R.createElement('div',{className:'ai-fl'},'Key Factors:'),
@@ -803,7 +839,7 @@ const Dashboard=({go})=>{
             [{lb:'Lookback Period',v:45,mx:100},{lb:'Breakout Threshold',v:2.3,mx:5},{lb:'Stop Loss (%)',v:3.0,mx:10},{lb:'Take Profit (%)',v:6.0,mx:20},{lb:'Sharpe Ratio',v:1.87,mx:3}].map(p=>
               R.createElement('div',{key:p.lb,className:'sl-row'},
                 R.createElement('div',{className:'sl-hd'},R.createElement('span',{className:'sl-l'},p.lb),R.createElement('span',{className:'sl-v'},p.v),R.createElement('span',{className:'sl-m'},p.mx)),
-                R.createElement('input',{type:'range',className:'slider',defaultValue:p.v,min:0,max:p.mx})
+                R.createElement('input',{type:'range',className:'slider',defaultValue:p.v,min:0,max:p.mx,onChange:e=>{const el=e.target.previousSibling.previousSibling;if(el)el.textContent=e.target.value}})
               )
             )
           ),
@@ -896,7 +932,9 @@ const Dashboard=({go})=>{
 /* ══════════ STRATEGIES ══════════ */
 const StrategiesPage=({go})=>{
   const[f,setF]=useState('All');
-  const filtered=f==='All'?STRATS:STRATS.filter(s=>f==='Active'?s.st==='active':f==='Inactive'?s.st!=='active':true);
+  const[favs,setFavs]=useState([1,3]);
+  const toggleFav=(id)=>setFavs(fs=>fs.includes(id)?fs.filter(x=>x!==id):[...fs,id]);
+  const filtered=f==='All'?STRATS:STRATS.filter(s=>f==='Active'?s.st==='active':f==='Inactive'?s.st!=='active':f==='Favorites'?favs.includes(s.id):true);
   return R.createElement('div',{className:'pg fp'},
     R.createElement('div',{className:'pgh'},
       R.createElement('div',null,R.createElement('div',{className:'pgt'},'Strategies'),R.createElement('div',{className:'pgs'},`${STRATS.length} strategies configured`)),
@@ -914,7 +952,7 @@ const StrategiesPage=({go})=>{
               s.st==='active'?'● Active':s.st==='paused'?'◐ Paused':'○ Inactive'
             )
           ),
-          R.createElement('div',{className:'stc-tp'},s.tp)
+          R.createElement('div',{style:{display:'flex',alignItems:'center',gap:6}},R.createElement('span',{style:{fontSize:14,cursor:'pointer',color:favs.includes(s.id)?'var(--ye4)':'var(--t3)'},onClick:e=>{e.stopPropagation();toggleFav(s.id)}},favs.includes(s.id)?'★':'☆'),R.createElement('div',{className:'stc-tp'},s.tp))
         ),
         R.createElement(Spark,{data:s.sp,color:s.st==='active'?'#10b981':'#6b7280',h:42}),
         R.createElement('div',{className:'stc-m'},
@@ -966,7 +1004,7 @@ const BacktestPage=()=>{
         ),
         R.createElement('div',{className:'card cp'},
           R.createElement('div',{style:{fontSize:12,fontWeight:700,marginBottom:9}},'Performance Metrics'),
-          R.createElement('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:8}},
+          R.createElement('div',{className:'bt-metrics-grid'},
             [['Total Return','+34.67%','up'],['Max DD','-8.34%','down'],['Sharpe','1.67',''],['Win Rate','62.4%','up'],['CAGR','28.3%','up'],['Profit Factor','2.56',''],['Trades','158',''],['Expectancy','+3.67%','up']].map(([l,v,c])=>
               R.createElement('div',{key:l,style:{background:'var(--bg0)',borderRadius:8,padding:'8px 10px',border:'1px solid var(--bd)'}},
                 R.createElement('div',{style:{fontSize:9.5,color:'var(--t3)',textTransform:'uppercase',letterSpacing:'.4px',marginBottom:2}},l),
@@ -996,13 +1034,13 @@ const OptimizePage=()=>{
         R.createElement('button',{className:'btn btn-p btn-md',style:{marginTop:16},onClick:()=>{setRun(true);setTimeout(()=>{setRun(false);toast.success('Optimization Complete','Best Sharpe: 1.87 · LP:45, BT:2.3')},3000)}},run?'⟳ Optimizing…':'⚡ Start Optimization')
       )
     ),
-    R.createElement('div',{style:{display:'grid',gridTemplateColumns:'300px 1fr',gap:13}},
+    R.createElement('div',{className:'opt-pg-grid'},
       R.createElement('div',{className:'card cp'},
         R.createElement('div',{className:'pr-lbl'},'Parameter Ranges'),
         [{lb:'Lookback Period',v:45,mx:100},{lb:'Breakout Threshold',v:2.3,mx:5},{lb:'Stop Loss (%)',v:3.0,mx:10},{lb:'Take Profit (%)',v:6.0,mx:20},{lb:'Sharpe Ratio',v:1.87,mx:3}].map(p=>
           R.createElement('div',{key:p.lb,className:'sl-row'},
             R.createElement('div',{className:'sl-hd'},R.createElement('span',{className:'sl-l'},p.lb),R.createElement('span',{className:'sl-v'},p.v),R.createElement('span',{className:'sl-m'},p.mx)),
-            R.createElement('input',{type:'range',className:'slider',defaultValue:p.v,min:0,max:p.mx})
+            R.createElement('input',{type:'range',className:'slider',defaultValue:p.v,min:0,max:p.mx,onChange:e=>{const el=e.target.previousSibling.previousSibling;if(el)el.textContent=e.target.value}})
           )
         ),
         R.createElement('button',{className:'btn btn-p btn-fl',style:{marginTop:11}},'▶ Start Optimization')
@@ -1082,7 +1120,7 @@ const PortfolioPage=()=>{
       R.createElement('div',null,R.createElement('div',{className:'pgt'},'Portfolio'),R.createElement('div',{className:'pgs'},'Track your assets and performance')),
       R.createElement('button',{className:'btn btn-p btn-md',onClick:()=>toast.info('Add Asset','Opening asset form…')},'+ Add Asset')
     ),
-    R.createElement('div',{className:'sr',style:{gridTemplateColumns:'repeat(4,1fr)'}},
+    R.createElement('div',{className:'sr sr-4'},
       [{lb:'Total Equity',v:'$126,430.50',sub:'+12.34%',col:'#8b5cf6',cls:'sc-pu'},{lb:'Day Change',v:'+$1,234.50',sub:'+0.98%',col:'#10b981',cls:'sc-gr'},{lb:'Cash Balance',v:'$8,430.50',sub:'Available',col:'#60a5fa',cls:'sc-bl'},{lb:'Total Return',v:'+24.67%',sub:'All time',col:'#10b981',cls:'sc-gr'}].map(s=>
         R.createElement('div',{key:s.lb,className:cx('sc',s.cls)},
           R.createElement('div',{className:'sc-lbl'},s.lb),
@@ -1096,7 +1134,7 @@ const PortfolioPage=()=>{
     ),
     R.createElement('div',{className:'ppg'},
       R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
-        R.createElement('div',{className:'card cp'},
+        (tab==='Overview'||tab==='Holdings')&&R.createElement('div',{className:'card cp'},
           R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9}},'Top Holdings'),
           R.createElement('table',{className:'tbl'},
             R.createElement('thead',null,R.createElement('tr',null,['Asset','Type','Value','Change'].map(h=>R.createElement('th',{key:h},h)))),
@@ -1107,13 +1145,13 @@ const PortfolioPage=()=>{
             )
           )
         ),
-        R.createElement('div',{className:'card cp'},
-          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9}},'Performance Chart'),
+        (tab==='Overview'||tab==='Performance'||tab==='History')&&R.createElement('div',{className:'card cp'},
+          R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:9}},tab==='History'?'Historical Performance':'Performance Chart'),
           R.createElement(LineChart,{data:CURVE,keys:['eq'],colors:['#8b5cf6'],height:175})
         )
       ),
       R.createElement('div',{style:{display:'flex',flexDirection:'column',gap:12}},
-        R.createElement('div',{className:'card cp'},
+        (tab==='Overview'||tab==='Allocation')&&R.createElement('div',{className:'card cp'},
           R.createElement('div',{style:{fontSize:13,fontWeight:700,marginBottom:11}},'Allocation'),
           R.createElement('div',{style:{display:'flex',justifyContent:'center',position:'relative',marginBottom:10}},
             R.createElement(Donut,{data:ALLOC,size:140,iR:42,oR:62}),
@@ -1144,7 +1182,7 @@ const ReportsPage=()=>{
     R.createElement('div',{className:'fbar',style:{marginBottom:4}},
       ['All Reports','Performance','Backtest','Optimization','AI Analysis'].map(t=>R.createElement('button',{key:t,className:cx('fb',tab===t&&'on'),onClick:()=>setTab(t)},t))
     ),
-    REPORTS.map(r=>R.createElement('div',{key:r.id,className:'rr'},
+    REPORTS.filter(r=>tab==='All Reports'||(tab==='Performance'&&r.ic==='📊')||(tab==='Backtest'&&r.ic==='▶')||(tab==='Optimization'&&r.ic==='⚙')||(tab==='AI Analysis'&&r.ic==='🤖')).map(r=>R.createElement('div',{key:r.id,className:'rr'},
       R.createElement('span',{className:'rr-ic'},r.ic),
       R.createElement('div',{className:'rr-inf'},
         R.createElement('div',{className:'rr-nm'},r.tt),
@@ -1212,22 +1250,53 @@ const SettingsPage=({dark,toggle})=>{
         ['General','Account','Trading','Notifications','API'].map(t=>R.createElement('button',{key:t,className:cx('sn-b',sec===t&&'on'),onClick:()=>setSec(t)},t))
       ),
       R.createElement('div',null,
-        R.createElement('div',{className:'ss'},
-          R.createElement('div',{className:'ss-t'},'Profile Settings'),
-          [{lb:'Full Name',el:R.createElement('input',{className:'set-inp',defaultValue:'Anwaar Ahmad'})},
-           {lb:'Email',el:R.createElement('input',{className:'set-inp',defaultValue:'anwaar@example.com'})},
-           {lb:'Timezone',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'[UTC+05:00] Islamabad, Karachi'))}
+        sec==='General'&&R.createElement(R.Fragment,null,
+          R.createElement('div',{className:'ss'},
+            R.createElement('div',{className:'ss-t'},'Profile Settings'),
+            [{lb:'Full Name',el:R.createElement('input',{className:'set-inp',defaultValue:'Anwaar Ahmad'})},
+             {lb:'Email',el:R.createElement('input',{className:'set-inp',defaultValue:'anwaar@example.com'})},
+             {lb:'Timezone',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'[UTC+05:00] Islamabad, Karachi'))}
+            ].map(r=>R.createElement('div',{key:r.lb,className:'set-row'},R.createElement('div',{className:'set-rl'},r.lb),r.el))
+          ),
+          R.createElement('div',{className:'ss'},
+            R.createElement('div',{className:'ss-t'},'Preferences'),
+            [{lb:'Theme',el:R.createElement('select',{className:'set-inp',value:dark?'dark':'light',onChange:e=>toggle()},R.createElement('option',{value:'dark'},'Dark'),R.createElement('option',{value:'light'},'Light'))},
+             {lb:'Language',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'English'))},
+             {lb:'Currency',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'USD ($)'))},
+             {lb:'Date Format',el:R.createElement('input',{className:'set-inp',defaultValue:'May 18, 2024'})}
+            ].map(r=>R.createElement('div',{key:r.lb,className:'set-row'},R.createElement('div',{className:'set-rl'},r.lb),r.el))
+          )
+        ),
+        sec==='Account'&&R.createElement('div',{className:'ss'},
+          R.createElement('div',{className:'ss-t'},'Account Settings'),
+          R.createElement('div',{className:'set-row'},R.createElement('div',{className:'set-rl'},'Username'),R.createElement('input',{className:'set-inp',defaultValue:'qazianwaar1996-prog'})),
+          R.createElement('div',{className:'set-row'},R.createElement('div',{className:'set-rl'},'Plan'),R.createElement('span',{style:{background:'var(--acc)',color:'#fff',fontSize:11,fontWeight:700,padding:'2px 8px',borderRadius:20}},'Pro')),
+          R.createElement('div',{className:'set-row'},R.createElement('div',{className:'set-rl'},'Member Since'),R.createElement('span',{style:{color:'var(--t2)',fontSize:13}},'Jan 2024'))
+        ),
+        sec==='Trading'&&R.createElement('div',{className:'ss'},
+          R.createElement('div',{className:'ss-t'},'Trading Preferences'),
+          [{lb:'Default Timeframe',el:R.createElement('select',{className:'set-inp'},['1D','4H','1H','15M'].map(t=>R.createElement('option',{key:t},t)))},
+           {lb:'Default Capital',el:R.createElement('input',{className:'set-inp',defaultValue:'$100,000'})},
+           {lb:'Risk Per Trade',el:R.createElement('input',{className:'set-inp',defaultValue:'2%'})}
           ].map(r=>R.createElement('div',{key:r.lb,className:'set-row'},R.createElement('div',{className:'set-rl'},r.lb),r.el))
         ),
-        R.createElement('div',{className:'ss'},
-          R.createElement('div',{className:'ss-t'},'Preferences'),
-          [{lb:'Theme',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'Dark'),R.createElement('option',null,'Light'))},
-           {lb:'Language',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'English'))},
-           {lb:'Currency',el:R.createElement('select',{className:'set-inp'},R.createElement('option',null,'USD ($)'))},
-           {lb:'Date Format',el:R.createElement('input',{className:'set-inp',defaultValue:'May 18, 2024'})}
-          ].map(r=>R.createElement('div',{key:r.lb,className:'set-row'},R.createElement('div',{className:'set-rl'},r.lb),r.el))
+        sec==='Notifications'&&R.createElement('div',{className:'ss'},
+          R.createElement('div',{className:'ss-t'},'Notifications'),
+          [['Email Alerts','Receive trade alerts via email'],['Push Notifications','Browser push notifications'],['Weekly Reports','Weekly performance summary']].map(([lb,sub])=>
+            R.createElement('div',{key:lb,className:'set-row'},
+              R.createElement('div',null,R.createElement('div',{className:'set-rl'},lb),R.createElement('div',{className:'set-rs'},sub)),
+              R.createElement('div',{style:{width:38,height:20,borderRadius:20,background:'var(--pu5)',position:'relative',cursor:'pointer',flexShrink:0}},
+                R.createElement('div',{style:{position:'absolute',top:2,right:2,width:16,height:16,borderRadius:'50%',background:'#fff'}})
+              )
+            )
+          )
         ),
-        R.createElement('div',{className:'ss'},
+        sec==='API'&&R.createElement('div',{className:'ss'},
+          R.createElement('div',{className:'ss-t'},'API Access'),
+          R.createElement('div',{className:'set-row'},R.createElement('div',{className:'set-rl'},'API Key'),R.createElement('input',{className:'set-inp',defaultValue:'qx_live_••••••••••••••••',type:'password'})),
+          R.createElement('div',{style:{marginTop:10}},R.createElement('button',{className:'btn btn-g btn-md',onClick:()=>toast.info('API Key','New key generated')},'🔄 Regenerate Key'))
+        ),
+        (sec==='General'||sec==='Account')&&R.createElement('div',{className:'ss'},
           R.createElement('div',{className:'ss-t'},'Security'),
           R.createElement('div',{style:{display:'flex',gap:9,flexWrap:'wrap'}},
             R.createElement('button',{className:'btn btn-g btn-md',onClick:()=>toast.info('Password','Change password flow...')},'🔑 Change Password'),
@@ -1270,7 +1339,7 @@ const App=()=>{
   const[dark,setDark]=useState(true);
   const go=useCallback(p=>setPage(p),[]);
   const toggle=()=>setDark(d=>!d);
-  useEffect(()=>{document.body.classList.toggle('lm',!dark)},[dark]);
+  useEffect(()=>{document.body.classList.toggle('lm',!dark);document.querySelector('.shell').classList.toggle('lm',!dark)},[dark]);
   const render=()=>{
     switch(page){
       case 'dashboard': return R.createElement(Dashboard,{go});
